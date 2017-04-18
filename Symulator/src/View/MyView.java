@@ -375,7 +375,6 @@ public class MyView extends javax.swing.JFrame {
         // TODO add your handling code here:
         myController.addJob();
         myController.updateAnimationPanel();
-        machineCountSpinner.setValue(2);
     }//GEN-LAST:event_addJobButtonActionPerformed
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
