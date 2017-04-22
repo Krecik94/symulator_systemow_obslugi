@@ -119,12 +119,10 @@ public class MyController {
 
     public void updateMachineDataPanel() {
         currentView.updateMachinePanel(currentModel.getMachineList());
-        
-        
     }
 
     public void updateJobDataPanel() {
-        int currentIndex = currentView.getCurrentListIndex();
+        int currentIndex = currentView.getCurrentJobListIndex();
         if (currentModel.isSimulationRunning() == false) {
             if (currentIndex == -1) {
                 currentView.updateJobDataPanelForEditting(new LinkedList<Machine>(), new LinkedList<Integer>(), null, java.awt.Color.red);

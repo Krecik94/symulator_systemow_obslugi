@@ -502,7 +502,7 @@ public class MyView extends javax.swing.JFrame {
 //TODO dodac obsluge zmiany stanu spinnerow od zadan
     }
     
-    public int getCurrentListIndex() {
+    public int getCurrentJobListIndex() {
         return jList1.getSelectedIndex();
     }
     
