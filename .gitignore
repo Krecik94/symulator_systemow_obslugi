@@ -1,1 +1,6 @@
 Symulator/build/
+Symulator/nbproject/private/
+Symulator/nbbuild/
+Symulator/dist/
+Symulator/nbdist/
+Symulator/.nb-gradle/
