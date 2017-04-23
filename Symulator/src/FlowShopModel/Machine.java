@@ -18,11 +18,13 @@ public class Machine {
     private int queueMaxSize = 0;
     private int ID = 0;
     private String name;
+    private QueuePriorityParent queuePriority;
 
     public Machine(int newID) {
         ID = newID;
         name = "Maszyna "+ID;
         queueMaxSize = 0;
+        queuePriority = new LIFOPriority();
     }
 
     public boolean isFull() {
@@ -58,8 +60,9 @@ public class Machine {
     public void removeCurrentActiveJob() {
         currentJob = null;
         if (currentQueueList.size() != 0) {
-            currentJob = currentQueueList.get(0);
-            currentQueueList.remove(0);
+            int highestPriorityJobIndex = queuePriority.pickHighestPriorityJob(currentQueueList);
+            currentJob = currentQueueList.get(highestPriorityJobIndex);
+            currentQueueList.remove(highestPriorityJobIndex);
         }
     }
 
