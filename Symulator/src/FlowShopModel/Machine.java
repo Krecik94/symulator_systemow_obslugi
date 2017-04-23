@@ -22,7 +22,7 @@ public class Machine {
 
     public Machine(int newID) {
         ID = newID;
-        name = "Maszyna "+ID;
+        name = "Maszyna " + ID;
         queueMaxSize = 0;
         queuePriority = new LIFOPriority();
     }
@@ -66,7 +66,6 @@ public class Machine {
         }
     }
 
-    
     public String getName() {
         return name;
     }
@@ -74,8 +73,7 @@ public class Machine {
     public void setName(String newName) {
         name = newName;
     }
-    
-    
+
     public Job getActiveJob() {
         return currentJob;
     }
