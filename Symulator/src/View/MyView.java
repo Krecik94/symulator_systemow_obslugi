@@ -382,6 +382,7 @@ public class MyView extends javax.swing.JFrame {
         if ((int) machineCountSpinner.getValue() > 0) {
             myController.initializeTheSimulation();
             myController.updateJobDataPanel();
+            myController.updateMachineDataPanel();
             myController.updateAnimationPanel();
             startButton.setEnabled(false);
             stepButton.setEnabled(true);
@@ -399,6 +400,7 @@ public class MyView extends javax.swing.JFrame {
         // TODO add your handling code here:
         myController.executeStep();
         myController.updateJobDataPanel();
+        myController.updateMachineDataPanel();
         myController.updateGanttChart();
         myController.updateAnimationPanel();
 
@@ -408,6 +410,7 @@ public class MyView extends javax.swing.JFrame {
         // TODO add your handling code here:
         myController.resetSimulationProgress();
         myController.updateJobDataPanel();
+        myController.updateMachineDataPanel();
         myController.updateGanttChart();
         myController.updateAnimationPanel();
         startButton.setEnabled(true);
@@ -424,6 +427,7 @@ public class MyView extends javax.swing.JFrame {
         // TODO add your handling code here:
         myController.jumpToNextEvent();
         myController.updateJobDataPanel();
+        myController.updateMachineDataPanel();
         myController.updateGanttChart();
         myController.updateAnimationPanel();
     }//GEN-LAST:event_jumpButtonActionPerformed
@@ -493,8 +497,12 @@ public class MyView extends javax.swing.JFrame {
         jobDataPanel1.updatePanelForProgressDisplay(requiredMachinesList, requiredTimeUnitsList, acquiredTimeUnitsList);
     }
     
-    public void updateMachinePanel(LinkedList<Machine> allMachines) {
-        machineDataPanel1.updateMachinePanel(allMachines, jList2.getSelectedIndex());
+    public void updateMachinePanelForEditting(LinkedList<Machine> allMachines) {
+        machineDataPanel1.updateMachinePanelForEditting(allMachines, jList2.getSelectedIndex());
+    }
+    
+    public void updateMachinePanelForDisplay(LinkedList<Machine> allMachines) {
+        machineDataPanel1.updateMachinePanelForDisplay(allMachines, jList2.getSelectedIndex());
     }
     
     

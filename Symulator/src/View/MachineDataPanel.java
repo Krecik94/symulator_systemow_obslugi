@@ -39,6 +39,8 @@ public class MachineDataPanel extends javax.swing.JPanel {
     private JTextField nameChangeTextField = new JTextField();
     private JLabel queueSizeChangeLabel = new JLabel("Rozmiar kolejki:");
     private JSpinner queueSizeSpinner = new JSpinner();
+    private JLabel machineNameLabel = new JLabel("Maszyna");
+    private JLabel queueSizeLabel = new JLabel("1");
 
     private java.awt.Color currentJobColor = java.awt.Color.red;
 
@@ -51,7 +53,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
         System.out.println("test");
     }
 
-    public void updateMachinePanel(LinkedList<Machine> allMachines, int machineListIndex) {
+    public void updateMachinePanelForEditting(LinkedList<Machine> allMachines, int machineListIndex) {
         removeAll();
         nameChangeJLabel = new JLabel("Nazwa:");
         nameChangeTextField = new JTextField();
@@ -126,7 +128,71 @@ public class MachineDataPanel extends javax.swing.JPanel {
         repaint();
 
     }
+    
+    
+    
+public void updateMachinePanelForDisplay(LinkedList<Machine> allMachines, int machineListIndex) {
+        removeAll();
+        nameChangeJLabel = new JLabel("Nazwa:");
+        tmpVerticalParallelGroupList.clear();
+        //setPreferredSize(new Dimension(190, 308));
+        setPreferredSize(new Dimension(190, 200));
+        nameChangeTextField.setPreferredSize(new Dimension(20, 20));
 
+        nameChangeTextField.setMaximumSize(new Dimension(128, 28));
+
+        if(machineListIndex<0)
+        {
+            revalidate();
+            repaint();
+           return;
+        }
+        
+        System.out.println("PANEL MASZYNY");
+        
+        if (allMachines.get(machineListIndex).getName() != null) {
+            machineNameLabel.setText(allMachines.get(machineListIndex).getName());
+        }
+
+        
+
+        myLayout = new GroupLayout(this);
+        myLayout.setAutoCreateGaps(true);
+        myLayout.setAutoCreateContainerGaps(true);
+        this.setLayout(myLayout);
+
+        queueSizeLabel.setText(""+allMachines.get(machineListIndex).getQueueMaxSize());
+        SequentialGroup tmpVerticalGroup = myLayout.createSequentialGroup();
+
+        if (allMachines.get(machineListIndex).getName() != null) {
+            tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(nameChangeJLabel).addComponent(machineNameLabel));
+            tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(queueSizeChangeLabel).addComponent(queueSizeLabel));
+        }
+        
+
+        myLayout.setVerticalGroup(tmpVerticalGroup);
+
+        SequentialGroup tmpHorizontalGroup = myLayout.createSequentialGroup();
+        tmpParallelGroup = myLayout.createParallelGroup();
+        if (allMachines.get(machineListIndex).getName() != null) {
+            tmpParallelGroup.addComponent(nameChangeJLabel);
+            tmpParallelGroup.addComponent(queueSizeChangeLabel);
+        }
+     
+        tmpHorizontalGroup.addGroup(tmpParallelGroup);
+        tmpParallelGroup = myLayout.createParallelGroup();
+        if (allMachines.get(machineListIndex).getName() != null) {
+            tmpParallelGroup.addComponent(machineNameLabel);
+            tmpParallelGroup.addComponent(queueSizeLabel);
+        }
+        
+        tmpHorizontalGroup.addGroup(tmpParallelGroup);
+
+        myLayout.setHorizontalGroup(tmpHorizontalGroup);
+        revalidate();
+        repaint();
+
+    }
     
 
     private void MachineTextFieldActionPerformed(java.awt.event.ActionEvent evt) {

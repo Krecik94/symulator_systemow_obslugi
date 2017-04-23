@@ -118,7 +118,13 @@ public class MyController {
     }
 
     public void updateMachineDataPanel() {
-        currentView.updateMachinePanel(currentModel.getMachineList());
+        if (currentModel.isSimulationRunning() == false) {
+            currentView.updateMachinePanelForEditting(currentModel.getMachineList());
+        }
+        else{
+            currentView.updateMachinePanelForDisplay(currentModel.getMachineList());
+        }
+
     }
 
     public void updateJobDataPanel() {
