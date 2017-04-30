@@ -75,7 +75,7 @@ public class MyFlowShopModel {
                 }
             }
             if (!nameTaken) {
-                System.out.println("weszlo");
+                //System.out.println("weszlo");
                 newJob.setName("Zadanie " + (i + 1));
                 nameSet = true;
                 break;
@@ -86,7 +86,7 @@ public class MyFlowShopModel {
             newJob.setName("Zadanie " + (allJobs.size() + 1));
         }
         allJobs.add(newJob);
-        System.out.println("dodano");
+        //System.out.println("dodano");
     }
 
     public boolean removeJob(int jobID) {
@@ -157,7 +157,7 @@ public class MyFlowShopModel {
 
     public void removeJobByIndex(int index) {
         allJobs.remove(index);
-        System.out.println(allJobs.size());
+        //System.out.println(allJobs.size());
     }
 
     public DefaultListModel getJobListModel() {
@@ -203,9 +203,9 @@ public class MyFlowShopModel {
         while (stepFinished == false) {
             stepFinished = true;
             for (int i = 0; i < allJobs.size(); ++i) {
-                System.out.println("Teraz zadanie:" + i);
+                //System.out.println("Teraz zadanie:" + i);
                 if (!(allJobs.get(i).isCompletedOnCurrentMachine())) {
-                    System.out.println("nieukonczone - kontynuuje");
+                    //System.out.println("nieukonczone - kontynuuje");
                     continue;
                 } else if (allJobs.get(i).isFinished()) {
                     if (finishedJobs.indexOf(allJobs.get(i)) == -1) {
@@ -228,16 +228,16 @@ public class MyFlowShopModel {
         }
         if (finishedJobs.size() == allJobs.size()) {
 
-            System.out.println("UKONCZONE");
+            //System.out.println("UKONCZONE");
         }
 
         //TESTOWE WYPISANIE
-        System.out.println("Krok " + stepCounter);
+        //System.out.println("Krok " + stepCounter);
         for (int i = 0; i < allJobs.size(); ++i) {
-            System.out.println(allJobs.get(i).getAcquiredTimeUnitsList());
+            //System.out.println(allJobs.get(i).getAcquiredTimeUnitsList());
         }
-        System.out.println();
-        System.out.println();
+        //System.out.println();
+        //System.out.println();
     }
 
     //Method to execute steps until any task finishes
@@ -309,9 +309,9 @@ public class MyFlowShopModel {
         //TESTOWE WYPISANIE
         for (int i = 0; i < allJobs.size(); ++i) {
             if (allJobs.get(i).getAssignedMachine() != null) {
-                System.out.println("Zadanie " + allJobs.get(i).getID() + " : " + allJobs.get(i).getAssignedMachine().getID());
+                //System.out.println("Zadanie " + allJobs.get(i).getID() + " : " + allJobs.get(i).getAssignedMachine().getID());
             } else {
-                System.out.println("Zadanie " + allJobs.get(i).getID() + " : null");
+                //System.out.println("Zadanie " + allJobs.get(i).getID() + " : null");
             }
         }
 

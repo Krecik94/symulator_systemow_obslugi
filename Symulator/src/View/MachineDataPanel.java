@@ -50,7 +50,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
     }
 
     public MachineDataPanel() {
-        System.out.println("test");
+        //System.out.println("test");
     }
 
     public void updateMachinePanelForEditting(LinkedList<Machine> allMachines, int machineListIndex) {
@@ -70,7 +70,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
             repaint();
            return;
         }
-        System.out.println("PANEL MASZYNY");
+        //System.out.println("PANEL MASZYNY");
         
         if (allMachines.get(machineListIndex).getName() != null) {
             nameChangeTextField.setText(allMachines.get(machineListIndex).getName());
@@ -148,7 +148,7 @@ public void updateMachinePanelForDisplay(LinkedList<Machine> allMachines, int ma
            return;
         }
         
-        System.out.println("PANEL MASZYNY");
+        //System.out.println("PANEL MASZYNY");
         
         if (allMachines.get(machineListIndex).getName() != null) {
             machineNameLabel.setText(allMachines.get(machineListIndex).getName());

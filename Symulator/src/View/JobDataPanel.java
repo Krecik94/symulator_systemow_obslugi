@@ -56,11 +56,11 @@ public class JobDataPanel extends javax.swing.JPanel {
     }
 
     public JobDataPanel() {
-        System.out.println("test");
+        //System.out.println("test");
     }
 
     public void updatePanelForEditting(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, String jobName, java.awt.Color newJobColor) {
-        System.out.println(nameChangeTextField.getSize());
+        //System.out.println(nameChangeTextField.getSize());
         removeAll();
         jLabelList.clear();
         jSpinnerList.clear();
@@ -95,12 +95,12 @@ public class JobDataPanel extends javax.swing.JPanel {
         jobColorJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jobColorButtonActionPerformed(evt);
-                System.out.println("action preformed...");
+                //System.out.println("action preformed...");
             }
         });
 
         if (requiredMachinesList.size() != requiredTimeUnitsList.size()) {
-            System.out.println("ROZMIERY LIST NIEZGODNE");
+            //System.out.println("ROZMIERY LIST NIEZGODNE");
             return;
         }
 
@@ -176,7 +176,7 @@ public class JobDataPanel extends javax.swing.JPanel {
         setPreferredSize(new Dimension(185, requiredMachinesList.size() * 22));
 
         if (requiredMachinesList.size() != requiredTimeUnitsList.size() || requiredTimeUnitsList.size() != acquiredTimeUnitsList.size()) {
-            System.out.println("ROZMIERY LIST NIEZGODNE");
+           //System.out.println("ROZMIERY LIST NIEZGODNE");
             return;
         }
 

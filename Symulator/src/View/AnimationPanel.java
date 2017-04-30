@@ -89,7 +89,7 @@ public class AnimationPanel extends javax.swing.JPanel {
             if (allMachines.get(i).getActiveJob() != null) {
 
                 if (allMachines.get(i).getActiveJob().getCompletionPercentage() <= 1) {
-                    System.out.println(allMachines.get(i).getActiveJob().getCompletionPercentage());
+                    //System.out.println(allMachines.get(i).getActiveJob().getCompletionPercentage());
                     g2.setColor(java.awt.Color.GREEN);
                     g2.fillRect(queueOffsetSoFar+sizeRelatedOffset + notStartedJobsOffset + 90 * i + 1, 31 + 79 - (int) (allMachines.get(i).getActiveJob().getCompletionPercentage() * 79), 59, (int) (allMachines.get(i).getActiveJob().getCompletionPercentage() * 79));
                     g2.setColor(java.awt.Color.BLACK);

@@ -47,12 +47,10 @@ public class Job {
     public java.awt.Color getColor() {
         return color;
     }
-    
-    
+
     public void setColor(java.awt.Color newColor) {
-        color=newColor;
+        color = newColor;
     }
-    
 
     public void addRequiredMachine(Machine newMachine) {
         requiredMachines.add(newMachine);
@@ -100,6 +98,21 @@ public class Job {
         }
         int index = requiredMachines.indexOf(currentMachine);
         return acquiredTimeUnits.get(index);
+    }
+
+    public int getTotalRemainingRequiredTimeUnits() {
+        int requiredSum = 0;
+        int acquiredSum = 0;
+
+        for (int i = 0; i < requiredTimeUnits.size(); ++i) {
+            requiredSum += requiredTimeUnits.get(i);
+        }
+
+        for (int i = 0; i < acquiredTimeUnits.size(); ++i) {
+            acquiredSum += acquiredTimeUnits.get(i);
+        }
+        System.out.println("TEST "+this.name +" "+ (requiredSum - acquiredSum));
+        return requiredSum - acquiredSum;
     }
 
     public int getCurrentRequiredTimeUnits() {
