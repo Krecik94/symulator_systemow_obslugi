@@ -59,6 +59,10 @@ public class Machine {
 
     public void removeCurrentActiveJob() {
         currentJob = null;
+        for(int i=0;i<currentQueueList.size();++i)
+        {
+            System.out.println(currentQueueList.get(i).getName());
+        }
         if (currentQueueList.size() != 0) {
             int highestPriorityJobIndex = queuePriority.pickHighestPriorityJob(currentQueueList);
             currentJob = currentQueueList.get(highestPriorityJobIndex);

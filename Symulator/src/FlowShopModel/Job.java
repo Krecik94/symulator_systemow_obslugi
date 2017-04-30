@@ -101,18 +101,17 @@ public class Job {
     }
 
     public int getTotalRemainingRequiredTimeUnits() {
-        int requiredSum = 0;
-        int acquiredSum = 0;
-
-        for (int i = 0; i < requiredTimeUnits.size(); ++i) {
-            requiredSum += requiredTimeUnits.get(i);
+        int totalSum=0;
+        int currentMachineIndex=0;
+        if(currentMachine!=null)
+        {
+            currentMachineIndex=requiredMachines.indexOf(currentMachine);
         }
-
-        for (int i = 0; i < acquiredTimeUnits.size(); ++i) {
-            acquiredSum += acquiredTimeUnits.get(i);
+        for (int i=currentMachineIndex;i<requiredMachines.size();++i)
+        {
+            totalSum+=requiredTimeUnits.get(i);
         }
-        System.out.println("TEST "+this.name +" "+ (requiredSum - acquiredSum));
-        return requiredSum - acquiredSum;
+        return totalSum;
     }
 
     public int getCurrentRequiredTimeUnits() {
