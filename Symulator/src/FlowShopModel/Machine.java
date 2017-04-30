@@ -24,7 +24,7 @@ public class Machine {
         ID = newID;
         name = "Maszyna " + ID;
         queueMaxSize = 0;
-        queuePriority = new FIFOPriority();
+        queuePriority = new SPTPriority();
     }
 
     public boolean isFull() {
