@@ -14,6 +14,7 @@ import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.GroupLayout.SequentialGroup;
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -41,6 +42,8 @@ public class MachineDataPanel extends javax.swing.JPanel {
     private JSpinner queueSizeSpinner = new JSpinner();
     private JLabel machineNameLabel = new JLabel("Maszyna");
     private JLabel queueSizeLabel = new JLabel("1");
+    private JComboBox queuePriorityComboBox=new JComboBox();
+    private JLabel queuePriorityLabel = new JLabel("Priorytet kolejki:");
 
     private java.awt.Color currentJobColor = java.awt.Color.red;
 
@@ -102,6 +105,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
         if (allMachines.get(machineListIndex).getName() != null) {
             tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(nameChangeJLabel).addComponent(nameChangeTextField));
             tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(queueSizeChangeLabel).addComponent(queueSizeSpinner));
+            tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(queuePriorityLabel).addComponent(queuePriorityComboBox));
         }
         
 
@@ -112,6 +116,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
         if (allMachines.get(machineListIndex).getName() != null) {
             tmpParallelGroup.addComponent(nameChangeJLabel);
             tmpParallelGroup.addComponent(queueSizeChangeLabel);
+            tmpParallelGroup.addComponent(queuePriorityLabel);
         }
      
         tmpHorizontalGroup.addGroup(tmpParallelGroup);
@@ -119,7 +124,10 @@ public class MachineDataPanel extends javax.swing.JPanel {
         if (allMachines.get(machineListIndex).getName() != null) {
             tmpParallelGroup.addComponent(nameChangeTextField);
             tmpParallelGroup.addComponent(queueSizeSpinner);
+            tmpParallelGroup.addComponent(queuePriorityComboBox);
         }
+        
+        
         
         tmpHorizontalGroup.addGroup(tmpParallelGroup);
 
