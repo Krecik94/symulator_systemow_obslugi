@@ -42,7 +42,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
     private JSpinner queueSizeSpinner = new JSpinner();
     private JLabel machineNameLabel = new JLabel("Maszyna");
     private JLabel queueSizeLabel = new JLabel("1");
-    private JComboBox queuePriorityComboBox=new JComboBox();
+    private JComboBox queuePriorityComboBox = new JComboBox();
     private JLabel queuePriorityLabel = new JLabel("Priorytet kolejki:");
 
     private java.awt.Color currentJobColor = java.awt.Color.red;
@@ -67,14 +67,13 @@ public class MachineDataPanel extends javax.swing.JPanel {
 
         nameChangeTextField.setMaximumSize(new Dimension(128, 28));
 
-        if(machineListIndex<0)
-        {
+        if (machineListIndex < 0) {
             revalidate();
             repaint();
-           return;
+            return;
         }
         //System.out.println("PANEL MASZYNY");
-        
+
         if (allMachines.get(machineListIndex).getName() != null) {
             nameChangeTextField.setText(allMachines.get(machineListIndex).getName());
         }
@@ -87,7 +86,8 @@ public class MachineDataPanel extends javax.swing.JPanel {
 
         queueSizeSpinner.setMaximumSize(new Dimension(128, 28));
         queueSizeSpinner.setValue(allMachines.get(machineListIndex).getQueueMaxSize());
-        
+        queuePriorityComboBox.setMaximumSize(new Dimension(128, 28));
+
         queueSizeSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 //jSpinner5StateChanged(evt);
@@ -107,7 +107,6 @@ public class MachineDataPanel extends javax.swing.JPanel {
             tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(queueSizeChangeLabel).addComponent(queueSizeSpinner));
             tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(queuePriorityLabel).addComponent(queuePriorityComboBox));
         }
-        
 
         myLayout.setVerticalGroup(tmpVerticalGroup);
 
@@ -118,7 +117,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
             tmpParallelGroup.addComponent(queueSizeChangeLabel);
             tmpParallelGroup.addComponent(queuePriorityLabel);
         }
-     
+
         tmpHorizontalGroup.addGroup(tmpParallelGroup);
         tmpParallelGroup = myLayout.createParallelGroup();
         if (allMachines.get(machineListIndex).getName() != null) {
@@ -126,9 +125,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
             tmpParallelGroup.addComponent(queueSizeSpinner);
             tmpParallelGroup.addComponent(queuePriorityComboBox);
         }
-        
-        
-        
+
         tmpHorizontalGroup.addGroup(tmpParallelGroup);
 
         myLayout.setHorizontalGroup(tmpHorizontalGroup);
@@ -136,10 +133,8 @@ public class MachineDataPanel extends javax.swing.JPanel {
         repaint();
 
     }
-    
-    
-    
-public void updateMachinePanelForDisplay(LinkedList<Machine> allMachines, int machineListIndex) {
+
+    public void updateMachinePanelForDisplay(LinkedList<Machine> allMachines, int machineListIndex) {
         removeAll();
         nameChangeJLabel = new JLabel("Nazwa:");
         tmpVerticalParallelGroupList.clear();
@@ -149,34 +144,29 @@ public void updateMachinePanelForDisplay(LinkedList<Machine> allMachines, int ma
 
         nameChangeTextField.setMaximumSize(new Dimension(128, 28));
 
-        if(machineListIndex<0)
-        {
+        if (machineListIndex < 0) {
             revalidate();
             repaint();
-           return;
+            return;
         }
-        
+
         //System.out.println("PANEL MASZYNY");
-        
         if (allMachines.get(machineListIndex).getName() != null) {
             machineNameLabel.setText(allMachines.get(machineListIndex).getName());
         }
-
-        
 
         myLayout = new GroupLayout(this);
         myLayout.setAutoCreateGaps(true);
         myLayout.setAutoCreateContainerGaps(true);
         this.setLayout(myLayout);
 
-        queueSizeLabel.setText(""+allMachines.get(machineListIndex).getQueueMaxSize());
+        queueSizeLabel.setText("" + allMachines.get(machineListIndex).getQueueMaxSize());
         SequentialGroup tmpVerticalGroup = myLayout.createSequentialGroup();
 
         if (allMachines.get(machineListIndex).getName() != null) {
             tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(nameChangeJLabel).addComponent(machineNameLabel));
             tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(queueSizeChangeLabel).addComponent(queueSizeLabel));
         }
-        
 
         myLayout.setVerticalGroup(tmpVerticalGroup);
 
@@ -186,14 +176,14 @@ public void updateMachinePanelForDisplay(LinkedList<Machine> allMachines, int ma
             tmpParallelGroup.addComponent(nameChangeJLabel);
             tmpParallelGroup.addComponent(queueSizeChangeLabel);
         }
-     
+
         tmpHorizontalGroup.addGroup(tmpParallelGroup);
         tmpParallelGroup = myLayout.createParallelGroup();
         if (allMachines.get(machineListIndex).getName() != null) {
             tmpParallelGroup.addComponent(machineNameLabel);
             tmpParallelGroup.addComponent(queueSizeLabel);
         }
-        
+
         tmpHorizontalGroup.addGroup(tmpParallelGroup);
 
         myLayout.setHorizontalGroup(tmpHorizontalGroup);
@@ -201,7 +191,6 @@ public void updateMachinePanelForDisplay(LinkedList<Machine> allMachines, int ma
         repaint();
 
     }
-    
 
     private void MachineTextFieldActionPerformed(java.awt.event.ActionEvent evt) {
         JTextField source = (JTextField) evt.getSource();
@@ -209,6 +198,12 @@ public void updateMachinePanelForDisplay(LinkedList<Machine> allMachines, int ma
         if (value.compareTo("") != 0) {
             myView.machineNameChanged(value);
         }
+    }
+
+    private void queuePriorityComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
+        JComboBox source = (JComboBox) evt.getSource();
+        int index = source.getSelectedIndex();
+        myView.machineQueuePriorityChanged(index);
     }
 
     private void machineDataSpinnerChanged(javax.swing.event.ChangeEvent evt) {
@@ -219,10 +214,6 @@ public void updateMachinePanelForDisplay(LinkedList<Machine> allMachines, int ma
             myView.machineDataSpinnerChanged((Integer) source.getValue());
         }
     }
-
-   
-
-    
 
     public void test() {
         test = new JLabel("test");

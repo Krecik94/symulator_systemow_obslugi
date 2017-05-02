@@ -468,7 +468,9 @@ public class MyView extends javax.swing.JFrame {
         
     }
     
-    
+    public void machineQueuePriorityChanged(int selectedPriorityIndex){
+        
+    }
     
     public void jobNameChanged(String newName) {
         myController.changeJobName(jList1.getSelectedIndex(), newName);
