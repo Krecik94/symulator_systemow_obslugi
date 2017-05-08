@@ -49,6 +49,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
     private JComboBox queuePriorityComboBox = new JComboBox();
     private JLabel queuePriorityLabel = new JLabel("Priorytet kolejki:");
     private boolean shouldReactFlag=true;
+    private int test1=0;
 
     private java.awt.Color currentJobColor = java.awt.Color.red;
 
@@ -112,16 +113,21 @@ public class MachineDataPanel extends javax.swing.JPanel {
         }
         
         shouldReactFlag=true;
+        System.err.println(test1);
+        if(test1++ < 5){
+            System.err.println("addin Listener");
         queuePriorityComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 if (evt.getStateChange() == ItemEvent.SELECTED) {
                     if (shouldReactFlag) {
                         queuePriorityComboBoxActionPerformed(evt);
                         System.err.println("action Performed");
+                        System.err.println(queuePriorityComboBox.getActionListeners());
                     }
                 }
             }
-        });
+        });}
+        
 
         queueSizeSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -166,6 +172,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
         myLayout.setHorizontalGroup(tmpHorizontalGroup);
         revalidate();
         repaint();
+        //queuePriorityComboBox=null;
 
     }
 

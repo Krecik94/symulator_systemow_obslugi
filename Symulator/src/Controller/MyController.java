@@ -163,7 +163,14 @@ public class MyController {
     }
     
     public DefaultComboBoxModel getQueuePriorityListModel(){
-        return queuePriorityListModel;
+        DefaultComboBoxModel returnQueuePriorityListModel = new DefaultComboBoxModel();
+        returnQueuePriorityListModel.addElement(new FIFOPriority());
+        returnQueuePriorityListModel.addElement(new LIFOPriority());
+        returnQueuePriorityListModel.addElement(new SPTPriority());
+        returnQueuePriorityListModel.addElement(new LPTPriority());
+        returnQueuePriorityListModel.addElement(new LWRPriority());
+        
+        return returnQueuePriorityListModel;
     }
     
     public void changeMachineQueuePriority(QueuePriorityParent priorityToSet, int machineIndex){
