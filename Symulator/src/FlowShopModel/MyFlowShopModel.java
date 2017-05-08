@@ -160,6 +160,10 @@ public class MyFlowShopModel {
         //System.out.println(allJobs.size());
     }
 
+    public void changeMachineQueuePriority(QueuePriorityParent priorityToSet, int machineIndex){
+        allMachines.get(machineIndex).setQueuePriority(priorityToSet);
+    }
+    
     public DefaultListModel getJobListModel() {
         DefaultListModel returnModel = new DefaultListModel();
         for (int i = 0; i < allJobs.size(); ++i) {

@@ -88,6 +88,14 @@ public class Machine {
         }
     }
 
+    public void setQueuePriority(QueuePriorityParent priorityToSet){
+        queuePriority = priorityToSet;
+    }
+    
+    public QueuePriorityParent getQueuePriority(){
+        return queuePriority;
+    }
+    
     public int getID() {
         int returnID = ID;
         return returnID;

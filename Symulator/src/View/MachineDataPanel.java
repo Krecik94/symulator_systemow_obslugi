@@ -6,8 +6,10 @@
 package View;
 
 import FlowShopModel.Machine;
+import FlowShopModel.QueuePriorityParent;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.util.LinkedList;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -46,6 +48,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
     private JLabel queueSizeLabel = new JLabel("1");
     private JComboBox queuePriorityComboBox = new JComboBox();
     private JLabel queuePriorityLabel = new JLabel("Priorytet kolejki:");
+    private boolean shouldReactFlag=true;
 
     private java.awt.Color currentJobColor = java.awt.Color.red;
 
@@ -62,6 +65,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
         removeAll();
         nameChangeJLabel = new JLabel("Nazwa:");
         nameChangeTextField = new JTextField();
+        queuePriorityComboBox = new JComboBox();
         tmpVerticalParallelGroupList.clear();
         //setPreferredSize(new Dimension(190, 308));
         setPreferredSize(new Dimension(190, 200));
@@ -89,9 +93,35 @@ public class MachineDataPanel extends javax.swing.JPanel {
         queueSizeSpinner.setMaximumSize(new Dimension(128, 28));
         queueSizeSpinner.setValue(allMachines.get(machineListIndex).getQueueMaxSize());
         queuePriorityComboBox.setMaximumSize(new Dimension(128, 28));
-        
-        
+        shouldReactFlag = false;
         queuePriorityComboBox.setModel(myView.getQueuePriorityListModel());
+
+        QueuePriorityParent selectedPriority = allMachines.get(machineListIndex).getQueuePriority();
+
+        
+        if (selectedPriority.getName() == "FIFO") {
+            queuePriorityComboBox.setSelectedIndex(0);
+        } else if (selectedPriority.getName() == "LIFO") {
+            queuePriorityComboBox.setSelectedIndex(1);
+        } else if (selectedPriority.getName() == "SPT") {
+            queuePriorityComboBox.setSelectedIndex(2);
+        } else if (selectedPriority.getName() == "LPT") {
+            queuePriorityComboBox.setSelectedIndex(3);
+        } else if (selectedPriority.getName() == "LWR") {
+            queuePriorityComboBox.setSelectedIndex(4);
+        }
+        
+        shouldReactFlag=true;
+        queuePriorityComboBox.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                if (evt.getStateChange() == ItemEvent.SELECTED) {
+                    if (shouldReactFlag) {
+                        queuePriorityComboBoxActionPerformed(evt);
+                        System.err.println("action Performed");
+                    }
+                }
+            }
+        });
 
         queueSizeSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -205,10 +235,10 @@ public class MachineDataPanel extends javax.swing.JPanel {
         }
     }
 
-    private void queuePriorityComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
+    private void queuePriorityComboBoxActionPerformed(java.awt.event.ItemEvent evt) {
         JComboBox source = (JComboBox) evt.getSource();
-        int index = source.getSelectedIndex();
-        myView.machineQueuePriorityChanged(index);
+        QueuePriorityParent selectedPriority = (QueuePriorityParent) source.getSelectedItem();
+        myView.machineQueuePriorityChanged(selectedPriority);
     }
 
     private void machineDataSpinnerChanged(javax.swing.event.ChangeEvent evt) {

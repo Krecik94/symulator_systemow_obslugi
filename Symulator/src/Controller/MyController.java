@@ -12,6 +12,7 @@ import FlowShopModel.LPTPriority;
 import FlowShopModel.LWRPriority;
 import FlowShopModel.Machine;
 import FlowShopModel.MyFlowShopModel;
+import FlowShopModel.QueuePriorityParent;
 import View.MyView;
 import java.util.LinkedList;
 import javax.swing.DefaultComboBoxModel;
@@ -163,6 +164,10 @@ public class MyController {
     
     public DefaultComboBoxModel getQueuePriorityListModel(){
         return queuePriorityListModel;
+    }
+    
+    public void changeMachineQueuePriority(QueuePriorityParent priorityToSet, int machineIndex){
+        currentModel.changeMachineQueuePriority(priorityToSet, machineIndex);
     }
     
     

@@ -3,6 +3,7 @@ package View;
 import Controller.MyController;
 import FlowShopModel.Job;
 import FlowShopModel.Machine;
+import FlowShopModel.QueuePriorityParent;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
@@ -474,8 +475,8 @@ public class MyView extends javax.swing.JFrame {
         
     }
     
-    public void machineQueuePriorityChanged(int selectedPriorityIndex){
-        
+    public void machineQueuePriorityChanged(QueuePriorityParent selectedPriority){
+        myController.changeMachineQueuePriority(selectedPriority, jList2.getSelectedIndex());
     }
     
     public void jobNameChanged(String newName) {

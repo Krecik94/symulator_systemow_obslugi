@@ -28,5 +28,24 @@ public class LWRPriority extends QueuePriorityParent {
         }
         return current_lowest_index;
     }
+    
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        }
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Job)) {
+            return false;
+        }
+        QueuePriorityParent otherMyClass = (QueuePriorityParent) other;
+        if (otherMyClass.getName() == this.getName()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }
