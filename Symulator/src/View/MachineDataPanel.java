@@ -9,6 +9,8 @@ import FlowShopModel.Machine;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.ParallelGroup;
 import javax.swing.GroupLayout.SequentialGroup;
@@ -87,6 +89,9 @@ public class MachineDataPanel extends javax.swing.JPanel {
         queueSizeSpinner.setMaximumSize(new Dimension(128, 28));
         queueSizeSpinner.setValue(allMachines.get(machineListIndex).getQueueMaxSize());
         queuePriorityComboBox.setMaximumSize(new Dimension(128, 28));
+        
+        
+        queuePriorityComboBox.setModel(myView.getQueuePriorityListModel());
 
         queueSizeSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {

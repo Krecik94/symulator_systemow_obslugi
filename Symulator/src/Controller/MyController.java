@@ -9,6 +9,7 @@ import FlowShopModel.Machine;
 import FlowShopModel.MyFlowShopModel;
 import View.MyView;
 import java.util.LinkedList;
+import javax.swing.DefaultComboBoxModel;
 
 /**
  *
@@ -18,10 +19,18 @@ public class MyController {
 
     private MyView currentView;
     private MyFlowShopModel currentModel;
+    private DefaultComboBoxModel queuePriorityListModel;
 
     public MyController() {
         currentModel = new MyFlowShopModel();
         currentView = new MyView(this);
+        queuePriorityListModel = new DefaultComboBoxModel();
+        queuePriorityListModel.addElement("FIFO");
+        queuePriorityListModel.addElement("LIFO");
+        queuePriorityListModel.addElement("SPT");
+        queuePriorityListModel.addElement("LPT");
+        queuePriorityListModel.addElement("LWR");
+        
         System.out.println("test2");
 
         /* Create and display the form */
@@ -145,5 +154,11 @@ public class MyController {
             }
         }
     }
+    
+    public DefaultComboBoxModel getQueuePriorityListModel(){
+        return queuePriorityListModel;
+    }
+    
+    
 
 }

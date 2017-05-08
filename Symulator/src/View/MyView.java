@@ -7,6 +7,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.util.LinkedList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
@@ -444,6 +445,11 @@ public class MyView extends javax.swing.JFrame {
         jList1.setSelectedIndex(oldIndex);
         
     }
+    
+    public DefaultComboBoxModel getQueuePriorityListModel(){
+        return myController.getQueuePriorityListModel();
+    }
+    
     
     public void updateMachineListModel(DefaultListModel newModel) {
         int oldIndex=jList2.getSelectedIndex();
