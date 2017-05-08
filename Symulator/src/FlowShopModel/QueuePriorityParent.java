@@ -18,5 +18,9 @@ public class QueuePriorityParent {
         return -1;
     }
     
+    @Override
+    public String toString(){
+        return name;
+    }
     
 }

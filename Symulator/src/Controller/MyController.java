@@ -5,6 +5,11 @@
  */
 package Controller;
 
+import FlowShopModel.FIFOPriority;
+import FlowShopModel.LIFOPriority;
+import FlowShopModel.SPTPriority;
+import FlowShopModel.LPTPriority;
+import FlowShopModel.LWRPriority;
 import FlowShopModel.Machine;
 import FlowShopModel.MyFlowShopModel;
 import View.MyView;
@@ -25,11 +30,12 @@ public class MyController {
         currentModel = new MyFlowShopModel();
         currentView = new MyView(this);
         queuePriorityListModel = new DefaultComboBoxModel();
-        queuePriorityListModel.addElement("FIFO");
-        queuePriorityListModel.addElement("LIFO");
-        queuePriorityListModel.addElement("SPT");
-        queuePriorityListModel.addElement("LPT");
-        queuePriorityListModel.addElement("LWR");
+        queuePriorityListModel.addElement(new FIFOPriority());
+        queuePriorityListModel.addElement(new LIFOPriority());
+        queuePriorityListModel.addElement(new SPTPriority());
+        queuePriorityListModel.addElement(new LPTPriority());
+        queuePriorityListModel.addElement(new LWRPriority());
+        
         
         System.out.println("test2");
 
