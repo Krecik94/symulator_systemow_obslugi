@@ -10,6 +10,7 @@ import java.awt.Toolkit;
 import java.util.LinkedList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 
@@ -72,6 +73,8 @@ public class MyView extends javax.swing.JFrame {
         resetButton = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -305,6 +308,18 @@ public class MyView extends javax.swing.JFrame {
         jMenu3.setText("Tryb");
         jMenuBar2.add(jMenu3);
 
+        jMenu1.setText("Opcje");
+
+        jMenuItem1.setText("Manager priorytetów kolejek");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar2.add(jMenu1);
+
         setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -439,99 +454,103 @@ public class MyView extends javax.swing.JFrame {
         myController.updateMachineDataPanel();
 
     }//GEN-LAST:event_jList2ValueChanged
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        
+        queuePriorityJFrame = new QueuePriorityManager();
+        queuePriorityJFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        queuePriorityJFrame.setVisible(true);
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
     public void updateListModel(DefaultListModel newModel) {
-        int oldIndex=jList1.getSelectedIndex();
+        int oldIndex = jList1.getSelectedIndex();
         listModel = newModel;
         jList1.setModel(listModel);
         jList1.setSelectedIndex(oldIndex);
-        
+
     }
-    
-    public DefaultComboBoxModel getQueuePriorityListModel(){
+
+    public DefaultComboBoxModel getQueuePriorityListModel() {
         return myController.getQueuePriorityListModel();
     }
-    
-    
+
     public void updateMachineListModel(DefaultListModel newModel) {
-        int oldIndex=jList2.getSelectedIndex();
+        int oldIndex = jList2.getSelectedIndex();
         MachineListModel = newModel;
         jList2.setModel(MachineListModel);
         jList2.setSelectedIndex(oldIndex);
-        
+
     }
-    
-    
-    
+
     public void jobDataSpinnerChanged(int index, int newValue) {
         System.out.println("Zmieniono: " + index + "  " + newValue);
         myController.changeTimeUnitsRequired(jList1.getSelectedIndex(), index, newValue);
-        
+
     }
-    
+
     public void machineDataSpinnerChanged(int newValue) {
         System.out.println("Zmieniono: " + "  " + newValue);
         myController.changeQueueSize(jList2.getSelectedIndex(), newValue);
         myController.updateAnimationPanel();
-        
+
     }
-    
-    public void machineQueuePriorityChanged(QueuePriorityParent selectedPriority){
+
+    public void machineQueuePriorityChanged(QueuePriorityParent selectedPriority) {
         myController.changeMachineQueuePriority(selectedPriority, jList2.getSelectedIndex());
     }
-    
+
     public void jobNameChanged(String newName) {
         myController.changeJobName(jList1.getSelectedIndex(), newName);
     }
-    
+
     public void machineNameChanged(String newName) {
         myController.changeMachineName(jList2.getSelectedIndex(), newName);
         myController.updateJobDataPanel();
     }
-    
+
     public void jobColorChanged(java.awt.Color newColor) {
         myController.changeJobColor(jList1.getSelectedIndex(), newColor);
     }
-    
-    
+
     public void updateAnimationPanel(LinkedList<Job> allJobsList, LinkedList<Machine> allMachinestList) {
         animationPanel.setAllJobs(allJobsList);
         animationPanel.setAllMachines(allMachinestList);
     }
-    
-    public void updateJobDataPanelForEditting(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, String jobName,java.awt.Color jobColor) {
-        jobDataPanel1.updatePanelForEditting(requiredMachinesList, requiredTimeUnitsList, jobName,jobColor);
+
+    public void updateJobDataPanelForEditting(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, String jobName, java.awt.Color jobColor) {
+        jobDataPanel1.updatePanelForEditting(requiredMachinesList, requiredTimeUnitsList, jobName, jobColor);
     }
-    
+
     public void updateJobDataPanelForProgressDisplay(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, LinkedList<Integer> acquiredTimeUnitsList) {
         jobDataPanel1.updatePanelForProgressDisplay(requiredMachinesList, requiredTimeUnitsList, acquiredTimeUnitsList);
     }
-    
+
     public void updateMachinePanelForEditting(LinkedList<Machine> allMachines) {
         machineDataPanel1.updateMachinePanelForEditting(allMachines, jList2.getSelectedIndex());
     }
-    
+
     public void updateMachinePanelForDisplay(LinkedList<Machine> allMachines) {
         machineDataPanel1.updateMachinePanelForDisplay(allMachines, jList2.getSelectedIndex());
     }
-    
-    
+
     public void jobSpinnerChanged(int index, int value) {
 //TODO dodac obsluge zmiany stanu spinnerow od zadan
     }
-    
+
     public int getCurrentJobListIndex() {
         return jList1.getSelectedIndex();
     }
-    
+
     public void disableButtonsOnFinish() {
         stepButton.setEnabled(false);
         jumpButton.setEnabled(false);
     }
-    
+
     public void setGanttChartStepCount(int newStepCount) {
         ganttChartPanel1.setStepCount(newStepCount);
     }
-    
+
     public void setGanttChartSimulationData(LinkedList<java.awt.Color> newSimulationData) {
         ganttChartPanel1.setSimulationData(newSimulationData);
     }
@@ -542,6 +561,7 @@ public class MyView extends javax.swing.JFrame {
     private ListModel listModel = new DefaultListModel();
     private ListModel MachineListModel = new DefaultListModel();
     private MyController myController;
+    private JFrame queuePriorityJFrame;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JobPanel;
     private javax.swing.JButton addJobButton;
@@ -549,8 +569,10 @@ public class MyView extends javax.swing.JFrame {
     private View.GanttChartPanel ganttChartPanel1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
