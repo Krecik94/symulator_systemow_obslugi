@@ -48,8 +48,6 @@ public class MachineDataPanel extends javax.swing.JPanel {
     private JLabel queueSizeLabel = new JLabel("1");
     private JComboBox queuePriorityComboBox = new JComboBox();
     private JLabel queuePriorityLabel = new JLabel("Priorytet kolejki:");
-    private boolean shouldReactFlag=true;
-    private int test1=0;
 
     private java.awt.Color currentJobColor = java.awt.Color.red;
 
@@ -94,13 +92,24 @@ public class MachineDataPanel extends javax.swing.JPanel {
         queueSizeSpinner.setMaximumSize(new Dimension(128, 28));
         queueSizeSpinner.setValue(allMachines.get(machineListIndex).getQueueMaxSize());
         queuePriorityComboBox.setMaximumSize(new Dimension(128, 28));
-        shouldReactFlag = false;
-        queuePriorityComboBox.setModel(myView.getQueuePriorityListModel());
+
+        DefaultComboBoxModel currentQueuPriorityModel=myView.getQueuePriorityListModel();
+        
+        queuePriorityComboBox.setModel(currentQueuPriorityModel);
 
         QueuePriorityParent selectedPriority = allMachines.get(machineListIndex).getQueuePriority();
-
+        int foundIndex=0;
+        for (int i=0;i< currentQueuPriorityModel.getSize(); ++i)
+        {
+            if(((QueuePriorityParent)currentQueuPriorityModel.getElementAt(i)).getName()==selectedPriority.getName()){
+                foundIndex=i;
+                break;
+            }
+        }
         
-        if (selectedPriority.getName() == "FIFO") {
+        queuePriorityComboBox.setSelectedIndex(foundIndex);
+        
+        /*if (selectedPriority.getName() == "FIFO") {
             queuePriorityComboBox.setSelectedIndex(0);
         } else if (selectedPriority.getName() == "LIFO") {
             queuePriorityComboBox.setSelectedIndex(1);
@@ -110,24 +119,18 @@ public class MachineDataPanel extends javax.swing.JPanel {
             queuePriorityComboBox.setSelectedIndex(3);
         } else if (selectedPriority.getName() == "LWR") {
             queuePriorityComboBox.setSelectedIndex(4);
-        }
-        
-        shouldReactFlag=true;
-        System.err.println(test1);
-        if(test1++ < 5){
-            System.err.println("addin Listener");
+        }*/
+        queuePriorityComboBox.setSelectedItem(allMachines.get(machineListIndex).getQueuePriority());
+
         queuePriorityComboBox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 if (evt.getStateChange() == ItemEvent.SELECTED) {
-                    if (shouldReactFlag) {
-                        queuePriorityComboBoxActionPerformed(evt);
-                        System.err.println("action Performed");
-                        System.err.println(queuePriorityComboBox.getActionListeners());
-                    }
+                    queuePriorityComboBoxActionPerformed(evt);
+                    System.err.println("action Performed");
+                    System.err.println(queuePriorityComboBox.getActionListeners());
                 }
             }
-        });}
-        
+        });
 
         queueSizeSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
