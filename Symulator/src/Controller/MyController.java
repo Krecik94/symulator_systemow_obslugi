@@ -5,6 +5,7 @@
  */
 package Controller;
 
+import FlowShopModel.CustomPriority;
 import FlowShopModel.FIFOPriority;
 import FlowShopModel.LIFOPriority;
 import FlowShopModel.SPTPriority;
@@ -14,8 +15,11 @@ import FlowShopModel.Machine;
 import FlowShopModel.MyFlowShopModel;
 import FlowShopModel.QueuePriorityParent;
 import View.MyView;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -26,6 +30,7 @@ public class MyController {
     private MyView currentView;
     private MyFlowShopModel currentModel;
     private DefaultComboBoxModel queuePriorityListModel;
+    private LinkedList<QueuePriorityParent> customPriorityList = new LinkedList<QueuePriorityParent>();
 
     public MyController() {
         currentModel = new MyFlowShopModel();
@@ -36,8 +41,7 @@ public class MyController {
         queuePriorityListModel.addElement(new SPTPriority());
         queuePriorityListModel.addElement(new LPTPriority());
         queuePriorityListModel.addElement(new LWRPriority());
-        
-        
+
         System.out.println("test2");
 
         /* Create and display the form */
@@ -46,6 +50,14 @@ public class MyController {
                 currentView.setVisible(true);
             }
         });
+        
+        //CUSTOM QUEUE TEST
+        HashMap<Integer, Integer> testMap = new HashMap<Integer, Integer>();
+        testMap.put(1, 1);
+        testMap.put(2, 4);
+        testMap.put(3, 2);
+        testMap.put(4, 3);
+        customPriorityList.add(new CustomPriority(testMap));
     }
 
     public void test() {
@@ -136,8 +148,7 @@ public class MyController {
     public void updateMachineDataPanel() {
         if (currentModel.isSimulationRunning() == false) {
             currentView.updateMachinePanelForEditting(currentModel.getMachineList());
-        }
-        else{
+        } else {
             currentView.updateMachinePanelForDisplay(currentModel.getMachineList());
         }
 
@@ -161,22 +172,32 @@ public class MyController {
             }
         }
     }
-    
-    public DefaultComboBoxModel getQueuePriorityListModel(){
+
+    public DefaultListModel getCustomQueuPriorityListModel() {
+        DefaultListModel returnModel = new DefaultListModel();
+        for (int i = 0; i < customPriorityList.size(); ++i) {
+            returnModel.addElement(customPriorityList.get(i));
+        }
+        return returnModel;
+    }
+
+    public DefaultComboBoxModel getQueuePriorityListModel() {
         DefaultComboBoxModel returnQueuePriorityListModel = new DefaultComboBoxModel();
         returnQueuePriorityListModel.addElement(new FIFOPriority());
         returnQueuePriorityListModel.addElement(new LIFOPriority());
         returnQueuePriorityListModel.addElement(new SPTPriority());
         returnQueuePriorityListModel.addElement(new LPTPriority());
         returnQueuePriorityListModel.addElement(new LWRPriority());
-        
+
+        for (int i = 0; i < customPriorityList.size(); ++i) {
+            returnQueuePriorityListModel.addElement(customPriorityList.get(i));
+        }
+
         return returnQueuePriorityListModel;
     }
-    
-    public void changeMachineQueuePriority(QueuePriorityParent priorityToSet, int machineIndex){
+
+    public void changeMachineQueuePriority(QueuePriorityParent priorityToSet, int machineIndex) {
         currentModel.changeMachineQueuePriority(priorityToSet, machineIndex);
     }
-    
-    
 
 }

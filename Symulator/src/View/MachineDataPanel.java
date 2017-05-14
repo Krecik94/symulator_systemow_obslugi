@@ -92,6 +92,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
         queueSizeSpinner.setMaximumSize(new Dimension(128, 28));
         queueSizeSpinner.setValue(allMachines.get(machineListIndex).getQueueMaxSize());
         queuePriorityComboBox.setMaximumSize(new Dimension(128, 28));
+        queuePriorityComboBox.setPrototypeDisplayValue("XXXXXXXX");
 
         DefaultComboBoxModel currentQueuPriorityModel=myView.getQueuePriorityListModel();
         

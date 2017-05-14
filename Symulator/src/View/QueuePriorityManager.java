@@ -5,6 +5,7 @@
  */
 package View;
 
+import Controller.MyController;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -17,12 +18,14 @@ public class QueuePriorityManager extends javax.swing.JFrame {
     /**
      * Creates new form QueuePriorityManager
      */
-    public QueuePriorityManager(MyView ownerView) {
+    public QueuePriorityManager(MyView ownerView, MyController paramController) {
         myView=ownerView;
+        myController=paramController;
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         this.setTitle("Manager priorytetów kolejek");
+        jList2.setModel(myController.getCustomQueuPriorityListModel());
     }
 
     /**
@@ -64,6 +67,11 @@ public class QueuePriorityManager extends javax.swing.JFrame {
         );
 
         jButton1.setText("Dodaj");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Usuń");
 
@@ -107,11 +115,17 @@ public class QueuePriorityManager extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
    
     private MyView myView;
+    private MyController myController;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

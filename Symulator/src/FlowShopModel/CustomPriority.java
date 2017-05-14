@@ -6,7 +6,7 @@
 package FlowShopModel;
 
 import java.util.LinkedList;
-import java.util.Map;
+import java.util.HashMap;
 
 /**
  *
@@ -14,14 +14,37 @@ import java.util.Map;
  */
 public class CustomPriority extends QueuePriorityParent {
 
-    public CustomPriority(Map<Integer, Integer> initPriorityToJobMap) {
-        this.name = "Priorytet własny 1";
+    private static int counter = 0;
+
+    public CustomPriority(HashMap<Integer, Integer> initPriorityToJobMap) {
+        this.name = "Priorytet " + counter++;
         this.priorityToJobMap = initPriorityToJobMap;
     }
 
     public int pickHighestPriorityJob(LinkedList<Job> inputList) {
-        return 0;
+        int returnValue = 0;
+        if (inputList.size() != 0 && inputList.size() != 1) {
+            int currentHighestPriority = 1;
+            if (priorityToJobMap.containsKey(inputList.get(0).getID())) {
+                currentHighestPriority = priorityToJobMap.get(inputList.get(0).getID());
+            }
+
+            for (int i = 1; i < inputList.size(); ++i) {
+                if (priorityToJobMap.containsKey(inputList.get(i).getID())) {
+                    if (currentHighestPriority > priorityToJobMap.get(inputList.get(i).getID())) {
+                        currentHighestPriority = priorityToJobMap.get(inputList.get(i).getID());
+                        returnValue = i;
+                    }
+                } else {
+                    if (currentHighestPriority > 1) {
+                        currentHighestPriority = 1;
+                        returnValue = i;
+                    }
+                }
+            }
+        }
+        return returnValue;
     }
 
-    private Map<Integer, Integer> priorityToJobMap;
+    private HashMap<Integer, Integer> priorityToJobMap;
 }
