@@ -33,6 +33,7 @@ public class MyView extends javax.swing.JFrame {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
+        this.setTitle("Symulator systemów obsługi");
         stepButton.setEnabled(false);
         resetButton.setEnabled(false);
         jumpButton.setEnabled(false);
@@ -458,7 +459,7 @@ public class MyView extends javax.swing.JFrame {
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
         
-        queuePriorityJFrame = new QueuePriorityManager();
+        queuePriorityJFrame = new QueuePriorityManager(this);
         queuePriorityJFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         queuePriorityJFrame.setVisible(true);
         
