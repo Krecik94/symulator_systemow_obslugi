@@ -56,7 +56,7 @@ public class QueuePriorityManager extends javax.swing.JFrame {
         queueManagerNewPriorityPanel1.setLayout(queueManagerNewPriorityPanel1Layout);
         queueManagerNewPriorityPanel1Layout.setHorizontalGroup(
             queueManagerNewPriorityPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 198, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         queueManagerNewPriorityPanel1Layout.setVerticalGroup(
             queueManagerNewPriorityPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,10 +81,12 @@ public class QueuePriorityManager extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton3)
-                    .addComponent(queueManagerNewPriorityPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(0, 230, Short.MAX_VALUE)
+                        .addComponent(jButton3))
+                    .addComponent(queueManagerNewPriorityPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(

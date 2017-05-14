@@ -27,6 +27,10 @@ public class QueuePriorityParent {
         return name;
     }
     
+    public void setName(String newName){
+        name=newName;
+    }
+    
     
     @Override
     public boolean equals(Object other) {
