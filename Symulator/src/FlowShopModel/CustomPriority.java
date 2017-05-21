@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class CustomPriority extends QueuePriorityParent {
 
     private static int counter = 0;
+    private HashMap<Integer, Integer> priorityToJobMap;
 
     public CustomPriority(HashMap<Integer, Integer> initPriorityToJobMap) {
         this.name = "Priorytet " + counter++;
@@ -46,5 +47,16 @@ public class CustomPriority extends QueuePriorityParent {
         return returnValue;
     }
 
-    private HashMap<Integer, Integer> priorityToJobMap;
+    public int getPriorityForID(int inputID) {
+        if (priorityToJobMap.containsKey(inputID)) {
+            return priorityToJobMap.get(inputID);
+        } else {
+            return 1;
+        }
+    }
+
+    public void setPriorityMap(HashMap<Integer, Integer> newPriorityToJobMap) {
+        priorityToJobMap = newPriorityToJobMap;
+    }
+
 }

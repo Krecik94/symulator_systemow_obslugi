@@ -7,6 +7,7 @@ package Controller;
 
 import FlowShopModel.CustomPriority;
 import FlowShopModel.FIFOPriority;
+import FlowShopModel.Job;
 import FlowShopModel.LIFOPriority;
 import FlowShopModel.SPTPriority;
 import FlowShopModel.LPTPriority;
@@ -50,7 +51,7 @@ public class MyController {
                 currentView.setVisible(true);
             }
         });
-        
+
         //CUSTOM QUEUE TEST
         HashMap<Integer, Integer> testMap = new HashMap<Integer, Integer>();
         testMap.put(1, 1);
@@ -77,6 +78,10 @@ public class MyController {
 
     public void updateAnimationPanel() {
         currentView.updateAnimationPanel(currentModel.getJobList(), currentModel.getMachineList());
+    }
+
+    public LinkedList<Job> getJobList() {
+        return currentModel.getJobList();
     }
 
     public void updateJobList() {
@@ -179,6 +184,10 @@ public class MyController {
             returnModel.addElement(customPriorityList.get(i));
         }
         return returnModel;
+    }
+
+    public LinkedList<QueuePriorityParent> getCustomQueuePriorityList() {
+        return customPriorityList;
     }
 
     public DefaultComboBoxModel getQueuePriorityListModel() {

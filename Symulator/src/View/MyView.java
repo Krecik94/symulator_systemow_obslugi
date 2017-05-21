@@ -458,11 +458,11 @@ public class MyView extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
-        
-        queuePriorityJFrame = new QueuePriorityManager(this,myController);
+
+        queuePriorityJFrame = new QueuePriorityManager(this, myController);
         queuePriorityJFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         queuePriorityJFrame.setVisible(true);
-        
+
     }//GEN-LAST:event_jMenuItem1ActionPerformed
     public void updateListModel(DefaultListModel newModel) {
         int oldIndex = jList1.getSelectedIndex();
