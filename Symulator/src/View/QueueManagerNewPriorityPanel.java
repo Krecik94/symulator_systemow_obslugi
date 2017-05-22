@@ -8,6 +8,7 @@ package View;
 import FlowShopModel.CustomPriority;
 import FlowShopModel.Job;
 import FlowShopModel.Machine;
+import java.awt.Dimension;
 import java.util.LinkedList;
 import javax.swing.GroupLayout;
 import javax.swing.JLabel;
@@ -25,6 +26,7 @@ public class QueueManagerNewPriorityPanel extends javax.swing.JPanel {
     private GroupLayout.ParallelGroup tmpParallelGroup;
 
     public QueueManagerNewPriorityPanel() {
+        setPreferredSize(new Dimension(50,50));
 
     }
 
