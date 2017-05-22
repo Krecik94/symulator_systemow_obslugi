@@ -30,16 +30,18 @@ public class QueueManagerNewPriorityPanel extends javax.swing.JPanel {
 
     }
 
-    public void updateMachinePanelForEditting(LinkedList<Job> allJobs, CustomPriority selectedPriority) {
+    public void updateQueueManagerNewPriorityPanelForEditting(LinkedList<Job> allJobs, CustomPriority selectedPriority) {
         removeAll();
         jobNameLabels.clear();
         jobPrioritySpinners.clear();
+        setPreferredSize(new Dimension(50,allJobs.size()*36));
         for (int i = 0; i < allJobs.size(); ++i) {
             jobNameLabels.add(new JLabel(allJobs.get(i).getName()));
         }
         for (int i = 0; i < allJobs.size(); ++i) {
             JSpinner spinnerToAdd = new JSpinner();
             spinnerToAdd.setValue(selectedPriority.getPriorityForID(allJobs.get(i).getID()));
+            spinnerToAdd.setToolTipText("*Zadanie z niższą wartością priorytetu ma pierwszeństwo");
             jobPrioritySpinners.add(spinnerToAdd);
         }
 
@@ -76,6 +78,14 @@ public class QueueManagerNewPriorityPanel extends javax.swing.JPanel {
 
     }
 
+    public void clearPanel(){
+        removeAll();
+        jobNameLabels.clear();
+        jobPrioritySpinners.clear();
+        revalidate();
+        repaint();
+    }
+    
     public LinkedList<Integer> getSpinnerValues() {
         LinkedList<Integer> returnList = new LinkedList<Integer>();
         for (int i = 0; i < jobPrioritySpinners.size(); ++i) {

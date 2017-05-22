@@ -48,6 +48,8 @@ public class QueuePriorityManager extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         queueManagerNewPriorityPanel1 = new View.QueueManagerNewPriorityPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -71,6 +73,11 @@ public class QueuePriorityManager extends javax.swing.JFrame {
         });
 
         jButton2.setText("Usuń");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Zapisz");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -94,23 +101,33 @@ public class QueuePriorityManager extends javax.swing.JFrame {
 
         jScrollPane1.setViewportView(queueManagerNewPriorityPanel1);
 
+        jLabel1.setText("Nazwa zadania");
+
+        jLabel2.setText("Priorytet zadania*");
+        jLabel2.setToolTipText("*Zadanie z niższą wartością priorytetu ma pierwszeństwo");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton2))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel2))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 284, Short.MAX_VALUE))
                         .addGap(14, 14, 14)))
                 .addContainerGap())
         );
@@ -119,14 +136,19 @@ public class QueuePriorityManager extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -134,25 +156,45 @@ public class QueuePriorityManager extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        myController.addNewCustomPriority();
+        jList2.setModel(myController.getCustomQueuPriorityListModel());
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jList2ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList2ValueChanged
         // TODO add your handling code here:
-        queueManagerNewPriorityPanel1.updateMachinePanelForEditting(myController.getJobList(), (CustomPriority) myController.getCustomQueuePriorityList().get(jList2.getSelectedIndex()));
+        if (jList2.getSelectedIndex() < 0) {
+            return;
+        }
+        queueManagerNewPriorityPanel1.updateQueueManagerNewPriorityPanelForEditting(myController.getJobList(), (CustomPriority) myController.getCustomQueuePriorityList().get(jList2.getSelectedIndex()));
     }//GEN-LAST:event_jList2ValueChanged
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        if (jList2.getSelectedIndex() < 0) {
+            return;
+        }
         HashMap<Integer, Integer> newPriorityMap = new HashMap<Integer, Integer>();
         LinkedList<Integer> spinnerValues = queueManagerNewPriorityPanel1.getSpinnerValues();
         LinkedList<Job> allJobs = myController.getJobList();
-        for (int i = 0; i < allJobs.size() ; ++i) {
+        for (int i = 0; i < allJobs.size(); ++i) {
             newPriorityMap.put(allJobs.get(i).getID(), spinnerValues.get(i));
         }
 
-        ((CustomPriority)myController.getCustomQueuePriorityList().get(jList2.getSelectedIndex())).setPriorityMap(newPriorityMap);
+        ((CustomPriority) myController.getCustomQueuePriorityList().get(jList2.getSelectedIndex())).setPriorityMap(newPriorityMap);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if (jList2.getSelectedIndex() < 0) {
+            return;
+        }
+        else{
+            myController.removeCustomPriorityAtIndex(jList2.getSelectedIndex());
+            jList2.setModel(myController.getCustomQueuPriorityListModel());
+        }
+        queueManagerNewPriorityPanel1.clearPanel();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -163,6 +205,8 @@ public class QueuePriorityManager extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JList<String> jList2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
