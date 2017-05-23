@@ -102,7 +102,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
         int foundIndex=0;
         for (int i=0;i< currentQueuPriorityModel.getSize(); ++i)
         {
-            if(((QueuePriorityParent)currentQueuPriorityModel.getElementAt(i)).getName()==selectedPriority.getName()){
+            if(((QueuePriorityParent)currentQueuPriorityModel.getElementAt(i)).getName().equals(selectedPriority.getName())){
                 foundIndex=i;
                 break;
             }

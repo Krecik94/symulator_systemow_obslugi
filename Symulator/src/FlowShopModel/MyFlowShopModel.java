@@ -170,6 +170,10 @@ public class MyFlowShopModel {
     public void changeInitialQueuePriority(QueuePriorityParent priorityToSet) {
         initialQueuePriority = priorityToSet;
     }
+    
+    public QueuePriorityParent getInitialQueuePriority() {
+        return initialQueuePriority;
+    }
 
     public DefaultListModel getJobListModel() {
         DefaultListModel returnModel = new DefaultListModel();

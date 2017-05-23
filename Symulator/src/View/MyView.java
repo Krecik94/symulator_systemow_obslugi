@@ -433,6 +433,7 @@ public class MyView extends javax.swing.JFrame {
             removeJobButton.setEnabled(false);
             machineCountLabel.setEnabled(false);
             machineCountSpinner.setEnabled(false);
+            jComboBox1.setEnabled(false);
         }
 
     }//GEN-LAST:event_startButtonActionPerformed
@@ -462,6 +463,7 @@ public class MyView extends javax.swing.JFrame {
         removeJobButton.setEnabled(true);
         machineCountLabel.setEnabled(true);
         machineCountSpinner.setEnabled(true);
+        jComboBox1.setEnabled(true);
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void jumpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jumpButtonActionPerformed
@@ -493,7 +495,7 @@ public class MyView extends javax.swing.JFrame {
         JComboBox source = (JComboBox) evt.getSource();
         QueuePriorityParent selectedPriority = (QueuePriorityParent) source.getSelectedItem();
         myController.changeInitialQueuePriority(selectedPriority);
-        
+
     }//GEN-LAST:event_jComboBox1ItemStateChanged
     public void updateListModel(DefaultListModel newModel) {
         int oldIndex = jList1.getSelectedIndex();
@@ -586,9 +588,16 @@ public class MyView extends javax.swing.JFrame {
     public void setGanttChartSimulationData(LinkedList<java.awt.Color> newSimulationData) {
         ganttChartPanel1.setSimulationData(newSimulationData);
     }
-    
-    public void updateInitialPriorityComboBoxModel(DefaultComboBoxModel newModel){
+
+    public void updateInitialPriorityComboBoxModel(DefaultComboBoxModel newModel) {
+        String currentName = ((QueuePriorityParent) jComboBox1.getSelectedItem()).getName();
         jComboBox1.setModel(newModel);
+        for (int i = 0; i < newModel.getSize(); ++i) {
+            if(((QueuePriorityParent)newModel.getElementAt(i)).getName().equals(currentName)){
+                jComboBox1.setSelectedIndex(i);
+                break;
+            }
+        }
     }
 
     /**
