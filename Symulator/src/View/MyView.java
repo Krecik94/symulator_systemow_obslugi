@@ -10,6 +10,7 @@ import java.awt.Toolkit;
 import java.util.LinkedList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
@@ -37,6 +38,8 @@ public class MyView extends javax.swing.JFrame {
         stepButton.setEnabled(false);
         resetButton.setEnabled(false);
         jumpButton.setEnabled(false);
+        jComboBox1.setModel(myController.getQueuePriorityListModel());
+        jComboBox1.setPrototypeDisplayValue("XXXXXXXX");
     }
 
     /**
@@ -51,6 +54,8 @@ public class MyView extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList<>();
+        jLabel1 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         ganttChartPanel1 = new View.GanttChartPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -89,13 +94,27 @@ public class MyView extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(jList2);
 
+        jLabel1.setText("Priorytet początkowy:");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 183, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -103,7 +122,11 @@ public class MyView extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(49, 49, 49)
                 .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addContainerGap())
         );
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -348,7 +371,7 @@ public class MyView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 318, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -464,6 +487,14 @@ public class MyView extends javax.swing.JFrame {
         queuePriorityJFrame.setVisible(true);
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        // TODO add your handling code here:
+        JComboBox source = (JComboBox) evt.getSource();
+        QueuePriorityParent selectedPriority = (QueuePriorityParent) source.getSelectedItem();
+        myController.changeInitialQueuePriority(selectedPriority);
+        
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
     public void updateListModel(DefaultListModel newModel) {
         int oldIndex = jList1.getSelectedIndex();
         listModel = newModel;
@@ -555,6 +586,10 @@ public class MyView extends javax.swing.JFrame {
     public void setGanttChartSimulationData(LinkedList<java.awt.Color> newSimulationData) {
         ganttChartPanel1.setSimulationData(newSimulationData);
     }
+    
+    public void updateInitialPriorityComboBoxModel(DefaultComboBoxModel newModel){
+        jComboBox1.setModel(newModel);
+    }
 
     /**
      * @param args the command line arguments
@@ -568,6 +603,8 @@ public class MyView extends javax.swing.JFrame {
     private javax.swing.JButton addJobButton;
     private View.AnimationPanel animationPanel;
     private View.GanttChartPanel ganttChartPanel1;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
     private javax.swing.JMenu jMenu1;

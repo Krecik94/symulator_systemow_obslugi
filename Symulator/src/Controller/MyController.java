@@ -59,6 +59,7 @@ public class MyController {
         testMap.put(3, 2);
         testMap.put(4, 3);
         customPriorityList.add(new CustomPriority(testMap));
+        currentView.updateInitialPriorityComboBoxModel(getQueuePriorityListModel());
     }
     
     public void test() {
@@ -224,6 +225,11 @@ public class MyController {
     public LinkedList<QueuePriorityParent> getCustomQueuePriorityList() {
         return customPriorityList;
     }
+    
+    public void changeInitialQueuePriority(QueuePriorityParent priorityToSet) {
+        currentModel.changeInitialQueuePriority(priorityToSet);
+    }
+    
     
     public DefaultComboBoxModel getQueuePriorityListModel() {
         DefaultComboBoxModel returnQueuePriorityListModel = new DefaultComboBoxModel();

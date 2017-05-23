@@ -24,9 +24,12 @@ public class MyFlowShopModel {
     private int stepCounter = 0;
     private boolean stepFinished = false;
     private boolean eventOccured = false;
+    private QueuePriorityParent initialQueuePriority;
+    private LinkedList<Job> prioritySortedJobList = new LinkedList<Job>();
 
     public MyFlowShopModel() {
         changeNumberOfMachines(0);
+        initialQueuePriority = new FIFOPriority();
     }
 
     public int getID() {
@@ -160,10 +163,14 @@ public class MyFlowShopModel {
         //System.out.println(allJobs.size());
     }
 
-    public void changeMachineQueuePriority(QueuePriorityParent priorityToSet, int machineIndex){
+    public void changeMachineQueuePriority(QueuePriorityParent priorityToSet, int machineIndex) {
         allMachines.get(machineIndex).setQueuePriority(priorityToSet);
     }
     
+    public void changeInitialQueuePriority(QueuePriorityParent priorityToSet) {
+        initialQueuePriority = priorityToSet;
+    }
+
     public DefaultListModel getJobListModel() {
         DefaultListModel returnModel = new DefaultListModel();
         for (int i = 0; i < allJobs.size(); ++i) {
@@ -182,16 +189,19 @@ public class MyFlowShopModel {
 
     public void executeStep() {
 
+        // can't execute step with simulation not running
         if (simulationIsRunning == false) {
             return;
         }
         stepCounter += 1;
         stepFinished = false;
 
+        // adding times units to all jobs on machines
         for (int i = 0; i < allMachines.size(); ++i) {
             allMachines.get(i).addTimeUnits();
         }
 
+        // getting simulation data in shape of list of colors (for gantt panel)
         for (int i = 0; i < allMachines.size(); ++i) {
             if (allMachines.get(i).getActiveJob() == null) {
                 simulationData.add(new java.awt.Color(255, 255, 255));
@@ -206,39 +216,39 @@ public class MyFlowShopModel {
 
         while (stepFinished == false) {
             stepFinished = true;
-            for (int i = 0; i < allJobs.size(); ++i) {
-                //System.out.println("Teraz zadanie:" + i);
-                if (!(allJobs.get(i).isCompletedOnCurrentMachine())) {
+            for (int i = 0; i < prioritySortedJobList.size(); ++i) {
+                //case of unfinished task with for example 4/6 time units. Needs to sit, all good. Continue.
+                if (!(prioritySortedJobList.get(i).isCompletedOnCurrentMachine())) {
                     //System.out.println("nieukonczone - kontynuuje");
                     continue;
-                } else if (allJobs.get(i).isFinished()) {
-                    if (finishedJobs.indexOf(allJobs.get(i)) == -1) {
-                        finishedJobs.add(allJobs.get(i));
-                        allJobs.get(i).getAssignedMachine().removeCurrentActiveJob();
-                        allJobs.get(i).removeCurrentlyAssignedMachine();
+                } else if (prioritySortedJobList.get(i).isFinished()) {
+                    if (finishedJobs.indexOf(prioritySortedJobList.get(i)) == -1) {
+                        finishedJobs.add(prioritySortedJobList.get(i));
+                        prioritySortedJobList.get(i).getAssignedMachine().removeCurrentActiveJob();
+                        prioritySortedJobList.get(i).removeCurrentlyAssignedMachine();
                         stepFinished = false;
                         eventOccured = true;
                     }
                 } else {
-                    if (allJobs.get(i).getNextRequiredMachine().isFull()) {
+                    if (prioritySortedJobList.get(i).getNextRequiredMachine().isFull()) {
                         continue;
                     } else {
-                        assignJobToMachine(allJobs.get(i), allJobs.get(i).getNextRequiredMachine());
+                        assignJobToMachine(prioritySortedJobList.get(i), prioritySortedJobList.get(i).getNextRequiredMachine());
                         stepFinished = false;
                         eventOccured = true;
                     }
                 }
             }
         }
-        if (finishedJobs.size() == allJobs.size()) {
+        if (finishedJobs.size() == prioritySortedJobList.size()) {
 
             //System.out.println("UKONCZONE");
         }
 
         //TESTOWE WYPISANIE
         //System.out.println("Krok " + stepCounter);
-        for (int i = 0; i < allJobs.size(); ++i) {
-            //System.out.println(allJobs.get(i).getAcquiredTimeUnitsList());
+        for (int i = 0; i < prioritySortedJobList.size(); ++i) {
+            //System.out.println(prioritySortedJobList.get(i).getAcquiredTimeUnitsList());
         }
         //System.out.println();
         //System.out.println();
@@ -276,6 +286,7 @@ public class MyFlowShopModel {
         }
         finishedJobs.clear();
         simulationData.clear();
+        prioritySortedJobList.clear();
         stepCounter = 0;
         simulationIsRunning = false;
     }
@@ -299,26 +310,32 @@ public class MyFlowShopModel {
 
         finishedJobs.clear();
         simulationData.clear();
+        prioritySortedJobList.clear();
         stepCounter = 0;
         simulationIsRunning = true;
+        LinkedList<Job> notSortedJobList = new LinkedList<Job>();
         for (int i = 0; i < allJobs.size(); ++i) {
-            if (allJobs.get(i).hasNextRequiredMachine()) {
-                if (!(allJobs.get(i).getNextRequiredMachine().isFull())) {
+            notSortedJobList.add(allJobs.get(i));
+        }
+
+        // Creating a class list sorted according to set priority.
+        // Tasks will be handled according to this list
+        int iterations = notSortedJobList.size();
+        int nextPriorityIndex = 0;
+        for (int i = 0; i < iterations; ++i) {
+            nextPriorityIndex = initialQueuePriority.pickHighestPriorityJob(notSortedJobList);
+            prioritySortedJobList.add(notSortedJobList.get(nextPriorityIndex));
+            notSortedJobList.remove(nextPriorityIndex);
+        }
+
+        for (int i = 0; i < prioritySortedJobList.size(); ++i) {
+            if (prioritySortedJobList.get(i).hasNextRequiredMachine()) {
+                if (!(prioritySortedJobList.get(i).getNextRequiredMachine().isFull())) {
                     //allJobs.get(i).getNextRequiredMachine().addJob(allJobs.get(i));
-                    assignJobToMachine(allJobs.get(i), allJobs.get(i).getNextRequiredMachine());
+                    assignJobToMachine(prioritySortedJobList.get(i), prioritySortedJobList.get(i).getNextRequiredMachine());
                 }
             }
         }
-
-        //TESTOWE WYPISANIE
-        for (int i = 0; i < allJobs.size(); ++i) {
-            if (allJobs.get(i).getAssignedMachine() != null) {
-                //System.out.println("Zadanie " + allJobs.get(i).getID() + " : " + allJobs.get(i).getAssignedMachine().getID());
-            } else {
-                //System.out.println("Zadanie " + allJobs.get(i).getID() + " : null");
-            }
-        }
-
     }
 
 }
