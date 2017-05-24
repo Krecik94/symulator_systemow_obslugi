@@ -166,13 +166,37 @@ public class MyFlowShopModel {
     public void changeMachineQueuePriority(QueuePriorityParent priorityToSet, int machineIndex) {
         allMachines.get(machineIndex).setQueuePriority(priorityToSet);
     }
-    
+
     public void changeInitialQueuePriority(QueuePriorityParent priorityToSet) {
         initialQueuePriority = priorityToSet;
     }
-    
+
     public QueuePriorityParent getInitialQueuePriority() {
         return initialQueuePriority;
+    }
+
+    public void moveMachineAtIndexInJobAtIndexUpInRequiredOrder(int machineIndex, int jobIndex) {
+        if (jobIndex < 0 || jobIndex >= allJobs.size()) {
+            System.err.println("Bad index");
+            return;
+        }
+        allJobs.get(jobIndex).moveMachineAtIndexUpInRequiredOrder(machineIndex);
+    }
+
+    public void moveMachineAtIndexInJobAtIndexDownInRequiredOrder(int machineIndex, int jobIndex) {
+        if (jobIndex < 0 || jobIndex >= allJobs.size()) {
+            System.err.println("Bad index");
+            return;
+        }
+        allJobs.get(jobIndex).moveMachineAtIndexDownInRequiredOrder(machineIndex);
+    }
+
+    public void removeMachineAtIndexInJobAtIndex(int machineIndex, int jobIndex) {
+        if (jobIndex < 0 || jobIndex >= allJobs.size()) {
+            System.err.println("Bad index");
+            return;
+        }
+        allJobs.get(jobIndex).removeMachineAtIndex(machineIndex);
     }
 
     public DefaultListModel getJobListModel() {
@@ -228,7 +252,9 @@ public class MyFlowShopModel {
                 } else if (prioritySortedJobList.get(i).isFinished()) {
                     if (finishedJobs.indexOf(prioritySortedJobList.get(i)) == -1) {
                         finishedJobs.add(prioritySortedJobList.get(i));
-                        prioritySortedJobList.get(i).getAssignedMachine().removeCurrentActiveJob();
+                        if (prioritySortedJobList.get(i).getAssignedMachine() != null) {
+                            prioritySortedJobList.get(i).getAssignedMachine().removeCurrentActiveJob();
+                        }
                         prioritySortedJobList.get(i).removeCurrentlyAssignedMachine();
                         stepFinished = false;
                         eventOccured = true;

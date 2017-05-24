@@ -263,8 +263,20 @@ public class MyController {
         return returnQueuePriorityListModel;
     }
 
+    public void moveMachineAtIndexInJobAtIndexUpInRequiredOrder(int machineIndex, int jobIndex) {
+        currentModel.moveMachineAtIndexInJobAtIndexUpInRequiredOrder(machineIndex, jobIndex);
+    }
+
+    public void moveMachineAtIndexInJobAtIndexDownInRequiredOrder(int machineIndex, int jobIndex) {
+        currentModel.moveMachineAtIndexInJobAtIndexDownInRequiredOrder(machineIndex, jobIndex);
+    }
+
     public void changeMachineQueuePriority(QueuePriorityParent priorityToSet, int machineIndex) {
         currentModel.changeMachineQueuePriority(priorityToSet, machineIndex);
+    }
+
+    public void removeMachineAtIndexInJobAtIndex(int machineIndex, int jobIndex) {
+        currentModel.removeMachineAtIndexInJobAtIndex(machineIndex, jobIndex);
     }
 
 }

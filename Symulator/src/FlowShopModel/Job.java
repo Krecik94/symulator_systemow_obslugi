@@ -52,6 +52,53 @@ public class Job {
         color = newColor;
     }
 
+    public void moveMachineAtIndexUpInRequiredOrder(int index) {
+        if (index <= 0) {
+            return;
+        } else {
+            Machine machineAtIndex = requiredMachines.get(index);
+            int acquiredTimeUnitsAtIndex = acquiredTimeUnits.get(index);
+            int requiredTimeUnitsAtIndex = requiredTimeUnits.get(index);
+
+            requiredMachines.set(index, requiredMachines.get(index - 1));
+            acquiredTimeUnits.set(index, acquiredTimeUnits.get(index - 1));
+            requiredTimeUnits.set(index, requiredTimeUnits.get(index - 1));
+
+            requiredMachines.set(index - 1, machineAtIndex);
+            acquiredTimeUnits.set(index - 1, acquiredTimeUnitsAtIndex);
+            requiredTimeUnits.set(index - 1, requiredTimeUnitsAtIndex);
+        }
+    }
+
+    public void moveMachineAtIndexDownInRequiredOrder(int index) {
+        if (index >= (requiredMachines.size() - 1)) {
+            return;
+        } else {
+            Machine machineAtIndex = requiredMachines.get(index);
+            int acquiredTimeUnitsAtIndex = acquiredTimeUnits.get(index);
+            int requiredTimeUnitsAtIndex = requiredTimeUnits.get(index);
+
+            requiredMachines.set(index, requiredMachines.get(index + 1));
+            acquiredTimeUnits.set(index, acquiredTimeUnits.get(index + 1));
+            requiredTimeUnits.set(index, requiredTimeUnits.get(index + 1));
+
+            requiredMachines.set(index + 1, machineAtIndex);
+            acquiredTimeUnits.set(index + 1, acquiredTimeUnitsAtIndex);
+            requiredTimeUnits.set(index + 1, requiredTimeUnitsAtIndex);
+        }
+    }
+
+    public void removeMachineAtIndex(int index) {
+        if (index < 0 || index >= requiredMachines.size()) {
+            System.err.println("Bad index");
+            return;
+        } else {
+            requiredMachines.remove(index);
+            requiredTimeUnits.remove(index);
+            acquiredTimeUnits.remove(index);
+        }
+    }
+
     public void addRequiredMachine(Machine newMachine) {
         requiredMachines.add(newMachine);
     }
@@ -101,15 +148,13 @@ public class Job {
     }
 
     public int getTotalRemainingRequiredTimeUnits() {
-        int totalSum=0;
-        int currentMachineIndex=0;
-        if(currentMachine!=null)
-        {
-            currentMachineIndex=requiredMachines.indexOf(currentMachine);
+        int totalSum = 0;
+        int currentMachineIndex = 0;
+        if (currentMachine != null) {
+            currentMachineIndex = requiredMachines.indexOf(currentMachine);
         }
-        for (int i=currentMachineIndex;i<requiredMachines.size();++i)
-        {
-            totalSum+=requiredTimeUnits.get(i);
+        for (int i = currentMachineIndex; i < requiredMachines.size(); ++i) {
+            totalSum += requiredTimeUnits.get(i);
         }
         return totalSum;
     }
