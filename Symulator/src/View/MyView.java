@@ -6,10 +6,13 @@ import FlowShopModel.Machine;
 import FlowShopModel.QueuePriorityParent;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.util.LinkedList;
+import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.ListModel;
@@ -40,6 +43,14 @@ public class MyView extends javax.swing.JFrame {
         jumpButton.setEnabled(false);
         jComboBox1.setModel(myController.getQueuePriorityListModel());
         jComboBox1.setPrototypeDisplayValue("XXXXXXXX");
+
+        try {
+            Image img = ImageIO.read(getClass().getResource("/resources/test.png"));
+            jButton1.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
     }
 
     /**
@@ -612,11 +623,26 @@ public class MyView extends javax.swing.JFrame {
         String currentName = ((QueuePriorityParent) jComboBox1.getSelectedItem()).getName();
         jComboBox1.setModel(newModel);
         for (int i = 0; i < newModel.getSize(); ++i) {
-            if(((QueuePriorityParent)newModel.getElementAt(i)).getName().equals(currentName)){
+            if (((QueuePriorityParent) newModel.getElementAt(i)).getName().equals(currentName)) {
                 jComboBox1.setSelectedIndex(i);
                 break;
             }
         }
+    }
+
+    public void moveMachineAtIndexInJobAtIndexUpInRequiredOrder(int machineIndex) {
+        myController.moveMachineAtIndexInJobAtIndexUpInRequiredOrder(machineIndex, jList1.getSelectedIndex());
+        myController.updateJobDataPanel();
+    }
+
+    public void moveMachineAtIndexInJobAtIndexDownInRequiredOrder(int machineIndex) {
+        myController.moveMachineAtIndexInJobAtIndexDownInRequiredOrder(machineIndex, jList1.getSelectedIndex());
+        myController.updateJobDataPanel();
+    }
+
+    public void removeMachineAtIndexInJobAtIndex(int machineIndex) {
+        myController.removeMachineAtIndexInJobAtIndex(machineIndex, jList1.getSelectedIndex());
+        myController.updateJobDataPanel();
     }
 
     /**

@@ -19,6 +19,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.LayoutStyle;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 
 /**
@@ -45,6 +46,9 @@ public class JobDataPanel extends javax.swing.JPanel {
     private JLabel jobColorJLabel = new JLabel("Kolor:");
     private JButton jobColorJButton = new JButton();
     private java.awt.Color currentJobColor = java.awt.Color.red;
+    private LinkedList<JButton> moveMachineUpButtonList = new LinkedList<JButton>();
+    private LinkedList<JButton> moveMachineDownButtonList = new LinkedList<JButton>();
+    private LinkedList<JButton> deleteMachineButtonList = new LinkedList<JButton>();
 
     public JobDataPanel(MyView ownerView) {
         myView = ownerView;
@@ -64,6 +68,9 @@ public class JobDataPanel extends javax.swing.JPanel {
         removeAll();
         jLabelList.clear();
         jSpinnerList.clear();
+        moveMachineUpButtonList.clear();
+        moveMachineDownButtonList.clear();
+        deleteMachineButtonList.clear();
         currentJobColor = newJobColor;
         nameChangeJLabel = new JLabel("Nazwa:");
         JLabel jobColorJLabel = new JLabel("Kolor:");
@@ -84,6 +91,36 @@ public class JobDataPanel extends javax.swing.JPanel {
 
         if (jobName != null) {
             nameChangeTextField.setText(jobName);
+        }
+
+        for (int i = 0; i < requiredMachinesList.size(); ++i) {
+            JButton moveMachineUpButtonToAdd = new JButton();
+            moveMachineUpButtonToAdd.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    moveMachineUpButtonActionPerformed(evt);
+                }
+            });
+            moveMachineUpButtonToAdd.setPreferredSize(new Dimension(30, 15));
+            moveMachineUpButtonList.add(moveMachineUpButtonToAdd);
+
+            JButton moveMachineDownButtonToAdd = new JButton();
+            moveMachineDownButtonToAdd.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    moveMachineDownButtonActionPerformed(evt);
+                }
+            });
+            moveMachineDownButtonToAdd.setPreferredSize(new Dimension(30, 15));
+            moveMachineDownButtonList.add(moveMachineDownButtonToAdd);
+
+            JButton deleteMachineButtonToAdd = new JButton();
+            deleteMachineButtonToAdd.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    deleteMachineButtonActionPerformed(evt);
+                }
+            });
+            deleteMachineButtonToAdd.setPreferredSize(new Dimension(15, 30));
+            deleteMachineButtonList.add(deleteMachineButtonToAdd);
+
         }
 
         nameChangeTextField.addActionListener(new java.awt.event.ActionListener() {
@@ -123,6 +160,7 @@ public class JobDataPanel extends javax.swing.JPanel {
             jSpinnerList.add(spinnerToAdd);
         }
 
+        // Setting layout
         myLayout = new GroupLayout(this);
         myLayout.setAutoCreateGaps(true);
         myLayout.setAutoCreateContainerGaps(true);
@@ -131,11 +169,22 @@ public class JobDataPanel extends javax.swing.JPanel {
         SequentialGroup tmpVerticalGroup = myLayout.createSequentialGroup();
 
         if (jobName != null) {
-            tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(nameChangeJLabel).addComponent(nameChangeTextField));
-            tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(jobColorJLabel).addComponent(jobColorJButton));
+            tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                    .addComponent(nameChangeJLabel)
+                    .addComponent(nameChangeTextField));
+            tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                    .addComponent(jobColorJLabel)
+                    .addComponent(jobColorJButton));
         }
         for (int i = 0; i < jLabelList.size(); ++i) {
-            tmpVerticalParallelGroupList.add(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(jLabelList.get(i)).addComponent(jSpinnerList.get(i), 30, 30, 30));
+            tmpVerticalParallelGroupList.add(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                    .addComponent(jLabelList.get(i))
+                    .addGroup(myLayout.createSequentialGroup()
+                            .addComponent(moveMachineUpButtonList.get(i), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                            .addGap(0)
+                            .addComponent(moveMachineDownButtonList.get(i), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+                    .addComponent(deleteMachineButtonList.get(i), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jSpinnerList.get(i), 30, 30, 30));
         }
         for (int i = 0; i < tmpVerticalParallelGroupList.size(); ++i) {
             tmpVerticalGroup.addGroup(tmpVerticalParallelGroupList.get(i));
@@ -152,6 +201,26 @@ public class JobDataPanel extends javax.swing.JPanel {
         for (int i = 0; i < jLabelList.size(); ++i) {
             tmpParallelGroup.addComponent(jLabelList.get(i));
         }
+        tmpParallelGroup.addGap(0);
+        tmpHorizontalGroup.addGroup(tmpParallelGroup);
+        tmpParallelGroup = myLayout.createParallelGroup();
+        for (int i = 0; i < moveMachineUpButtonList.size(); ++i) {
+            tmpParallelGroup.addComponent(moveMachineUpButtonList.get(i), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
+            tmpParallelGroup.addComponent(moveMachineDownButtonList.get(i), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
+            
+        }
+        tmpParallelGroup.addGap(0);
+        tmpHorizontalGroup.addGroup(tmpParallelGroup);
+
+        tmpHorizontalGroup.addGroup(tmpParallelGroup);
+        tmpParallelGroup = myLayout.createParallelGroup();
+        for (int i = 0; i < deleteMachineButtonList.size(); ++i) {
+            tmpParallelGroup.addComponent(deleteMachineButtonList.get(i), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+                    GroupLayout.PREFERRED_SIZE);
+        }
+        tmpParallelGroup.addGap(0);
+        tmpHorizontalGroup.addGroup(tmpParallelGroup);
+
         tmpHorizontalGroup.addGroup(tmpParallelGroup);
         tmpParallelGroup = myLayout.createParallelGroup();
         if (jobName != null) {
@@ -161,6 +230,7 @@ public class JobDataPanel extends javax.swing.JPanel {
         for (int i = 0; i < jSpinnerList.size(); ++i) {
             tmpParallelGroup.addComponent(jSpinnerList.get(i));
         }
+        tmpParallelGroup.addGap(0);
         tmpHorizontalGroup.addGroup(tmpParallelGroup);
 
         myLayout.setHorizontalGroup(tmpHorizontalGroup);
@@ -176,7 +246,7 @@ public class JobDataPanel extends javax.swing.JPanel {
         setPreferredSize(new Dimension(185, requiredMachinesList.size() * 22));
 
         if (requiredMachinesList.size() != requiredTimeUnitsList.size() || requiredTimeUnitsList.size() != acquiredTimeUnitsList.size()) {
-           //System.out.println("ROZMIERY LIST NIEZGODNE");
+            //System.out.println("ROZMIERY LIST NIEZGODNE");
             return;
         }
 
@@ -243,6 +313,27 @@ public class JobDataPanel extends javax.swing.JPanel {
             if (jSpinnerList.indexOf(source) != -1) {
                 myView.jobDataSpinnerChanged(jSpinnerList.indexOf(source), (Integer) source.getValue());
             }
+        }
+    }
+
+    private void moveMachineUpButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        JButton source = (JButton) evt.getSource();
+        if (moveMachineUpButtonList.indexOf(source) != -1) {
+            myView.moveMachineAtIndexInJobAtIndexUpInRequiredOrder(moveMachineUpButtonList.indexOf(source));
+        }
+    }
+
+    private void moveMachineDownButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        JButton source = (JButton) evt.getSource();
+        if (moveMachineDownButtonList.indexOf(source) != -1) {
+            myView.moveMachineAtIndexInJobAtIndexDownInRequiredOrder(moveMachineDownButtonList.indexOf(source));
+        }
+    }
+
+    private void deleteMachineButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        JButton source = (JButton) evt.getSource();
+        if (deleteMachineButtonList.indexOf(source) != -1) {
+            myView.removeMachineAtIndexInJobAtIndex(deleteMachineButtonList.indexOf(source));
         }
     }
 
