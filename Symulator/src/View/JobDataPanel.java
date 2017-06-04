@@ -7,6 +7,8 @@ package View;
 
 import FlowShopModel.Machine;
 import java.awt.Dimension;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import javax.swing.GroupLayout;
@@ -21,6 +23,7 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
+import java.awt.Insets;
 
 /**
  *
@@ -78,7 +81,7 @@ public class JobDataPanel extends javax.swing.JPanel {
         nameChangeTextField = new JTextField();
         tmpVerticalParallelGroupList.clear();
         //setPreferredSize(new Dimension(190, 308));
-        setPreferredSize(new Dimension(185, (requiredMachinesList.size() * 36) + 36 + 36));
+        setPreferredSize(new Dimension(185, (requiredMachinesList.size() * 43) + 36 + 36));
         nameChangeTextField.setPreferredSize(new Dimension(20, 20));
 
         nameChangeTextField.setMaximumSize(new Dimension(128, 28));
@@ -161,6 +164,7 @@ public class JobDataPanel extends javax.swing.JPanel {
         }
 
         // Setting layout
+        /*
         myLayout = new GroupLayout(this);
         myLayout.setAutoCreateGaps(true);
         myLayout.setAutoCreateContainerGaps(true);
@@ -234,6 +238,104 @@ public class JobDataPanel extends javax.swing.JPanel {
         tmpHorizontalGroup.addGroup(tmpParallelGroup);
 
         myLayout.setHorizontalGroup(tmpHorizontalGroup);
+         */
+        // end of setting layout
+        this.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 1.0;
+        c.weighty = 0.0;
+        //c.anchor = GridBagConstraints.NORTHWEST;
+        c.insets = new Insets(0, 0, 0, 0);
+
+        if (jobName != null) {
+            c.gridx = 0;
+            c.gridwidth = 4;
+            c.gridheight = 2;
+            c.gridy = 0;
+            c.insets = new Insets(5, 2, 5, 0);
+            add(nameChangeJLabel, c);
+            c.insets = new Insets(0, 0, 0, 0);
+
+            c.gridx = 4;
+            c.gridwidth = 5;
+            c.gridheight = 2;
+            c.gridy = 0;
+            c.ipady = 10;
+            c.insets = new Insets(5, 0, 0, 2);
+            add(nameChangeTextField, c);
+            c.insets = new Insets(0, 0, 0, 0);
+
+            c.gridx = 0;
+            c.gridwidth = 4;
+            c.gridheight = 2;
+            c.gridy = 2;
+            c.ipady = 0;
+            c.insets = new Insets(5, 2, 5, 2);
+            add(jobColorJLabel, c);
+            c.insets = new Insets(0, 0, 0, 0);
+
+            c.gridx = 4;
+            c.gridwidth = 5;
+            c.gridheight = 2;
+            c.gridy = 2;
+            add(jobColorJButton, c);
+        }
+
+        for (int i = 0; i < jLabelList.size(); ++i) {
+            c.gridx = 0;
+            c.gridwidth = 3;
+            c.gridheight = 2;
+            c.gridy = (2 * i) + 4;
+            c.insets = new Insets(7, 2, 0, 0);
+            add(jLabelList.get(i), c);
+            c.insets = new Insets(0, 0, 0, 0);
+
+            c.gridx = 3;
+            c.gridwidth = 2;
+            c.gridheight = 1;
+            c.gridy = (2 * i) + 4;
+            c.insets = new Insets(7,0,0,0);
+            c.ipady = 6;
+            c.weightx=0.3;
+            add(moveMachineUpButtonList.get(i), c);
+            c.insets = new Insets(0,0,0,0);
+
+            c.gridx = 3;
+            c.gridwidth = 2;
+            c.gridheight = 1;
+            c.gridy = (2 * i) + 5;
+            add(moveMachineDownButtonList.get(i), c);
+            c.ipady = 0;
+
+            c.gridx = 5;
+            c.gridwidth = 1;
+            c.gridheight = 2;
+            c.gridy = (2 * i) + 4;
+            c.insets = new Insets(7,0,0,0);
+            add(deleteMachineButtonList.get(i), c);
+            c.insets = new Insets(0,0,0,0);
+            c.weightx=1.0;
+
+            c.gridx = 6;
+            c.gridwidth = 3;
+            c.gridheight = 2;
+            c.gridy = (2 * i) + 4;
+            c.insets = new Insets(7,0,0,2);
+            add(jSpinnerList.get(i), c);
+            c.insets = new Insets(0,0,0,0);
+
+        }
+
+        // Adding empty scalable Label to allow components to start from top of panel.
+        c.gridx = 0;
+        c.gridwidth = 9;
+        c.gridheight = 2;
+        c.gridy = (2 * jLabelList.size()) + 4;
+        c.weighty = 1.0;
+        add(new JLabel(), c);
+
         revalidate();
         repaint();
 

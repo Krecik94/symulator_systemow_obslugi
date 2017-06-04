@@ -147,7 +147,9 @@ public class MyFlowShopModel {
     }
 
     public void changeJobColor(int jobIndex, java.awt.Color newColor) {
-        allJobs.get(jobIndex).setColor(newColor);
+        if (jobIndex >= 0) {
+            allJobs.get(jobIndex).setColor(newColor);
+        }
     }
 
     public String getJobName(int jobIndex) {
