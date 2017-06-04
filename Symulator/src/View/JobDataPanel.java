@@ -9,6 +9,7 @@ import FlowShopModel.Machine;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
 import javax.swing.GroupLayout;
@@ -24,6 +25,8 @@ import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import java.awt.Insets;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -116,6 +119,14 @@ public class JobDataPanel extends javax.swing.JPanel {
             moveMachineDownButtonList.add(moveMachineDownButtonToAdd);
 
             JButton deleteMachineButtonToAdd = new JButton();
+
+            try {
+                Image img = ImageIO.read(getClass().getResource("/resources/delete2.png"));
+                deleteMachineButtonToAdd.setIcon(new ImageIcon(img));
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+
             deleteMachineButtonToAdd.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     deleteMachineButtonActionPerformed(evt);
@@ -296,11 +307,11 @@ public class JobDataPanel extends javax.swing.JPanel {
             c.gridwidth = 2;
             c.gridheight = 1;
             c.gridy = (2 * i) + 4;
-            c.insets = new Insets(7,0,0,0);
+            c.insets = new Insets(7, 0, 0, 0);
             c.ipady = 6;
-            c.weightx=0.3;
+            c.weightx = 0.3;
             add(moveMachineUpButtonList.get(i), c);
-            c.insets = new Insets(0,0,0,0);
+            c.insets = new Insets(0, 0, 0, 0);
 
             c.gridx = 3;
             c.gridwidth = 2;
@@ -313,18 +324,18 @@ public class JobDataPanel extends javax.swing.JPanel {
             c.gridwidth = 1;
             c.gridheight = 2;
             c.gridy = (2 * i) + 4;
-            c.insets = new Insets(7,0,0,0);
+            c.insets = new Insets(7, 0, 0, 0);
             add(deleteMachineButtonList.get(i), c);
-            c.insets = new Insets(0,0,0,0);
-            c.weightx=1.0;
+            c.insets = new Insets(0, 0, 0, 0);
+            c.weightx = 1.0;
 
             c.gridx = 6;
             c.gridwidth = 3;
             c.gridheight = 2;
             c.gridy = (2 * i) + 4;
-            c.insets = new Insets(7,0,0,2);
+            c.insets = new Insets(7, 0, 0, 2);
             add(jSpinnerList.get(i), c);
-            c.insets = new Insets(0,0,0,0);
+            c.insets = new Insets(0, 0, 0, 0);
 
         }
 
