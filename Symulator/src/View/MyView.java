@@ -44,12 +44,6 @@ public class MyView extends javax.swing.JFrame {
         jComboBox1.setModel(myController.getQueuePriorityListModel());
         jComboBox1.setPrototypeDisplayValue("XXXXXXXX");
 
-        try {
-            Image img = ImageIO.read(getClass().getResource("/resources/test.png"));
-            jButton1.setIcon(new ImageIcon(img));
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
 
     }
 
