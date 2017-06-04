@@ -101,6 +101,29 @@ public class JobDataPanel extends javax.swing.JPanel {
 
         for (int i = 0; i < requiredMachinesList.size(); ++i) {
             JButton moveMachineUpButtonToAdd = new JButton();
+            
+            
+            Dimension tmpMinSize = moveMachineUpButtonToAdd.getMinimumSize();
+            Dimension tmpMaxSize = moveMachineUpButtonToAdd.getMaximumSize();
+            Dimension tmpPrefSize = moveMachineUpButtonToAdd.getPreferredSize();
+            
+            
+            
+            
+            try {
+                Image img = ImageIO.read(getClass().getResource("/resources/up.png"));
+                moveMachineUpButtonToAdd.setIcon(new ImageIcon(img));
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+            moveMachineUpButtonToAdd.setMinimumSize(tmpMinSize);
+            moveMachineUpButtonToAdd.setMaximumSize(tmpMaxSize);
+            moveMachineUpButtonToAdd.setPreferredSize(tmpPrefSize);
+            
+            
+            
+            
+            
             moveMachineUpButtonToAdd.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     moveMachineUpButtonActionPerformed(evt);
@@ -110,6 +133,30 @@ public class JobDataPanel extends javax.swing.JPanel {
             moveMachineUpButtonList.add(moveMachineUpButtonToAdd);
 
             JButton moveMachineDownButtonToAdd = new JButton();
+            
+            
+            
+            
+            tmpMinSize = moveMachineDownButtonToAdd.getMinimumSize();
+            tmpMaxSize = moveMachineDownButtonToAdd.getMaximumSize();
+            tmpPrefSize = moveMachineDownButtonToAdd.getPreferredSize();
+            
+            
+            try {
+                Image img = ImageIO.read(getClass().getResource("/resources/down.png"));
+                moveMachineDownButtonToAdd.setIcon(new ImageIcon(img));
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+            moveMachineDownButtonToAdd.setMinimumSize(tmpMinSize);
+            moveMachineDownButtonToAdd.setMaximumSize(tmpMaxSize);
+            moveMachineDownButtonToAdd.setPreferredSize(tmpPrefSize);
+            
+            
+            
+            
+            
+            
             moveMachineDownButtonToAdd.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     moveMachineDownButtonActionPerformed(evt);
@@ -120,13 +167,24 @@ public class JobDataPanel extends javax.swing.JPanel {
 
             JButton deleteMachineButtonToAdd = new JButton();
 
+            tmpMinSize = deleteMachineButtonToAdd.getMinimumSize();
+            tmpMaxSize = deleteMachineButtonToAdd.getMaximumSize();
+            tmpPrefSize = deleteMachineButtonToAdd.getPreferredSize();
+            
             try {
                 Image img = ImageIO.read(getClass().getResource("/resources/delete2.png"));
                 deleteMachineButtonToAdd.setIcon(new ImageIcon(img));
             } catch (Exception ex) {
                 System.out.println(ex);
             }
-
+            
+            deleteMachineButtonToAdd.setMinimumSize(tmpMinSize);
+            deleteMachineButtonToAdd.setMaximumSize(tmpMaxSize);
+            deleteMachineButtonToAdd.setPreferredSize(tmpPrefSize);
+            
+            
+            
+            
             deleteMachineButtonToAdd.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     deleteMachineButtonActionPerformed(evt);
