@@ -114,6 +114,12 @@ public class Machine {
     }
 
     @Override
+    public String toString(){
+        return name;
+    }
+    
+    
+    @Override
     public boolean equals(Object other) {
         if (other == null) {
             return false;

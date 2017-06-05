@@ -248,6 +248,17 @@ public class MyController {
         return returnQueuePriorityListModel;
     }
 
+    
+    public void addMachineToJobAtIndex(int index, Machine machineToAdd){
+        System.err.println(machineToAdd.getName());
+        currentModel.addMachineToJobAtIndex(index, machineToAdd);
+        
+    }
+    
+    public DefaultComboBoxModel getMissingMachineListModelAtIndex(int index) {
+        return currentModel.getMissingMachineListModelAtIndex(index);
+    }
+    
     public DefaultComboBoxModel getQueuePriorityListModel() {
         DefaultComboBoxModel returnQueuePriorityListModel = new DefaultComboBoxModel();
         returnQueuePriorityListModel.addElement(new FIFOPriority());

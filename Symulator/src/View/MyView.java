@@ -44,7 +44,6 @@ public class MyView extends javax.swing.JFrame {
         jComboBox1.setModel(myController.getQueuePriorityListModel());
         jComboBox1.setPrototypeDisplayValue("XXXXXXXX");
 
-
     }
 
     /**
@@ -603,6 +602,20 @@ public class MyView extends javax.swing.JFrame {
                 break;
             }
         }
+    }
+
+    public DefaultComboBoxModel getMissingMachineListModelOfCurrentJob() {
+        if (jList1.getSelectedIndex() != -1) {
+            return myController.getMissingMachineListModelAtIndex(jList1.getSelectedIndex());
+        }
+        return new DefaultComboBoxModel();
+    }
+
+    public void addMachineToJobAtIndex(Machine machineToAdd) {
+        if (jList1.getSelectedIndex() != -1) {
+            myController.addMachineToJobAtIndex(jList1.getSelectedIndex(), machineToAdd);
+        }
+        myController.updateJobDataPanel();
     }
 
     public void moveMachineAtIndexInJobAtIndexUpInRequiredOrder(int machineIndex) {

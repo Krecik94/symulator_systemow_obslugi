@@ -27,6 +27,7 @@ import javax.swing.colorchooser.AbstractColorChooserPanel;
 import java.awt.Insets;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 
 /**
  *
@@ -55,6 +56,7 @@ public class JobDataPanel extends javax.swing.JPanel {
     private LinkedList<JButton> moveMachineUpButtonList = new LinkedList<JButton>();
     private LinkedList<JButton> moveMachineDownButtonList = new LinkedList<JButton>();
     private LinkedList<JButton> deleteMachineButtonList = new LinkedList<JButton>();
+    private JComboBox missingMachinesComboBox = new JComboBox();
 
     public JobDataPanel(MyView ownerView) {
         myView = ownerView;
@@ -81,10 +83,16 @@ public class JobDataPanel extends javax.swing.JPanel {
         nameChangeJLabel = new JLabel("Nazwa:");
         JLabel jobColorJLabel = new JLabel("Kolor:");
         JButton jobColorJButton = new JButton();
+        missingMachinesComboBox = new JComboBox();
+        JButton addMissingMachineButton = new JButton();
         nameChangeTextField = new JTextField();
         tmpVerticalParallelGroupList.clear();
         //setPreferredSize(new Dimension(190, 308));
-        setPreferredSize(new Dimension(185, (requiredMachinesList.size() * 43) + 36 + 36));
+        if (myView.getMissingMachineListModelOfCurrentJob().getSize() == 0) {
+            setPreferredSize(new Dimension(185, (requiredMachinesList.size() * 43) + 36 + 36));
+        } else {
+            setPreferredSize(new Dimension(185, (requiredMachinesList.size() * 43) + 36 + 36 + 36));
+        }
         nameChangeTextField.setPreferredSize(new Dimension(20, 20));
 
         nameChangeTextField.setMaximumSize(new Dimension(128, 28));
@@ -95,21 +103,29 @@ public class JobDataPanel extends javax.swing.JPanel {
         jobColorJButton.setForeground(currentJobColor);
         jobColorJButton.setOpaque(false);
 
+        missingMachinesComboBox.setModel(myView.getMissingMachineListModelOfCurrentJob());
+        missingMachinesComboBox.setPrototypeDisplayValue("XXXXXXXX");
+        missingMachinesComboBox.setPreferredSize(new Dimension(128, 28));
+        missingMachinesComboBox.setMinimumSize(new Dimension(50, 28));
+
         if (jobName != null) {
             nameChangeTextField.setText(jobName);
         }
 
+        addMissingMachineButton.setText("Dodaj");
+        addMissingMachineButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addMissingMachineActionPerformed(evt);
+            }
+        });
+
         for (int i = 0; i < requiredMachinesList.size(); ++i) {
             JButton moveMachineUpButtonToAdd = new JButton();
-            
-            
+
             Dimension tmpMinSize = moveMachineUpButtonToAdd.getMinimumSize();
             Dimension tmpMaxSize = moveMachineUpButtonToAdd.getMaximumSize();
             Dimension tmpPrefSize = moveMachineUpButtonToAdd.getPreferredSize();
-            
-            
-            
-            
+
             try {
                 Image img = ImageIO.read(getClass().getResource("/resources/up.png"));
                 moveMachineUpButtonToAdd.setIcon(new ImageIcon(img));
@@ -119,11 +135,7 @@ public class JobDataPanel extends javax.swing.JPanel {
             moveMachineUpButtonToAdd.setMinimumSize(tmpMinSize);
             moveMachineUpButtonToAdd.setMaximumSize(tmpMaxSize);
             moveMachineUpButtonToAdd.setPreferredSize(tmpPrefSize);
-            
-            
-            
-            
-            
+
             moveMachineUpButtonToAdd.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     moveMachineUpButtonActionPerformed(evt);
@@ -133,15 +145,11 @@ public class JobDataPanel extends javax.swing.JPanel {
             moveMachineUpButtonList.add(moveMachineUpButtonToAdd);
 
             JButton moveMachineDownButtonToAdd = new JButton();
-            
-            
-            
-            
+
             tmpMinSize = moveMachineDownButtonToAdd.getMinimumSize();
             tmpMaxSize = moveMachineDownButtonToAdd.getMaximumSize();
             tmpPrefSize = moveMachineDownButtonToAdd.getPreferredSize();
-            
-            
+
             try {
                 Image img = ImageIO.read(getClass().getResource("/resources/down.png"));
                 moveMachineDownButtonToAdd.setIcon(new ImageIcon(img));
@@ -151,12 +159,7 @@ public class JobDataPanel extends javax.swing.JPanel {
             moveMachineDownButtonToAdd.setMinimumSize(tmpMinSize);
             moveMachineDownButtonToAdd.setMaximumSize(tmpMaxSize);
             moveMachineDownButtonToAdd.setPreferredSize(tmpPrefSize);
-            
-            
-            
-            
-            
-            
+
             moveMachineDownButtonToAdd.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     moveMachineDownButtonActionPerformed(evt);
@@ -170,21 +173,18 @@ public class JobDataPanel extends javax.swing.JPanel {
             tmpMinSize = deleteMachineButtonToAdd.getMinimumSize();
             tmpMaxSize = deleteMachineButtonToAdd.getMaximumSize();
             tmpPrefSize = deleteMachineButtonToAdd.getPreferredSize();
-            
+
             try {
                 Image img = ImageIO.read(getClass().getResource("/resources/delete2.png"));
                 deleteMachineButtonToAdd.setIcon(new ImageIcon(img));
             } catch (Exception ex) {
                 System.out.println(ex);
             }
-            
+
             deleteMachineButtonToAdd.setMinimumSize(tmpMinSize);
             deleteMachineButtonToAdd.setMaximumSize(tmpMaxSize);
             deleteMachineButtonToAdd.setPreferredSize(tmpPrefSize);
-            
-            
-            
-            
+
             deleteMachineButtonToAdd.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
                     deleteMachineButtonActionPerformed(evt);
@@ -397,14 +397,35 @@ public class JobDataPanel extends javax.swing.JPanel {
 
         }
 
-        // Adding empty scalable Label to allow components to start from top of panel.
-        c.gridx = 0;
-        c.gridwidth = 9;
-        c.gridheight = 2;
-        c.gridy = (2 * jLabelList.size()) + 4;
-        c.weighty = 1.0;
-        add(new JLabel(), c);
+        if (myView.getMissingMachineListModelOfCurrentJob().getSize() > 0 && jobName != null) {
+            //Adding missing machines adding
+            c.gridx = 0;
+            c.gridwidth = 6;
+            c.gridheight = 2;
+            c.gridy = (2 * jLabelList.size()) + 4;
+            add(missingMachinesComboBox, c);
 
+            c.gridx = 6;
+            c.gridwidth = 3;
+            c.gridheight = 2;
+            c.gridy = (2 * jLabelList.size()) + 4;
+            add(addMissingMachineButton, c);
+
+            // Adding empty scalable Label to allow components to start from top of panel.
+            c.gridx = 0;
+            c.gridwidth = 9;
+            c.gridheight = 2;
+            c.gridy = (2 * jLabelList.size()) + 6;
+            c.weighty = 1.0;
+            add(new JLabel(), c);
+        } else {
+            c.gridx = 0;
+            c.gridwidth = 9;
+            c.gridheight = 2;
+            c.gridy = (2 * jLabelList.size()) + 4;
+            c.weighty = 1.0;
+            add(new JLabel(), c);
+        }
         revalidate();
         repaint();
 
@@ -484,6 +505,13 @@ public class JobDataPanel extends javax.swing.JPanel {
             if (jSpinnerList.indexOf(source) != -1) {
                 myView.jobDataSpinnerChanged(jSpinnerList.indexOf(source), (Integer) source.getValue());
             }
+        }
+    }
+
+    private void addMissingMachineActionPerformed(java.awt.event.ActionEvent evt) {
+        System.err.println(missingMachinesComboBox.getSelectedIndex());
+        if (missingMachinesComboBox.getSelectedIndex() >= 0) {
+            myView.addMachineToJobAtIndex((Machine) missingMachinesComboBox.getSelectedItem());
         }
     }
 

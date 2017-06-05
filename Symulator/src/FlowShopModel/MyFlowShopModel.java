@@ -6,6 +6,7 @@
 package FlowShopModel;
 
 import java.util.LinkedList;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 
 /**
@@ -58,6 +59,37 @@ public class MyFlowShopModel {
             }
         }
 
+    }
+
+    public void addMachineToJobAtIndex(int index, Machine machineToAdd) {
+        allJobs.get(index).addRequiredMachine(machineToAdd);
+        allJobs.get(index).addRequiredTimeUnits(1);
+    }
+
+    public DefaultComboBoxModel getMissingMachineListModelAtIndex(int index) {
+        DefaultComboBoxModel returnModel = new DefaultComboBoxModel();
+        LinkedList<Machine> existingMachineList = allJobs.get(index).getRequiredMachinesList();
+        boolean machineFound = false;
+
+        System.err.println(allMachines.size());
+        System.err.println(existingMachineList.size());
+        
+        
+        for (int i = 0; i < allMachines.size(); ++i) {
+            machineFound = false;
+            for (int j = 0; j < existingMachineList.size(); ++j) {
+                if (existingMachineList.get(j).getName().equals(allMachines.get(i).getName())) {
+                    machineFound = true;
+                    break;
+                }
+            }
+            if(!machineFound)
+            {
+                returnModel.addElement(allMachines.get(i));
+            }
+        }
+
+        return returnModel;
     }
 
     public void addJob() {
