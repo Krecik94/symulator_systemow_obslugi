@@ -89,9 +89,9 @@ public class JobDataPanel extends javax.swing.JPanel {
         tmpVerticalParallelGroupList.clear();
         //setPreferredSize(new Dimension(190, 308));
         if (myView.getMissingMachineListModelOfCurrentJob().getSize() == 0) {
-            setPreferredSize(new Dimension(185, (requiredMachinesList.size() * 43) + 36 + 36));
+            setPreferredSize(new Dimension(185, (requiredMachinesList.size() * 43) + 36 + 36 + 30));
         } else {
-            setPreferredSize(new Dimension(185, (requiredMachinesList.size() * 43) + 36 + 36 + 36));
+            setPreferredSize(new Dimension(185, (requiredMachinesList.size() * 43) + 36 + 36 + 36 + 30));
         }
         nameChangeTextField.setPreferredSize(new Dimension(20, 20));
 
@@ -400,16 +400,20 @@ public class JobDataPanel extends javax.swing.JPanel {
         if (myView.getMissingMachineListModelOfCurrentJob().getSize() > 0 && jobName != null) {
             //Adding missing machines adding
             c.gridx = 0;
-            c.gridwidth = 6;
+            c.gridwidth = 5;
             c.gridheight = 2;
             c.gridy = (2 * jLabelList.size()) + 4;
+            c.insets = new Insets(7, 0, 0, 0);
             add(missingMachinesComboBox, c);
+            c.insets = new Insets(0, 0, 0, 0);
 
-            c.gridx = 6;
-            c.gridwidth = 3;
+            c.gridx = 5;
+            c.gridwidth = 4;
             c.gridheight = 2;
             c.gridy = (2 * jLabelList.size()) + 4;
+            c.insets = new Insets(7, 0, 0, 0);
             add(addMissingMachineButton, c);
+            c.insets = new Insets(0, 0, 0, 0);
 
             // Adding empty scalable Label to allow components to start from top of panel.
             c.gridx = 0;
