@@ -113,6 +113,7 @@ public class JobDataPanel extends javax.swing.JPanel {
         }
 
         addMissingMachineButton.setText("Dodaj");
+        addMissingMachineButton.setToolTipText("Dodaj wybraną maszynę do listy wymaganych maszyn dla tego zadania");
         addMissingMachineButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addMissingMachineActionPerformed(evt);
@@ -121,7 +122,8 @@ public class JobDataPanel extends javax.swing.JPanel {
 
         for (int i = 0; i < requiredMachinesList.size(); ++i) {
             JButton moveMachineUpButtonToAdd = new JButton();
-
+            moveMachineUpButtonToAdd.setToolTipText("Przesuń maszynę w górę kolejności");
+            
             Dimension tmpMinSize = moveMachineUpButtonToAdd.getMinimumSize();
             Dimension tmpMaxSize = moveMachineUpButtonToAdd.getMaximumSize();
             Dimension tmpPrefSize = moveMachineUpButtonToAdd.getPreferredSize();
@@ -145,6 +147,8 @@ public class JobDataPanel extends javax.swing.JPanel {
             moveMachineUpButtonList.add(moveMachineUpButtonToAdd);
 
             JButton moveMachineDownButtonToAdd = new JButton();
+            moveMachineDownButtonToAdd.setToolTipText("Przesuń maszynę w dół kolejności");
+            
 
             tmpMinSize = moveMachineDownButtonToAdd.getMinimumSize();
             tmpMaxSize = moveMachineDownButtonToAdd.getMaximumSize();
@@ -169,6 +173,7 @@ public class JobDataPanel extends javax.swing.JPanel {
             moveMachineDownButtonList.add(moveMachineDownButtonToAdd);
 
             JButton deleteMachineButtonToAdd = new JButton();
+            deleteMachineButtonToAdd.setToolTipText("Usuń maszynę z listy wymaganych maszyn dla tego zadania");
 
             tmpMinSize = deleteMachineButtonToAdd.getMinimumSize();
             tmpMaxSize = deleteMachineButtonToAdd.getMaximumSize();
@@ -201,6 +206,7 @@ public class JobDataPanel extends javax.swing.JPanel {
             }
         });
 
+        jobColorJButton.setToolTipText("Zmień kolor zadania");
         jobColorJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jobColorButtonActionPerformed(evt);

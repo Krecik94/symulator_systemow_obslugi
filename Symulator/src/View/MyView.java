@@ -91,6 +91,7 @@ public class MyView extends javax.swing.JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Lista maszyn", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP));
 
         jList2.setModel(MachineListModel);
+        jList2.setToolTipText("Lista maszyn");
         jList2.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jList2ValueChanged(evt);
@@ -101,12 +102,14 @@ public class MyView extends javax.swing.JFrame {
         jLabel1.setText("Priorytet początkowy:");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setToolTipText("Zmień priorytet początkowy zadań wchodzących do systemu");
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox1ItemStateChanged(evt);
             }
         });
 
+        machineCountSpinner.setToolTipText("Zmień liczbę maszyn");
         machineCountSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 machineCountSpinnerStateChanged(evt);
@@ -173,7 +176,7 @@ public class MyView extends javax.swing.JFrame {
 
         jList1.setModel(listModel);
         jList1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jList1.setToolTipText("");
+        jList1.setToolTipText("Lista zadań");
         jList1.addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent evt) {
                 jList1ValueChanged(evt);
@@ -189,6 +192,7 @@ public class MyView extends javax.swing.JFrame {
         });
 
         removeJobButton.setText("Usuń ");
+        removeJobButton.setToolTipText("Usuń wybrane zadanie");
         removeJobButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeJobButtonActionPerformed(evt);
