@@ -43,7 +43,6 @@ public class MyController {
         queuePriorityListModel.addElement(new LPTPriority());
         queuePriorityListModel.addElement(new LWRPriority());
 
-        System.out.println("test2");
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -84,6 +83,11 @@ public class MyController {
     public LinkedList<Job> getJobList() {
         return currentModel.getJobList();
     }
+    
+    public LinkedList<Machine> getMachineList() {
+        return currentModel.getMachineList();
+    }
+    
 
     public void updateJobList() {
         currentView.updateListModel(currentModel.getJobListModel());
@@ -127,6 +131,14 @@ public class MyController {
     public void updateGanttChart() {
         currentView.setGanttChartSimulationData(currentModel.getSimulationData());
         currentView.setGanttChartStepCount(currentModel.getStepCount());
+    }
+
+    public int getAverageMachineOccupation() {
+        return currentModel.getAverageMachineOccupation();
+    }
+    
+    public float getAverageJobWaiting() {
+        return currentModel.getAverageJobWaiting();
     }
 
     public int getStepCount() {
@@ -260,7 +272,6 @@ public class MyController {
     }
 
     public void addMachineToJobAtIndex(int index, Machine machineToAdd) {
-        System.err.println(machineToAdd.getName());
         currentModel.addMachineToJobAtIndex(index, machineToAdd);
 
     }

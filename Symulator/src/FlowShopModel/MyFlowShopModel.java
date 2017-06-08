@@ -31,6 +31,8 @@ public class MyFlowShopModel {
     //0 for flow shop
     //1 for job shop
     private int currentMode = 0;
+    private int totalMachineOccupied = 0;
+    private int totalJobWaiting = 0;
 
     public MyFlowShopModel() {
         changeNumberOfMachines(0);
@@ -275,9 +277,12 @@ public class MyFlowShopModel {
 
         // getting simulation data in shape of list of colors (for gantt panel)
         for (int i = 0; i < allMachines.size(); ++i) {
+            allMachines.get(i).setStepCounter(stepCounter);
             if (allMachines.get(i).getActiveJob() == null) {
                 simulationData.add(new java.awt.Color(255, 255, 255));
             } else {
+                totalMachineOccupied += 1;
+                allMachines.get(i).setTotalOccupied(allMachines.get(i).getTotalOccupied() + 1);
                 if (!allMachines.get(i).getActiveJob().isOnMachineTooLong()) {
                     simulationData.add(allMachines.get(i).getActiveJob().getColor());
                 } else {
@@ -317,6 +322,12 @@ public class MyFlowShopModel {
                 }
             }
         }
+        for (int i = 0; i < prioritySortedJobList.size(); ++i) {
+            if (prioritySortedJobList.get(i).isCompletedOnCurrentMachine() && !prioritySortedJobList.get(i).isFinished() && prioritySortedJobList.get(i).getNextRequiredMachine().isFull()) {
+                prioritySortedJobList.get(i).setTotalWaiting(prioritySortedJobList.get(i).getTotalWaiting() + 1);
+                totalJobWaiting += 1;
+            }
+        }
         if (finishedJobs.size() == prioritySortedJobList.size()) {
 
             //System.out.println("UKONCZONE");
@@ -343,7 +354,7 @@ public class MyFlowShopModel {
             }
         }
     }
-    
+
     public void jumpToEndOfSimulation() {
         if (simulationIsRunning == false) {
             return;
@@ -355,7 +366,6 @@ public class MyFlowShopModel {
             }
         }
     }
-    
 
     public void assignJobToMachine(Job jobToAssign, Machine machineToAssignTo) {
         if (jobToAssign.getAssignedMachine() != null) {
@@ -367,6 +377,20 @@ public class MyFlowShopModel {
         jobToAssign.assignMachine(machineToAssignTo);
     }
 
+    public int getAverageMachineOccupation() {
+        if (stepCounter == 0 || allMachines.size() == 0) {
+            return 0;
+        }
+        return (int) ((totalMachineOccupied * 100) / (stepCounter * allMachines.size()));
+    }
+
+    public float getAverageJobWaiting() {
+        if (stepCounter == 0 || allJobs.size() == 0) {
+            return 0;
+        }
+        return (float) (((float) totalJobWaiting / (float) allJobs.size()));
+    }
+
     public void resetSimulationProgress() {
         for (int i = 0; i < allJobs.size(); ++i) {
             allJobs.get(i).resetSimulationProgress();
@@ -376,6 +400,17 @@ public class MyFlowShopModel {
         }
         finishedJobs.clear();
         simulationData.clear();
+        for (int i = 0; i < allMachines.size(); ++i) {
+            allMachines.get(i).setTotalOccupied(0);
+            allMachines.get(i).setStepCounter(0);
+        }
+
+        for (int i = 0; i < allJobs.size(); ++i) {
+            allJobs.get(i).setTotalWaiting(0);
+        }
+
+        totalMachineOccupied = 0;
+        totalJobWaiting = 0;
         prioritySortedJobList.clear();
         stepCounter = 0;
         simulationIsRunning = false;
@@ -406,6 +441,15 @@ public class MyFlowShopModel {
         finishedJobs.clear();
         simulationData.clear();
         prioritySortedJobList.clear();
+        for (int i = 0; i < allMachines.size(); ++i) {
+            allMachines.get(i).setTotalOccupied(0);
+            allMachines.get(i).setStepCounter(0);
+        }
+        for (int i = 0; i < allJobs.size(); ++i) {
+            allJobs.get(i).setTotalWaiting(0);
+        }
+        totalJobWaiting = 0;
+        totalMachineOccupied = 0;
         stepCounter = 0;
         simulationIsRunning = true;
         deadlockOccured = false;

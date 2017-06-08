@@ -19,6 +19,8 @@ public class Machine {
     private int ID = 0;
     private String name;
     private QueuePriorityParent queuePriority;
+    private int totalOccupied = 0;
+    private int stepCounter = 0;
 
     public Machine(int newID) {
         ID = newID;
@@ -75,6 +77,22 @@ public class Machine {
 
     public void setName(String newName) {
         name = newName;
+    }
+
+    public void setTotalOccupied(int newTotalOcupied) {
+        totalOccupied = newTotalOcupied;
+    }
+
+    public int getTotalOccupied() {
+        return totalOccupied;
+    }
+
+    public void setStepCounter(int newStepCounter) {
+        stepCounter = newStepCounter;
+    }
+
+    public int getStepCounter() {
+        return stepCounter;
     }
 
     public Job getActiveJob() {

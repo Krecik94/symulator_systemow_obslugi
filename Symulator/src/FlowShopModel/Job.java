@@ -20,6 +20,7 @@ public class Job {
     private LinkedList<Integer> acquiredTimeUnits = new LinkedList<Integer>();
     private java.awt.Color color = java.awt.Color.red;
     private String name;
+    private int totalWaiting = 0;
 
     public Job(int newID) {
         ID = newID;
@@ -46,6 +47,14 @@ public class Job {
 
     public java.awt.Color getColor() {
         return color;
+    }
+
+    public void setTotalWaiting(int newTotalWaiting) {
+        totalWaiting = newTotalWaiting;
+    }
+
+    public int getTotalWaiting() {
+        return totalWaiting;
     }
 
     public void setColor(java.awt.Color newColor) {
