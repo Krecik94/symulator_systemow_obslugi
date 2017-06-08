@@ -78,13 +78,12 @@ public class MyFlowShopModel {
         for (int i = 0; i < allMachines.size(); ++i) {
             machineFound = false;
             for (int j = 0; j < existingMachineList.size(); ++j) {
-                if (existingMachineList.get(j).getName().equals(allMachines.get(i).getName())) {
+                if (existingMachineList.get(j).getID() == allMachines.get(i).getID()) {
                     machineFound = true;
                     break;
                 }
             }
-            if(!machineFound)
-            {
+            if (!machineFound) {
                 returnModel.addElement(allMachines.get(i));
             }
         }
