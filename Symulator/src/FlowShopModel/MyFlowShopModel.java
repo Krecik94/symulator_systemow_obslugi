@@ -27,6 +27,7 @@ public class MyFlowShopModel {
     private boolean eventOccured = false;
     private QueuePriorityParent initialQueuePriority;
     private LinkedList<Job> prioritySortedJobList = new LinkedList<Job>();
+    private boolean deadlockOccured = false;
 
     public MyFlowShopModel() {
         changeNumberOfMachines(0);
@@ -73,8 +74,7 @@ public class MyFlowShopModel {
 
         System.err.println(allMachines.size());
         System.err.println(existingMachineList.size());
-        
-        
+
         for (int i = 0; i < allMachines.size(); ++i) {
             machineFound = false;
             for (int j = 0; j < existingMachineList.size(); ++j) {
@@ -294,6 +294,9 @@ public class MyFlowShopModel {
                     }
                 } else {
                     if (prioritySortedJobList.get(i).getNextRequiredMachine().isFull()) {
+                        if (prioritySortedJobList.get(i).getNextRequiredMachine().checkIfDeadlocked(new LinkedList<Machine>())) {
+                            deadlockOccured = true;
+                        }
                         continue;
                     } else {
                         assignJobToMachine(prioritySortedJobList.get(i), prioritySortedJobList.get(i).getNextRequiredMachine());
@@ -352,6 +355,7 @@ public class MyFlowShopModel {
         prioritySortedJobList.clear();
         stepCounter = 0;
         simulationIsRunning = false;
+        deadlockOccured = false;
     }
 
     public boolean isSimulationFinished() {
@@ -369,6 +373,10 @@ public class MyFlowShopModel {
         return simulationIsRunning;
     }
 
+    public boolean isDeadlocked() {
+        return deadlockOccured;
+    }
+
     public void initializeTheSimulation() {
 
         finishedJobs.clear();
@@ -376,6 +384,7 @@ public class MyFlowShopModel {
         prioritySortedJobList.clear();
         stepCounter = 0;
         simulationIsRunning = true;
+        deadlockOccured = false;
         LinkedList<Job> notSortedJobList = new LinkedList<Job>();
         for (int i = 0; i < allJobs.size(); ++i) {
             notSortedJobList.add(allJobs.get(i));

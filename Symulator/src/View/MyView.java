@@ -15,6 +15,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.ListModel;
 import javax.swing.SwingUtilities;
 
@@ -455,9 +456,22 @@ public class MyView extends javax.swing.JFrame {
         myController.updateMachineDataPanel();
         myController.updateGanttChart();
         myController.updateAnimationPanel();
+        System.err.println(myController.isDeadlocked());
+        if (myController.isDeadlocked()) {
+            performDeadlockCleanup();
+        }
+
 
     }//GEN-LAST:event_stepButtonActionPerformed
 
+    public void performDeadlockCleanup() {
+        stepButton.setEnabled(false);
+        jumpButton.setEnabled(false);
+        JOptionPane.showMessageDialog(this,
+                "Wystąpiło zakleszczenie.",
+                "Uwaga",
+                JOptionPane.WARNING_MESSAGE);
+    }
     private void resetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetButtonActionPerformed
         // TODO add your handling code here:
         myController.resetSimulationProgress();

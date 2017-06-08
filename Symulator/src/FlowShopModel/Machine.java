@@ -59,8 +59,7 @@ public class Machine {
 
     public void removeCurrentActiveJob() {
         currentJob = null;
-        for(int i=0;i<currentQueueList.size();++i)
-        {
+        for (int i = 0; i < currentQueueList.size(); ++i) {
             System.out.println(currentQueueList.get(i).getName());
         }
         if (currentQueueList.size() != 0) {
@@ -88,14 +87,14 @@ public class Machine {
         }
     }
 
-    public void setQueuePriority(QueuePriorityParent priorityToSet){
+    public void setQueuePriority(QueuePriorityParent priorityToSet) {
         queuePriority = priorityToSet;
     }
-    
-    public QueuePriorityParent getQueuePriority(){
+
+    public QueuePriorityParent getQueuePriority() {
         return queuePriority;
     }
-    
+
     public int getID() {
         int returnID = ID;
         return returnID;
@@ -113,12 +112,33 @@ public class Machine {
         return queueMaxSize;
     }
 
+    public boolean checkIfDeadlocked(LinkedList<Machine> machinesCheckedSoFar) {
+        for (int i = 0; i < machinesCheckedSoFar.size(); ++i) {
+            if (machinesCheckedSoFar.get(i).getID() == this.getID()) {
+                return true;
+            }
+        }
+        if (!this.isFull()) {
+            return false;
+        } else if (currentJob == null) {
+            return false;
+        } else if (!currentJob.isCompletedOnCurrentMachine()) {
+            return false;
+        } else if (!currentJob.hasNextRequiredMachine()) {
+            return false;
+        } else if (!currentJob.getNextRequiredMachine().isFull()) {
+            return false;
+        } else {
+            machinesCheckedSoFar.add(this);
+            return currentJob.getNextRequiredMachine().checkIfDeadlocked(machinesCheckedSoFar);
+        }
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         return name;
     }
-    
-    
+
     @Override
     public boolean equals(Object other) {
         if (other == null) {
