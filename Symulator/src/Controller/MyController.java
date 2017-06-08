@@ -129,6 +129,10 @@ public class MyController {
         currentView.setGanttChartStepCount(currentModel.getStepCount());
     }
 
+    public int getStepCount() {
+        return currentModel.getStepCount();
+    }
+
     public void executeStep() {
         currentModel.executeStep();
         if (currentModel.isSimulationFinished()) {
@@ -138,6 +142,13 @@ public class MyController {
 
     public void jumpToNextEvent() {
         currentModel.jumpToNextEvent();
+        if (currentModel.isSimulationFinished()) {
+            currentView.disableButtonsOnFinish();
+        }
+    }
+
+    public void jumpToEndOfSimulation() {
+        currentModel.jumpToEndOfSimulation();
         if (currentModel.isSimulationFinished()) {
             currentView.disableButtonsOnFinish();
         }
@@ -265,7 +276,7 @@ public class MyController {
     public void setMode(int newMode) {
         currentModel.setMode(newMode);
         changeNumberOfMachines(0);
-        int numberOfIterations=currentModel.getJobList().size();
+        int numberOfIterations = currentModel.getJobList().size();
         for (int i = 0; i < numberOfIterations; ++i) {
             removeJob(0);
         }

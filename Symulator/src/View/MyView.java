@@ -41,10 +41,38 @@ public class MyView extends javax.swing.JFrame {
         this.setTitle("Symulator systemów obsługi");
         stepButton.setEnabled(false);
         resetButton.setEnabled(false);
+        endButton.setEnabled(false);
         jumpButton.setEnabled(false);
         jComboBox1.setModel(myController.getQueuePriorityListModel());
         jComboBox1.setPrototypeDisplayValue("XXXXXXXX");
-
+        stepLabel.setText("Krok: " + myController.getStepCount());
+        stepButton.setToolTipText("Wykonaj jeden krok symulacji");
+        jumpButton.setToolTipText("Przeskocz do następnego zdarzenia");
+        endButton.setToolTipText("Przeskocz do końca symulacji");
+        startButton.setToolTipText("Rozpocznij symulację");
+        resetButton.setToolTipText("Zresetuj symulację");
+        
+        try {
+            Image img = ImageIO.read(getClass().getResource("/resources/jump.png"));
+            jumpButton.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        
+        try {
+            Image img = ImageIO.read(getClass().getResource("/resources/step.png"));
+            stepButton.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        
+        try {
+            Image img = ImageIO.read(getClass().getResource("/resources/end.png"));
+            endButton.setIcon(new ImageIcon(img));
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        
     }
 
     /**
@@ -81,6 +109,8 @@ public class MyView extends javax.swing.JFrame {
         stepButton = new javax.swing.JButton();
         jumpButton = new javax.swing.JButton();
         resetButton = new javax.swing.JButton();
+        endButton = new javax.swing.JButton();
+        stepLabel = new javax.swing.JLabel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         ganttChartPanel1 = new View.GanttChartPanel();
@@ -247,7 +277,7 @@ public class MyView extends javax.swing.JFrame {
         );
         jobDataPanel1Layout.setVerticalGroup(
             jobDataPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 322, Short.MAX_VALUE)
+            .addGap(0, 339, Short.MAX_VALUE)
         );
 
         jScrollPane5.setViewportView(jobDataPanel1);
@@ -269,7 +299,7 @@ public class MyView extends javax.swing.JFrame {
 
         jScrollPane6.setViewportView(machineDataPanel1);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Panel symulacji", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BELOW_TOP));
 
         startButton.setText("Start");
         startButton.addActionListener(new java.awt.event.ActionListener() {
@@ -278,14 +308,12 @@ public class MyView extends javax.swing.JFrame {
             }
         });
 
-        stepButton.setText("Krok");
         stepButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 stepButtonActionPerformed(evt);
             }
         });
 
-        jumpButton.setText("Skocz");
         jumpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jumpButtonActionPerformed(evt);
@@ -299,6 +327,15 @@ public class MyView extends javax.swing.JFrame {
             }
         });
 
+        endButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                endButtonActionPerformed(evt);
+            }
+        });
+
+        stepLabel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        stepLabel.setText("Krok:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -307,12 +344,17 @@ public class MyView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(startButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(resetButton))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(stepButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jumpButton)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(stepLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(resetButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(stepButton, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jumpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(endButton, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -322,11 +364,13 @@ public class MyView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(startButton)
                     .addComponent(resetButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(stepButton)
-                    .addComponent(jumpButton))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(stepButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jumpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(endButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(stepLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -339,11 +383,11 @@ public class MyView extends javax.swing.JFrame {
         ganttChartPanel1.setLayout(ganttChartPanel1Layout);
         ganttChartPanel1Layout.setHorizontalGroup(
             ganttChartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 539, Short.MAX_VALUE)
+            .addGap(0, 556, Short.MAX_VALUE)
         );
         ganttChartPanel1Layout.setVerticalGroup(
             ganttChartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 527, Short.MAX_VALUE)
+            .addGap(0, 530, Short.MAX_VALUE)
         );
 
         jScrollPane1.setViewportView(ganttChartPanel1);
@@ -366,7 +410,7 @@ public class MyView extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addComponent(jButton1)
-                .addContainerGap(436, Short.MAX_VALUE))
+                .addContainerGap(453, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Statystyki", jPanel3);
@@ -436,10 +480,10 @@ public class MyView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                        .addComponent(jScrollPane6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -490,12 +534,14 @@ public class MyView extends javax.swing.JFrame {
             startButton.setEnabled(false);
             stepButton.setEnabled(true);
             jumpButton.setEnabled(true);
+            endButton.setEnabled(true);
             resetButton.setEnabled(true);
             addJobButton.setEnabled(false);
             removeJobButton.setEnabled(false);
             machineCountLabel.setEnabled(false);
             machineCountSpinner.setEnabled(false);
             jComboBox1.setEnabled(false);
+            stepLabel.setText("Krok: " + myController.getStepCount());
         }
 
     }//GEN-LAST:event_startButtonActionPerformed
@@ -507,17 +553,18 @@ public class MyView extends javax.swing.JFrame {
         myController.updateMachineDataPanel();
         myController.updateGanttChart();
         myController.updateAnimationPanel();
-        System.err.println(myController.isDeadlocked());
         if (myController.isDeadlocked()) {
             performDeadlockCleanup();
         }
-
+        stepLabel.setText("Krok: " + myController.getStepCount());
+        
 
     }//GEN-LAST:event_stepButtonActionPerformed
-
+    
     public void performDeadlockCleanup() {
         stepButton.setEnabled(false);
         jumpButton.setEnabled(false);
+        endButton.setEnabled(false);
         JOptionPane.showMessageDialog(this,
                 "Wystąpiło zakleszczenie.",
                 "Uwaga",
@@ -533,12 +580,14 @@ public class MyView extends javax.swing.JFrame {
         startButton.setEnabled(true);
         stepButton.setEnabled(false);
         jumpButton.setEnabled(false);
+        endButton.setEnabled(false);
         resetButton.setEnabled(false);
         addJobButton.setEnabled(true);
         removeJobButton.setEnabled(true);
         machineCountLabel.setEnabled(true);
         machineCountSpinner.setEnabled(true);
         jComboBox1.setEnabled(true);
+        stepLabel.setText("Krok: " + myController.getStepCount());
     }//GEN-LAST:event_resetButtonActionPerformed
 
     private void jumpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jumpButtonActionPerformed
@@ -548,6 +597,10 @@ public class MyView extends javax.swing.JFrame {
         myController.updateMachineDataPanel();
         myController.updateGanttChart();
         myController.updateAnimationPanel();
+        if (myController.isDeadlocked()) {
+            performDeadlockCleanup();
+        }
+        stepLabel.setText("Krok: " + myController.getStepCount());
     }//GEN-LAST:event_jumpButtonActionPerformed
 
     private void jList2ValueChanged(javax.swing.event.ListSelectionEvent evt) {//GEN-FIRST:event_jList2ValueChanged
@@ -581,16 +634,30 @@ public class MyView extends javax.swing.JFrame {
     private void jRadioButtonMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem1ActionPerformed
         // TODO add your handling code here:
         switchMode(0);
-        
+
     }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
+
+    private void endButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_endButtonActionPerformed
+        // TODO add your handling code here:
+        myController.jumpToEndOfSimulation();
+        myController.updateJobDataPanel();
+        myController.updateMachineDataPanel();
+        myController.updateGanttChart();
+        myController.updateAnimationPanel();
+        if (myController.isDeadlocked()) {
+            performDeadlockCleanup();
+        }
+        stepLabel.setText("Krok: " + myController.getStepCount());
+
+    }//GEN-LAST:event_endButtonActionPerformed
     public void updateListModel(DefaultListModel newModel) {
         int oldIndex = jList1.getSelectedIndex();
         listModel = newModel;
         jList1.setModel(listModel);
         jList1.setSelectedIndex(oldIndex);
-
+        
     }
-
+    
     public void switchMode(int newMode) {
         myController.setMode(newMode);
         myController.updateJobDataPanel();
@@ -599,91 +666,92 @@ public class MyView extends javax.swing.JFrame {
         myController.updateMachineDataPanel();
         machineCountSpinner.setValue(0);
     }
-
+    
     public DefaultComboBoxModel getQueuePriorityListModel() {
         return myController.getQueuePriorityListModel();
     }
-
+    
     public void updateMachineListModel(DefaultListModel newModel) {
         int oldIndex = jList2.getSelectedIndex();
         MachineListModel = newModel;
         jList2.setModel(MachineListModel);
         jList2.setSelectedIndex(oldIndex);
-
+        
     }
-
+    
     public void jobDataSpinnerChanged(int index, int newValue) {
         System.out.println("Zmieniono: " + index + "  " + newValue);
         myController.changeTimeUnitsRequired(jList1.getSelectedIndex(), index, newValue);
-
+        
     }
-
+    
     public void machineDataSpinnerChanged(int newValue) {
         System.out.println("Zmieniono: " + "  " + newValue);
         myController.changeQueueSize(jList2.getSelectedIndex(), newValue);
         myController.updateAnimationPanel();
-
+        
     }
-
+    
     public void machineQueuePriorityChanged(QueuePriorityParent selectedPriority) {
         myController.changeMachineQueuePriority(selectedPriority, jList2.getSelectedIndex());
     }
-
+    
     public void jobNameChanged(String newName) {
         myController.changeJobName(jList1.getSelectedIndex(), newName);
     }
-
+    
     public void machineNameChanged(String newName) {
         myController.changeMachineName(jList2.getSelectedIndex(), newName);
         myController.updateJobDataPanel();
     }
-
+    
     public void jobColorChanged(java.awt.Color newColor) {
         myController.changeJobColor(jList1.getSelectedIndex(), newColor);
     }
-
+    
     public void updateAnimationPanel(LinkedList<Job> allJobsList, LinkedList<Machine> allMachinestList) {
         animationPanel.setAllJobs(allJobsList);
         animationPanel.setAllMachines(allMachinestList);
     }
-
+    
     public void updateJobDataPanelForEditting(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, String jobName, java.awt.Color jobColor) {
-        jobDataPanel1.updatePanelForEditting(requiredMachinesList, requiredTimeUnitsList, jobName, jobColor,myController.getMode());
+        jobDataPanel1.updatePanelForEditting(requiredMachinesList, requiredTimeUnitsList, jobName, jobColor, myController.getMode());
     }
-
+    
     public void updateJobDataPanelForProgressDisplay(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, LinkedList<Integer> acquiredTimeUnitsList) {
         jobDataPanel1.updatePanelForProgressDisplay(requiredMachinesList, requiredTimeUnitsList, acquiredTimeUnitsList);
     }
-
+    
     public void updateMachinePanelForEditting(LinkedList<Machine> allMachines) {
         machineDataPanel1.updateMachinePanelForEditting(allMachines, jList2.getSelectedIndex());
     }
-
+    
     public void updateMachinePanelForDisplay(LinkedList<Machine> allMachines) {
         machineDataPanel1.updateMachinePanelForDisplay(allMachines, jList2.getSelectedIndex());
     }
-
+    
     public void jobSpinnerChanged(int index, int value) {
 //TODO dodac obsluge zmiany stanu spinnerow od zadan
     }
-
+    
     public int getCurrentJobListIndex() {
         return jList1.getSelectedIndex();
     }
-
+    
     public void disableButtonsOnFinish() {
         stepButton.setEnabled(false);
         jumpButton.setEnabled(false);
+        endButton.setEnabled(false);
     }
-
+    
     public void setGanttChartStepCount(int newStepCount) {
         ganttChartPanel1.setStepCount(newStepCount);
     }
-
+    
     public void setGanttChartSimulationData(LinkedList<java.awt.Color> newSimulationData) {
         ganttChartPanel1.setSimulationData(newSimulationData);
     }
-
+    
     public void updateInitialPriorityComboBoxModel(DefaultComboBoxModel newModel) {
         String currentName = ((QueuePriorityParent) jComboBox1.getSelectedItem()).getName();
         jComboBox1.setModel(newModel);
@@ -694,31 +762,31 @@ public class MyView extends javax.swing.JFrame {
             }
         }
     }
-
+    
     public DefaultComboBoxModel getMissingMachineListModelOfCurrentJob() {
         if (jList1.getSelectedIndex() != -1) {
             return myController.getMissingMachineListModelAtIndex(jList1.getSelectedIndex());
         }
         return new DefaultComboBoxModel();
     }
-
+    
     public void addMachineToJobAtIndex(Machine machineToAdd) {
         if (jList1.getSelectedIndex() != -1) {
             myController.addMachineToJobAtIndex(jList1.getSelectedIndex(), machineToAdd);
         }
         myController.updateJobDataPanel();
     }
-
+    
     public void moveMachineAtIndexInJobAtIndexUpInRequiredOrder(int machineIndex) {
         myController.moveMachineAtIndexInJobAtIndexUpInRequiredOrder(machineIndex, jList1.getSelectedIndex());
         myController.updateJobDataPanel();
     }
-
+    
     public void moveMachineAtIndexInJobAtIndexDownInRequiredOrder(int machineIndex) {
         myController.moveMachineAtIndexInJobAtIndexDownInRequiredOrder(machineIndex, jList1.getSelectedIndex());
         myController.updateJobDataPanel();
     }
-
+    
     public void removeMachineAtIndexInJobAtIndex(int machineIndex) {
         myController.removeMachineAtIndexInJobAtIndex(machineIndex, jList1.getSelectedIndex());
         myController.updateJobDataPanel();
@@ -736,6 +804,7 @@ public class MyView extends javax.swing.JFrame {
     private javax.swing.JButton addJobButton;
     private View.AnimationPanel animationPanel;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JButton endButton;
     private View.GanttChartPanel ganttChartPanel1;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -768,5 +837,6 @@ public class MyView extends javax.swing.JFrame {
     private javax.swing.JButton resetButton;
     private javax.swing.JButton startButton;
     private javax.swing.JButton stepButton;
+    private javax.swing.JLabel stepLabel;
     // End of variables declaration//GEN-END:variables
 }

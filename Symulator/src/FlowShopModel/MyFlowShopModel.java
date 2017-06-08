@@ -338,11 +338,24 @@ public class MyFlowShopModel {
         }
         if (finishedJobs.size() != allJobs.size()) {
             eventOccured = false;
-            while (!eventOccured) {
+            while (!eventOccured && !isDeadlocked()) {
                 executeStep();
             }
         }
     }
+    
+    public void jumpToEndOfSimulation() {
+        if (simulationIsRunning == false) {
+            return;
+        }
+        if (finishedJobs.size() != allJobs.size()) {
+            eventOccured = false;
+            while (!isSimulationFinished() && !isDeadlocked()) {
+                executeStep();
+            }
+        }
+    }
+    
 
     public void assignJobToMachine(Job jobToAssign, Machine machineToAssignTo) {
         if (jobToAssign.getAssignedMachine() != null) {
