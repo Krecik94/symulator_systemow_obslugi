@@ -228,6 +228,7 @@ public class JobDataPanel extends javax.swing.JPanel {
             //TODO ADD SPINNERS
 
             spinnerToAdd = new JSpinner();
+            spinnerToAdd.setToolTipText("Wymagany czas zadania na danej maszynie");
             spinnerToAdd.setValue(requiredTimeUnitsList.get(i));
             spinnerToAdd.addChangeListener(new javax.swing.event.ChangeListener() {
                 public void stateChanged(javax.swing.event.ChangeEvent evt) {
