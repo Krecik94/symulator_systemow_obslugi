@@ -71,7 +71,7 @@ public class JobDataPanel extends javax.swing.JPanel {
         //System.out.println("test");
     }
 
-    public void updatePanelForEditting(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, String jobName, java.awt.Color newJobColor) {
+    public void updatePanelForEditting(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, String jobName, java.awt.Color newJobColor, int currentMode) {
         //System.out.println(nameChangeTextField.getSize());
         removeAll();
         jLabelList.clear();
@@ -123,7 +123,7 @@ public class JobDataPanel extends javax.swing.JPanel {
         for (int i = 0; i < requiredMachinesList.size(); ++i) {
             JButton moveMachineUpButtonToAdd = new JButton();
             moveMachineUpButtonToAdd.setToolTipText("Przesuń maszynę w górę kolejności");
-            
+
             Dimension tmpMinSize = moveMachineUpButtonToAdd.getMinimumSize();
             Dimension tmpMaxSize = moveMachineUpButtonToAdd.getMaximumSize();
             Dimension tmpPrefSize = moveMachineUpButtonToAdd.getPreferredSize();
@@ -148,7 +148,6 @@ public class JobDataPanel extends javax.swing.JPanel {
 
             JButton moveMachineDownButtonToAdd = new JButton();
             moveMachineDownButtonToAdd.setToolTipText("Przesuń maszynę w dół kolejności");
-            
 
             tmpMinSize = moveMachineDownButtonToAdd.getMinimumSize();
             tmpMaxSize = moveMachineDownButtonToAdd.getMaximumSize();
@@ -359,49 +358,70 @@ public class JobDataPanel extends javax.swing.JPanel {
             add(jobColorJButton, c);
         }
 
-        for (int i = 0; i < jLabelList.size(); ++i) {
-            c.gridx = 0;
-            c.gridwidth = 3;
-            c.gridheight = 2;
-            c.gridy = (2 * i) + 4;
-            c.insets = new Insets(7, 2, 0, 0);
-            add(jLabelList.get(i), c);
-            c.insets = new Insets(0, 0, 0, 0);
+        if (currentMode == 0) {
+            for (int i = 0; i < jLabelList.size(); ++i) {
+                c.gridx = 0;
+                c.gridwidth = 4;
+                c.gridheight = 2;
+                c.gridy = (2 * i) + 4;
+                c.insets = new Insets(7, 2, 0, 0);
+                add(jLabelList.get(i), c);
+                c.insets = new Insets(0, 0, 0, 0);
 
-            c.gridx = 3;
-            c.gridwidth = 2;
-            c.gridheight = 1;
-            c.gridy = (2 * i) + 4;
-            c.insets = new Insets(7, 0, 0, 0);
-            c.ipady = 6;
-            c.weightx = 0.3;
-            add(moveMachineUpButtonList.get(i), c);
-            c.insets = new Insets(0, 0, 0, 0);
+                c.gridx = 5;
+                c.gridwidth = 5;
+                c.gridheight = 2;
+                c.gridy = (2 * i) + 4;
+                c.insets = new Insets(7, 0, 0, 2);
+                add(jSpinnerList.get(i), c);
+                c.insets = new Insets(0, 0, 0, 0);
 
-            c.gridx = 3;
-            c.gridwidth = 2;
-            c.gridheight = 1;
-            c.gridy = (2 * i) + 5;
-            add(moveMachineDownButtonList.get(i), c);
-            c.ipady = 0;
+            }
+        } else {
+            for (int i = 0; i < jLabelList.size(); ++i) {
+                c.gridx = 0;
+                c.gridwidth = 3;
+                c.gridheight = 2;
+                c.gridy = (2 * i) + 4;
+                c.insets = new Insets(7, 2, 0, 0);
+                add(jLabelList.get(i), c);
+                c.insets = new Insets(0, 0, 0, 0);
 
-            c.gridx = 5;
-            c.gridwidth = 1;
-            c.gridheight = 2;
-            c.gridy = (2 * i) + 4;
-            c.insets = new Insets(7, 0, 0, 0);
-            add(deleteMachineButtonList.get(i), c);
-            c.insets = new Insets(0, 0, 0, 0);
-            c.weightx = 1.0;
+                c.gridx = 3;
+                c.gridwidth = 2;
+                c.gridheight = 1;
+                c.gridy = (2 * i) + 4;
+                c.insets = new Insets(7, 0, 0, 0);
+                c.ipady = 6;
+                c.weightx = 0.3;
+                add(moveMachineUpButtonList.get(i), c);
+                c.insets = new Insets(0, 0, 0, 0);
 
-            c.gridx = 6;
-            c.gridwidth = 3;
-            c.gridheight = 2;
-            c.gridy = (2 * i) + 4;
-            c.insets = new Insets(7, 0, 0, 2);
-            add(jSpinnerList.get(i), c);
-            c.insets = new Insets(0, 0, 0, 0);
+                c.gridx = 3;
+                c.gridwidth = 2;
+                c.gridheight = 1;
+                c.gridy = (2 * i) + 5;
+                add(moveMachineDownButtonList.get(i), c);
+                c.ipady = 0;
 
+                c.gridx = 5;
+                c.gridwidth = 1;
+                c.gridheight = 2;
+                c.gridy = (2 * i) + 4;
+                c.insets = new Insets(7, 0, 0, 0);
+                add(deleteMachineButtonList.get(i), c);
+                c.insets = new Insets(0, 0, 0, 0);
+                c.weightx = 1.0;
+
+                c.gridx = 6;
+                c.gridwidth = 3;
+                c.gridheight = 2;
+                c.gridy = (2 * i) + 4;
+                c.insets = new Insets(7, 0, 0, 2);
+                add(jSpinnerList.get(i), c);
+                c.insets = new Insets(0, 0, 0, 0);
+
+            }
         }
 
         if (myView.getMissingMachineListModelOfCurrentJob().getSize() > 0 && jobName != null) {

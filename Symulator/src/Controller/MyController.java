@@ -258,6 +258,19 @@ public class MyController {
         return currentModel.isDeadlocked();
     }
 
+    public int getMode() {
+        return currentModel.getMode();
+    }
+
+    public void setMode(int newMode) {
+        currentModel.setMode(newMode);
+        changeNumberOfMachines(0);
+        int numberOfIterations=currentModel.getJobList().size();
+        for (int i = 0; i < numberOfIterations; ++i) {
+            removeJob(0);
+        }
+    }
+
     public DefaultComboBoxModel getMissingMachineListModelAtIndex(int index) {
         return currentModel.getMissingMachineListModelAtIndex(index);
     }

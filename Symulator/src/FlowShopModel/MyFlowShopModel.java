@@ -28,6 +28,9 @@ public class MyFlowShopModel {
     private QueuePriorityParent initialQueuePriority;
     private LinkedList<Job> prioritySortedJobList = new LinkedList<Job>();
     private boolean deadlockOccured = false;
+    //0 for flow shop
+    //1 for job shop
+    private int currentMode = 0;
 
     public MyFlowShopModel() {
         changeNumberOfMachines(0);
@@ -36,6 +39,14 @@ public class MyFlowShopModel {
 
     public int getID() {
         return idCounter++;
+    }
+
+    public int getMode() {
+        return currentMode;
+    }
+
+    public void setMode(int newMode) {
+        currentMode = newMode;
     }
 
     public void changeNumberOfMachines(int newNumber) {

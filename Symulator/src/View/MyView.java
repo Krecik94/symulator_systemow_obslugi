@@ -56,6 +56,7 @@ public class MyView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jList2 = new javax.swing.JList<>();
@@ -87,6 +88,8 @@ public class MyView extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
+        jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
+        jRadioButtonMenuItem2 = new javax.swing.JRadioButtonMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
 
@@ -326,7 +329,7 @@ public class MyView extends javax.swing.JFrame {
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jTabbedPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -336,7 +339,7 @@ public class MyView extends javax.swing.JFrame {
         ganttChartPanel1.setLayout(ganttChartPanel1Layout);
         ganttChartPanel1Layout.setHorizontalGroup(
             ganttChartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 537, Short.MAX_VALUE)
+            .addGap(0, 539, Short.MAX_VALUE)
         );
         ganttChartPanel1Layout.setVerticalGroup(
             ganttChartPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,8 +350,6 @@ public class MyView extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Wykres", jScrollPane1);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
         jButton1.setText("jButton1");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -358,19 +359,39 @@ public class MyView extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addComponent(jButton1)
-                .addContainerGap(453, Short.MAX_VALUE))
+                .addContainerGap(457, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(56, 56, 56)
                 .addComponent(jButton1)
-                .addContainerGap(432, Short.MAX_VALUE))
+                .addContainerGap(436, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Statystyki", jPanel3);
 
         jMenu3.setText("Tryb");
+
+        buttonGroup1.add(jRadioButtonMenuItem1);
+        jRadioButtonMenuItem1.setSelected(true);
+        jRadioButtonMenuItem1.setText("Flow Shop");
+        jRadioButtonMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jRadioButtonMenuItem1);
+
+        buttonGroup1.add(jRadioButtonMenuItem2);
+        jRadioButtonMenuItem2.setText("Job Shop");
+        jRadioButtonMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButtonMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jRadioButtonMenuItem2);
+
         jMenuBar2.add(jMenu3);
 
         jMenu1.setText("Opcje");
@@ -551,12 +572,32 @@ public class MyView extends javax.swing.JFrame {
         myController.changeInitialQueuePriority(selectedPriority);
 
     }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void jRadioButtonMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        switchMode(1);
+    }//GEN-LAST:event_jRadioButtonMenuItem2ActionPerformed
+
+    private void jRadioButtonMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        switchMode(0);
+        
+    }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
     public void updateListModel(DefaultListModel newModel) {
         int oldIndex = jList1.getSelectedIndex();
         listModel = newModel;
         jList1.setModel(listModel);
         jList1.setSelectedIndex(oldIndex);
 
+    }
+
+    public void switchMode(int newMode) {
+        myController.setMode(newMode);
+        myController.updateJobDataPanel();
+        myController.updateAnimationPanel();
+        myController.updateMachineList();
+        myController.updateMachineDataPanel();
+        machineCountSpinner.setValue(0);
     }
 
     public DefaultComboBoxModel getQueuePriorityListModel() {
@@ -607,7 +648,7 @@ public class MyView extends javax.swing.JFrame {
     }
 
     public void updateJobDataPanelForEditting(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, String jobName, java.awt.Color jobColor) {
-        jobDataPanel1.updatePanelForEditting(requiredMachinesList, requiredTimeUnitsList, jobName, jobColor);
+        jobDataPanel1.updatePanelForEditting(requiredMachinesList, requiredTimeUnitsList, jobName, jobColor,myController.getMode());
     }
 
     public void updateJobDataPanelForProgressDisplay(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, LinkedList<Integer> acquiredTimeUnitsList) {
@@ -694,6 +735,7 @@ public class MyView extends javax.swing.JFrame {
     private javax.swing.JPanel JobPanel;
     private javax.swing.JButton addJobButton;
     private View.AnimationPanel animationPanel;
+    private javax.swing.ButtonGroup buttonGroup1;
     private View.GanttChartPanel ganttChartPanel1;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -707,6 +749,8 @@ public class MyView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem1;
+    private javax.swing.JRadioButtonMenuItem jRadioButtonMenuItem2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
