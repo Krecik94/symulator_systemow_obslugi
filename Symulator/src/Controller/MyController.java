@@ -51,13 +51,13 @@ public class MyController {
             }
         });
 
-        //CUSTOM QUEUE TEST
-        HashMap<Integer, Integer> testMap = new HashMap<Integer, Integer>();
-        testMap.put(1, 1);
-        testMap.put(2, 4);
-        testMap.put(3, 2);
-        testMap.put(4, 3);
-        customPriorityList.add(new CustomPriority(testMap));
+//        //CUSTOM QUEUE TEST
+//        HashMap<Integer, Integer> testMap = new HashMap<Integer, Integer>();
+//        testMap.put(1, 1);
+//        testMap.put(2, 4);
+//        testMap.put(3, 2);
+//        testMap.put(4, 3);
+//        customPriorityList.add(new CustomPriority(testMap));
         currentView.updateInitialPriorityComboBoxModel(getQueuePriorityListModelForInitialQueue());
     }
 

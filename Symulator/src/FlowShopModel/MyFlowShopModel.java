@@ -85,8 +85,7 @@ public class MyFlowShopModel {
         LinkedList<Machine> existingMachineList = allJobs.get(index).getRequiredMachinesList();
         boolean machineFound = false;
 
-        System.err.println(allMachines.size());
-        System.err.println(existingMachineList.size());
+
 
         for (int i = 0; i < allMachines.size(); ++i) {
             machineFound = false;
