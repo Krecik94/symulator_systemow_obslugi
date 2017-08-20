@@ -42,12 +42,12 @@ public class MachineDataPanel extends javax.swing.JPanel {
     private MyView myView;
     private JLabel nameChangeJLabel = new JLabel("Nazwa:");
     private JTextField nameChangeTextField = new JTextField();
-    private JLabel queueSizeChangeLabel = new JLabel("Rozmiar kolejki:");
+    private JLabel queueSizeChangeLabel = new JLabel("Rozmiar bufora:");
     private JSpinner queueSizeSpinner = new JSpinner();
     private JLabel machineNameLabel = new JLabel("Maszyna");
     private JLabel queueSizeLabel = new JLabel("1");
     private JComboBox queuePriorityComboBox = new JComboBox();
-    private JLabel queuePriorityLabel = new JLabel("Priorytet kolejki:");
+    private JLabel queuePriorityLabel = new JLabel("Priorytet bufora:");
 
     private java.awt.Color currentJobColor = java.awt.Color.red;
 
