@@ -462,10 +462,21 @@ public class JobDataPanel extends javax.swing.JPanel {
 
     }
 
-    public void updatePanelForProgressDisplay(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, LinkedList<Integer> acquiredTimeUnitsList) {
+    public void updatePanelForProgressDisplay(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, LinkedList<Integer> acquiredTimeUnitsList, java.awt.Color newJobColor) {
         removeAll();
         jLabelList.clear();
         jLabelListProgress.clear();
+        JButton jobColorJButton = new JButton();
+        jobColorJButton.setPreferredSize(new Dimension(128, 28));
+        jobColorJButton.setMinimumSize(new Dimension(50, 28));
+        jobColorJButton.setBackground(currentJobColor);
+        jobColorJButton.setForeground(currentJobColor);
+        jobColorJButton.setOpaque(false);
+        jobColorJButton.setToolTipText("Kolor zadania");
+        currentJobColor = newJobColor;
+        JLabel jobColorJLabel = new JLabel("Kolor:");
+        
+        
         setPreferredSize(new Dimension(185, requiredMachinesList.size() * 22));
 
         if (requiredMachinesList.size() != requiredTimeUnitsList.size() || requiredTimeUnitsList.size() != acquiredTimeUnitsList.size()) {
@@ -493,6 +504,7 @@ public class JobDataPanel extends javax.swing.JPanel {
         for (int i = 0; i < jLabelList.size(); ++i) {
             tmpVerticalParallelGroupList.add(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(jLabelList.get(i)).addComponent(jLabelListProgress.get(i)));
         }
+        tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER).addComponent(jobColorJLabel).addComponent(jobColorJButton));
         for (int i = 0; i < tmpVerticalParallelGroupList.size(); ++i) {
             tmpVerticalGroup.addGroup(tmpVerticalParallelGroupList.get(i));
         }
@@ -501,14 +513,16 @@ public class JobDataPanel extends javax.swing.JPanel {
 
         SequentialGroup tmpHorizontalGroup = myLayout.createSequentialGroup();
         tmpParallelGroup = myLayout.createParallelGroup();
-
+        
+        tmpParallelGroup.addComponent(jobColorJLabel);
         for (int i = 0; i < jLabelList.size(); ++i) {
             tmpParallelGroup.addComponent(jLabelList.get(i));
         }
         tmpHorizontalGroup.addGroup(tmpParallelGroup);
         tmpHorizontalGroup.addGap(50, 50, 50);
         tmpParallelGroup = myLayout.createParallelGroup();
-
+        
+        tmpParallelGroup.addComponent(jobColorJButton);
         for (int i = 0; i < jLabelListProgress.size(); ++i) {
             tmpParallelGroup.addComponent(jLabelListProgress.get(i));
         }

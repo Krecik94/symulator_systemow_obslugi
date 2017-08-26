@@ -194,9 +194,9 @@ public class MyController {
         } else {
 
             if (currentIndex == -1) {
-                currentView.updateJobDataPanelForProgressDisplay(new LinkedList<Machine>(), new LinkedList<Integer>(), new LinkedList<Integer>());
+                currentView.updateJobDataPanelForProgressDisplay(new LinkedList<Machine>(), new LinkedList<Integer>(), new LinkedList<Integer>(), java.awt.Color.red);
             } else {
-                currentView.updateJobDataPanelForProgressDisplay(currentModel.getRequiredMachinesList(currentIndex), currentModel.getRequiredTimeUnitsList(currentIndex), currentModel.getAcquiredTimeUnitsList(currentIndex));
+                currentView.updateJobDataPanelForProgressDisplay(currentModel.getRequiredMachinesList(currentIndex), currentModel.getRequiredTimeUnitsList(currentIndex), currentModel.getAcquiredTimeUnitsList(currentIndex), currentModel.getJobColor(currentIndex));
 
             }
         }

@@ -689,8 +689,8 @@ public class MyView extends javax.swing.JFrame {
         } else {
             bigger = myController.getJobList().size();
         }
-        
-        statisticsPanel.setPreferredSize(new Dimension(510,120+bigger*18));
+
+        statisticsPanel.setPreferredSize(new Dimension(510, 120 + bigger * 18));
 
     }
 
@@ -802,8 +802,8 @@ public class MyView extends javax.swing.JFrame {
         jobDataPanel1.updatePanelForEditting(requiredMachinesList, requiredTimeUnitsList, jobName, jobColor, myController.getMode());
     }
 
-    public void updateJobDataPanelForProgressDisplay(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, LinkedList<Integer> acquiredTimeUnitsList) {
-        jobDataPanel1.updatePanelForProgressDisplay(requiredMachinesList, requiredTimeUnitsList, acquiredTimeUnitsList);
+    public void updateJobDataPanelForProgressDisplay(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, LinkedList<Integer> acquiredTimeUnitsList, java.awt.Color jobColor) {
+        jobDataPanel1.updatePanelForProgressDisplay(requiredMachinesList, requiredTimeUnitsList, acquiredTimeUnitsList, jobColor);
     }
 
     public void updateMachinePanelForEditting(LinkedList<Machine> allMachines) {
