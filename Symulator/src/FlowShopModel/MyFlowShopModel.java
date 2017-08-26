@@ -85,8 +85,6 @@ public class MyFlowShopModel {
         LinkedList<Machine> existingMachineList = allJobs.get(index).getRequiredMachinesList();
         boolean machineFound = false;
 
-
-
         for (int i = 0; i < allMachines.size(); ++i) {
             machineFound = false;
             for (int j = 0; j < existingMachineList.size(); ++j) {
@@ -323,6 +321,9 @@ public class MyFlowShopModel {
         }
         for (int i = 0; i < prioritySortedJobList.size(); ++i) {
             if (prioritySortedJobList.get(i).isCompletedOnCurrentMachine() && !prioritySortedJobList.get(i).isFinished() && prioritySortedJobList.get(i).getNextRequiredMachine().isFull()) {
+                prioritySortedJobList.get(i).setTotalWaiting(prioritySortedJobList.get(i).getTotalWaiting() + 1);
+                totalJobWaiting += 1;
+            } else if (prioritySortedJobList.get(i).isInQueue()) {
                 prioritySortedJobList.get(i).setTotalWaiting(prioritySortedJobList.get(i).getTotalWaiting() + 1);
                 totalJobWaiting += 1;
             }

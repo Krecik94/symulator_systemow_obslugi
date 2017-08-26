@@ -207,6 +207,16 @@ public class Job {
         }
     }
 
+    public boolean isInQueue() {
+        if (getAssignedMachine() == null) {
+            return false;
+        } else if (getAssignedMachine().getActiveJob() == this) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public Machine getNextRequiredMachine() {
 
         if (currentMachine == null) {
