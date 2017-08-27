@@ -269,7 +269,7 @@ public class MyFlowShopModel {
 
         // adding times units to all jobs on machines
         for (int i = 0; i < allMachines.size(); ++i) {
-            allMachines.get(i).addTimeUnits();
+            allMachines.get(i).addTimeUnits(stepCounter);
         }
 
         // getting simulation data in shape of list of colors (for gantt panel)
@@ -299,7 +299,7 @@ public class MyFlowShopModel {
                     if (finishedJobs.indexOf(prioritySortedJobList.get(i)) == -1) {
                         finishedJobs.add(prioritySortedJobList.get(i));
                         if (prioritySortedJobList.get(i).getAssignedMachine() != null) {
-                            prioritySortedJobList.get(i).getAssignedMachine().removeCurrentActiveJob();
+                            prioritySortedJobList.get(i).getAssignedMachine().removeCurrentActiveJob(stepCounter);
                         }
                         prioritySortedJobList.get(i).removeCurrentlyAssignedMachine();
                         stepFinished = false;
@@ -370,11 +370,11 @@ public class MyFlowShopModel {
     public void assignJobToMachine(Job jobToAssign, Machine machineToAssignTo) {
         if (jobToAssign.getAssignedMachine() != null) {
             if (jobToAssign.getAssignedMachine().getActiveJob() == jobToAssign) {
-                jobToAssign.getAssignedMachine().removeCurrentActiveJob();
+                jobToAssign.getAssignedMachine().removeCurrentActiveJob(stepCounter);
             }
         }
         machineToAssignTo.addJob(jobToAssign);
-        jobToAssign.assignMachine(machineToAssignTo);
+        jobToAssign.assignMachine(machineToAssignTo, stepCounter);
     }
 
     public int getAverageMachineOccupation() {

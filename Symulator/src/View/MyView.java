@@ -122,6 +122,12 @@ public class MyView extends javax.swing.JFrame {
         statAverageMachineOccupation = new javax.swing.JLabel();
         statJobList = new javax.swing.JLabel();
         statMachineList = new javax.swing.JLabel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        Events_panel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jobEventList = new javax.swing.JLabel();
+        machineEventList = new javax.swing.JLabel();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jRadioButtonMenuItem1 = new javax.swing.JRadioButtonMenuItem();
@@ -460,6 +466,55 @@ public class MyView extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Statystyki", jScrollPane8);
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Zdarzenia zadań");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Zdarzenia maszyn");
+
+        jobEventList.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jobEventList.setText("<Lista zdarzeń zadań>");
+        jobEventList.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        machineEventList.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        machineEventList.setText("<Lista zdarzeń maszyn>");
+        machineEventList.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+
+        javax.swing.GroupLayout Events_panelLayout = new javax.swing.GroupLayout(Events_panel);
+        Events_panel.setLayout(Events_panelLayout);
+        Events_panelLayout.setHorizontalGroup(
+            Events_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Events_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Events_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jobEventList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(Events_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                    .addComponent(machineEventList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
+        Events_panelLayout.setVerticalGroup(
+            Events_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Events_panelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Events_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(Events_panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jobEventList, javax.swing.GroupLayout.DEFAULT_SIZE, 349, Short.MAX_VALUE)
+                    .addComponent(machineEventList, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(101, Short.MAX_VALUE))
+        );
+
+        jScrollPane9.setViewportView(Events_panel);
+
+        jTabbedPane1.addTab("Lista Zdarzeń", jScrollPane9);
+
         jMenu3.setText("Tryb");
 
         buttonGroup1.add(jRadioButtonMenuItem1);
@@ -528,7 +583,7 @@ public class MyView extends javax.swing.JFrame {
                         .addComponent(jScrollPane6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -667,7 +722,7 @@ public class MyView extends javax.swing.JFrame {
         for (int i = 0; i < myController.getJobList().size(); ++i) {
             jobText += "" + myController.getJobList().get(i).getName() + ": " + myController.getJobList().get(i).getTotalWaiting() + "<br>";
         }
-        jobText += "<html>";
+        jobText += "</html>";
         statJobList.setText(jobText);
 
         String machineText = "<html>";
@@ -680,7 +735,7 @@ public class MyView extends javax.swing.JFrame {
             }
             machineText += "" + myController.getMachineList().get(i).getName() + ": " + amountToDisplay + "%<br>";
         }
-        machineText += "<html>";
+        machineText += "</html>";
         statMachineList.setText(machineText);
 
         int bigger = myController.getMachineList().size();
@@ -692,6 +747,21 @@ public class MyView extends javax.swing.JFrame {
 
         statisticsPanel.setPreferredSize(new Dimension(510, 120 + bigger * 18));
 
+        //EVENT SECTION
+        String jobEventText = "<html>";
+        for (int i = 0; i < myController.getJobList().size(); ++i) {
+            jobEventText += "<b>" + myController.getJobList().get(i).getName() + ":</b><br>";
+            for (int j = 0; j < myController.getJobList().get(i).getEventList().size(); ++j) {
+                jobEventText+=""+myController.getJobList().get(i).getEventList().get(j).eventTime+": "+myController.getJobList().get(i).getEventList().get(j).eventText+"<br>";
+            }
+            jobEventText+="<br>";
+        }
+
+        jobEventText += "</html>";
+
+        jobEventList.setText(jobEventText);
+
+        machineEventList.setText("TEST1");
     }
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -884,6 +954,7 @@ public class MyView extends javax.swing.JFrame {
     private MyController myController;
     private JFrame queuePriorityJFrame;
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel Events_panel;
     private javax.swing.JPanel JobPanel;
     private javax.swing.JButton addJobButton;
     private View.AnimationPanel animationPanel;
@@ -892,6 +963,8 @@ public class MyView extends javax.swing.JFrame {
     private View.GanttChartPanel ganttChartPanel1;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JList<String> jList1;
     private javax.swing.JList<String> jList2;
     private javax.swing.JMenu jMenu1;
@@ -910,12 +983,15 @@ public class MyView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
     private javax.swing.JTabbedPane jTabbedPane1;
     private View.JobDataPanel jobDataPanel1;
+    private javax.swing.JLabel jobEventList;
     private javax.swing.JButton jumpButton;
     private javax.swing.JLabel machineCountLabel;
     private javax.swing.JSpinner machineCountSpinner;
     private View.MachineDataPanel machineDataPanel1;
+    private javax.swing.JLabel machineEventList;
     private javax.swing.JButton removeJobButton;
     private javax.swing.JButton resetButton;
     private javax.swing.JButton startButton;

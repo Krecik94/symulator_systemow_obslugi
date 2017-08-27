@@ -21,6 +21,7 @@ public class Job {
     private java.awt.Color color = java.awt.Color.red;
     private String name;
     private int totalWaiting = 0;
+    public LinkedList<Event> eventList = new LinkedList<Event>();
 
     public Job(int newID) {
         ID = newID;
@@ -117,10 +118,12 @@ public class Job {
         requiredTimeUnits.clear();
         acquiredTimeUnits.clear();
         currentMachine = null;
+        eventList.clear();
     }
 
     public void resetSimulationProgress() {
         currentMachine = null;
+        eventList.clear();
         for (int i = 0; i < acquiredTimeUnits.size(); ++i) {
             acquiredTimeUnits.set(i, 0);
         }
@@ -238,6 +241,10 @@ public class Job {
         return acquiredTimeUnits;
     }
 
+    public LinkedList<Event> getEventList() {
+        return eventList;
+    }
+
     public void addRequiredTimeUnits(int newTimeUnitsRequired) {
         requiredTimeUnits.add(newTimeUnitsRequired);
         acquiredTimeUnits.add(0);
@@ -247,8 +254,14 @@ public class Job {
         requiredTimeUnits.set(index, newTimeUnitsRequired);
     }
 
-    public void assignMachine(Machine newMachine) {
+    public void assignMachine(Machine newMachine, int simulationTime) {
         currentMachine = newMachine;
+        if (isInQueue()) {
+            eventList.add(new Event(simulationTime, "Wejście na kolejkę " + currentMachine.getName()));
+        } else {
+            eventList.add(new Event(simulationTime, "Wejście na " + currentMachine.getName()));
+        }
+
     }
 
     public void removeCurrentlyAssignedMachine() {
@@ -260,8 +273,11 @@ public class Job {
         return returnMachine;
     }
 
-    public void addTimeUnit() {
+    public void addTimeUnit(int simulationTime) {
         acquiredTimeUnits.set(requiredMachines.indexOf(currentMachine), acquiredTimeUnits.get(requiredMachines.indexOf(currentMachine)) + 1);
+        if(isFinished()){
+            eventList.add(new Event(simulationTime, "Zadanie zakończone"));
+        }
     }
 
     public int getID() {

@@ -59,7 +59,7 @@ public class Machine {
         currentQueueList.clear();
     }
 
-    public void removeCurrentActiveJob() {
+    public void removeCurrentActiveJob(int simulationTime) {
         currentJob = null;
         for (int i = 0; i < currentQueueList.size(); ++i) {
             System.out.println(currentQueueList.get(i).getName());
@@ -67,6 +67,7 @@ public class Machine {
         if (currentQueueList.size() != 0) {
             int highestPriorityJobIndex = queuePriority.pickHighestPriorityJob(currentQueueList);
             currentJob = currentQueueList.get(highestPriorityJobIndex);
+            currentJob.eventList.add(new Event(simulationTime, "Wejście na " + getName()));
             currentQueueList.remove(highestPriorityJobIndex);
         }
     }
@@ -99,9 +100,9 @@ public class Machine {
         return currentJob;
     }
 
-    public void addTimeUnits() {
+    public void addTimeUnits(int simulationTime) {
         if (currentJob != null) {
-            currentJob.addTimeUnit();
+            currentJob.addTimeUnit(simulationTime);
         }
     }
 
