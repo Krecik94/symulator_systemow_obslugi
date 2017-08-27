@@ -257,9 +257,9 @@ public class Job {
     public void assignMachine(Machine newMachine, int simulationTime) {
         currentMachine = newMachine;
         if (isInQueue()) {
-            eventList.add(new Event(simulationTime, "Wejście na kolejkę " + currentMachine.getName()));
+            eventList.add(new Event(simulationTime, "Wejście na kolejkę <b>" + currentMachine.getName()+"</b>"));
         } else {
-            eventList.add(new Event(simulationTime, "Wejście na " + currentMachine.getName()));
+            eventList.add(new Event(simulationTime, "Wejście na <b>" + currentMachine.getName()+"</b>"));
         }
 
     }

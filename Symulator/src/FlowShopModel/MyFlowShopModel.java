@@ -373,7 +373,7 @@ public class MyFlowShopModel {
                 jobToAssign.getAssignedMachine().removeCurrentActiveJob(stepCounter);
             }
         }
-        machineToAssignTo.addJob(jobToAssign);
+        machineToAssignTo.addJob(jobToAssign, stepCounter);
         jobToAssign.assignMachine(machineToAssignTo, stepCounter);
     }
 

@@ -21,6 +21,7 @@ public class Machine {
     private QueuePriorityParent queuePriority;
     private int totalOccupied = 0;
     private int stepCounter = 0;
+    public LinkedList<Event> eventList = new LinkedList<Event>();
 
     public Machine(int newID) {
         ID = newID;
@@ -40,15 +41,17 @@ public class Machine {
         }
     }
 
-    public boolean addJob(Job newJob) {
+    public boolean addJob(Job newJob, int simulationTime) {
         if (this.isFull()) {
             return false;
         } else {
             if (currentJob != null) {
                 currentQueueList.add(newJob);
+                eventList.add(new Event(simulationTime, "Przyjęcie <b>" + newJob.getName() + "</b> na kolejkę"));
                 return true;
             } else {
                 currentJob = newJob;
+                eventList.add(new Event(simulationTime, "Rozpoczęcie obsługiwania <b>" + newJob.getName()+"</b>"));
                 return true;
             }
         }
@@ -57,9 +60,11 @@ public class Machine {
     public void resetSimulationProgress() {
         currentJob = null;
         currentQueueList.clear();
+        eventList.clear();
     }
 
     public void removeCurrentActiveJob(int simulationTime) {
+        eventList.add(new Event(simulationTime, "Zakończenie obsługiwania <b>" + currentJob.getName()+"</b>"));
         currentJob = null;
         for (int i = 0; i < currentQueueList.size(); ++i) {
             System.out.println(currentQueueList.get(i).getName());
@@ -67,7 +72,8 @@ public class Machine {
         if (currentQueueList.size() != 0) {
             int highestPriorityJobIndex = queuePriority.pickHighestPriorityJob(currentQueueList);
             currentJob = currentQueueList.get(highestPriorityJobIndex);
-            currentJob.eventList.add(new Event(simulationTime, "Wejście na " + getName()));
+            currentJob.eventList.add(new Event(simulationTime, "Wejście na <b>" + getName()+"</b>"));
+            eventList.add(new Event(simulationTime, "Rozpoczęcie obsługiwania <b>" + currentJob.getName()+"</b>"));
             currentQueueList.remove(highestPriorityJobIndex);
         }
     }
@@ -86,6 +92,10 @@ public class Machine {
 
     public int getTotalOccupied() {
         return totalOccupied;
+    }
+
+    public LinkedList<Event> getEventList() {
+        return eventList;
     }
 
     public void setStepCounter(int newStepCounter) {

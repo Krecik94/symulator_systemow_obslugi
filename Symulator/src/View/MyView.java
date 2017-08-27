@@ -750,7 +750,7 @@ public class MyView extends javax.swing.JFrame {
         //EVENT SECTION
         String jobEventText = "<html>";
         for (int i = 0; i < myController.getJobList().size(); ++i) {
-            jobEventText += "<b>" + myController.getJobList().get(i).getName() + ":</b><br>";
+            jobEventText += "<font size=\"5\">" + myController.getJobList().get(i).getName() + ":</font><br>";
             for (int j = 0; j < myController.getJobList().get(i).getEventList().size(); ++j) {
                 jobEventText+=""+myController.getJobList().get(i).getEventList().get(j).eventTime+": "+myController.getJobList().get(i).getEventList().get(j).eventText+"<br>";
             }
@@ -761,7 +761,18 @@ public class MyView extends javax.swing.JFrame {
 
         jobEventList.setText(jobEventText);
 
-        machineEventList.setText("TEST1");
+        String machineEventText = "<html>";
+        for (int i = 0; i < myController.getMachineList().size(); ++i) {
+            machineEventText += "<font size=\"5\">" + myController.getMachineList().get(i).getName() + ":</font><br>";
+            for (int j = 0; j < myController.getMachineList().get(i).getEventList().size(); ++j) {
+                machineEventText+=""+myController.getMachineList().get(i).getEventList().get(j).eventTime+": "+myController.getMachineList().get(i).getEventList().get(j).eventText+"<br>";
+            }
+            machineEventText+="<br>";
+        }
+
+        machineEventText += "</html>";
+
+        machineEventList.setText(machineEventText);
     }
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
