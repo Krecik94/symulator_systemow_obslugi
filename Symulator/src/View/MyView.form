@@ -8,7 +8,7 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Tryb"/>
+            <Property name="text" type="java.lang.String" value="Model"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JRadioButtonMenuItem" name="jRadioButtonMenuItem1">
@@ -141,7 +141,7 @@
                           <Component id="machineCountSpinner" min="-2" pref="52" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabel1" min="-2" pref="106" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jComboBox1" pref="63" max="32767" attributes="0"/>
                       </Group>
@@ -195,7 +195,8 @@
         </Container>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Priorytet pocz&#x105;tkowy:"/>
+            <Property name="text" type="java.lang.String" value="Priorytet wej&#x15b;cia:"/>
+            <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox1">
@@ -208,7 +209,7 @@
                 <StringItem index="3" value="Item 4"/>
               </StringArray>
             </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Zmie&#x144; priorytet pocz&#x105;tkowy zada&#x144; wchodz&#x105;cych do systemu"/>
+            <Property name="toolTipText" type="java.lang.String" value="Zmie&#x144; priorytet wej&#x15b;cia zada&#x144; wchodz&#x105;cych do systemu"/>
           </Properties>
           <Events>
             <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jComboBox1ItemStateChanged"/>

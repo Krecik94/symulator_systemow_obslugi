@@ -38,7 +38,7 @@ public class MyView extends javax.swing.JFrame {
         initComponents();
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
-        this.setTitle("Symulator systemów obsługi");
+        this.setTitle("Symulator systemów obsługi - Flow Shop");
         stepButton.setEnabled(false);
         resetButton.setEnabled(false);
         endButton.setEnabled(false);
@@ -148,10 +148,11 @@ public class MyView extends javax.swing.JFrame {
         });
         jScrollPane7.setViewportView(jList2);
 
-        jLabel1.setText("Priorytet początkowy:");
+        jLabel1.setText("Priorytet wejścia:");
+        jLabel1.setToolTipText("");
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox1.setToolTipText("Zmień priorytet początkowy zadań wchodzących do systemu");
+        jComboBox1.setToolTipText("Zmień priorytet wejścia zadań wchodzących do systemu");
         jComboBox1.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 jComboBox1ItemStateChanged(evt);
@@ -180,7 +181,7 @@ public class MyView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(machineCountSpinner, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, 0, 63, Short.MAX_VALUE)))
                 .addContainerGap())
@@ -515,7 +516,7 @@ public class MyView extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Lista Zdarzeń", jScrollPane9);
 
-        jMenu3.setText("Tryb");
+        jMenu3.setText("Model");
 
         buttonGroup1.add(jRadioButtonMenuItem1);
         jRadioButtonMenuItem1.setSelected(true);
@@ -752,9 +753,9 @@ public class MyView extends javax.swing.JFrame {
         for (int i = 0; i < myController.getJobList().size(); ++i) {
             jobEventText += "<font size=\"5\">" + myController.getJobList().get(i).getName() + ":</font><br>";
             for (int j = 0; j < myController.getJobList().get(i).getEventList().size(); ++j) {
-                jobEventText+=""+myController.getJobList().get(i).getEventList().get(j).eventTime+": "+myController.getJobList().get(i).getEventList().get(j).eventText+"<br>";
+                jobEventText += "" + myController.getJobList().get(i).getEventList().get(j).eventTime + ": " + myController.getJobList().get(i).getEventList().get(j).eventText + "<br>";
             }
-            jobEventText+="<br>";
+            jobEventText += "<br>";
         }
 
         jobEventText += "</html>";
@@ -765,9 +766,9 @@ public class MyView extends javax.swing.JFrame {
         for (int i = 0; i < myController.getMachineList().size(); ++i) {
             machineEventText += "<font size=\"5\">" + myController.getMachineList().get(i).getName() + ":</font><br>";
             for (int j = 0; j < myController.getMachineList().get(i).getEventList().size(); ++j) {
-                machineEventText+=""+myController.getMachineList().get(i).getEventList().get(j).eventTime+": "+myController.getMachineList().get(i).getEventList().get(j).eventText+"<br>";
+                machineEventText += "" + myController.getMachineList().get(i).getEventList().get(j).eventTime + ": " + myController.getMachineList().get(i).getEventList().get(j).eventText + "<br>";
             }
-            machineEventText+="<br>";
+            machineEventText += "<br>";
         }
 
         machineEventText += "</html>";
@@ -832,6 +833,12 @@ public class MyView extends javax.swing.JFrame {
         myController.updateMachineList();
         myController.updateMachineDataPanel();
         machineCountSpinner.setValue(0);
+        if (newMode == 0) {
+            this.setTitle("Symulator systemów obsługi - Flow Shop");
+        }
+        else{
+            this.setTitle("Symulator systemów obsługi - Job Shop");
+        }
     }
 
     public DefaultComboBoxModel getQueuePriorityListModel() {
