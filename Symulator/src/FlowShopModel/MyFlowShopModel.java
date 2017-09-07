@@ -119,7 +119,6 @@ public class MyFlowShopModel {
                 }
             }
             if (!nameTaken) {
-                //System.out.println("weszlo");
                 newJob.setName("Zadanie " + (i + 1));
                 nameSet = true;
                 break;
@@ -130,7 +129,6 @@ public class MyFlowShopModel {
             newJob.setName("Zadanie " + (allJobs.size() + 1));
         }
         allJobs.add(newJob);
-        //System.out.println("dodano");
     }
 
     public boolean removeJob(int jobID) {
@@ -203,7 +201,6 @@ public class MyFlowShopModel {
 
     public void removeJobByIndex(int index) {
         allJobs.remove(index);
-        //System.out.println(allJobs.size());
     }
 
     public void changeMachineQueuePriority(QueuePriorityParent priorityToSet, int machineIndex) {
@@ -293,7 +290,6 @@ public class MyFlowShopModel {
             for (int i = 0; i < prioritySortedJobList.size(); ++i) {
                 //case of unfinished task with for example 4/6 time units. Needs to sit, all good. Continue.
                 if (!(prioritySortedJobList.get(i).isCompletedOnCurrentMachine())) {
-                    //System.out.println("nieukonczone - kontynuuje");
                     continue;
                 } else if (prioritySortedJobList.get(i).isFinished()) {
                     if (finishedJobs.indexOf(prioritySortedJobList.get(i)) == -1) {
@@ -328,18 +324,7 @@ public class MyFlowShopModel {
                 totalJobWaiting += 1;
             }
         }
-        if (finishedJobs.size() == prioritySortedJobList.size()) {
-
-            //System.out.println("UKONCZONE");
-        }
-
-        //TESTOWE WYPISANIE
-        //System.out.println("Krok " + stepCounter);
-        for (int i = 0; i < prioritySortedJobList.size(); ++i) {
-            //System.out.println(prioritySortedJobList.get(i).getAcquiredTimeUnitsList());
-        }
-        //System.out.println();
-        //System.out.println();
+        
     }
 
     //Method to execute steps until any task finishes
@@ -471,7 +456,6 @@ public class MyFlowShopModel {
         for (int i = 0; i < prioritySortedJobList.size(); ++i) {
             if (prioritySortedJobList.get(i).hasNextRequiredMachine()) {
                 if (!(prioritySortedJobList.get(i).getNextRequiredMachine().isFull())) {
-                    //allJobs.get(i).getNextRequiredMachine().addJob(allJobs.get(i));
                     assignJobToMachine(prioritySortedJobList.get(i), prioritySortedJobList.get(i).getNextRequiredMachine());
                 }
             }

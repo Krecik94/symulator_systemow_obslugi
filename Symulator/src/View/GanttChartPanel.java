@@ -100,9 +100,6 @@ public class GanttChartPanel extends javax.swing.JPanel {
         }
 
         if (machineCount != 0) {
-            if (simulationData.size() % machineCount != 0) {
-                //System.out.println("ERROR WYKRESU");
-            }
             for (int i = 0; i < (int) simulationData.size() / machineCount; ++i) {
                 for (int j = 0; j < machineCount; j++) {
                     g2.setColor(simulationData.get(i * machineCount + j));
@@ -132,7 +129,6 @@ public class GanttChartPanel extends javax.swing.JPanel {
     
     public void setSimulationData(LinkedList<java.awt.Color> newSimulationData) {
         simulationData=newSimulationData;
-        //System.out.println("ASDSADASDAS"+newSimulationData.size());
         revalidate();
         repaint();
     }

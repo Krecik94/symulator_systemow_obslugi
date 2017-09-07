@@ -57,7 +57,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
     }
 
     public MachineDataPanel() {
-        //System.out.println("test");
+
     }
 
     public void updateMachinePanelForEditting(LinkedList<Machine> allMachines, int machineListIndex) {
@@ -66,7 +66,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
         nameChangeTextField = new JTextField();
         queuePriorityComboBox = new JComboBox();
         tmpVerticalParallelGroupList.clear();
-        //setPreferredSize(new Dimension(190, 308));
+
         setPreferredSize(new Dimension(190, 200));
         nameChangeTextField.setPreferredSize(new Dimension(20, 20));
 
@@ -77,7 +77,7 @@ public class MachineDataPanel extends javax.swing.JPanel {
             repaint();
             return;
         }
-        //System.out.println("PANEL MASZYNY");
+
 
         if (allMachines.get(machineListIndex).getName() != null) {
             nameChangeTextField.setText(allMachines.get(machineListIndex).getName());
@@ -135,7 +135,6 @@ public class MachineDataPanel extends javax.swing.JPanel {
 
         queueSizeSpinner.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                //jSpinner5StateChanged(evt);
                 machineDataSpinnerChanged(evt);
             }
         });
@@ -176,7 +175,6 @@ public class MachineDataPanel extends javax.swing.JPanel {
         myLayout.setHorizontalGroup(tmpHorizontalGroup);
         revalidate();
         repaint();
-        //queuePriorityComboBox=null;
 
     }
 
@@ -184,7 +182,6 @@ public class MachineDataPanel extends javax.swing.JPanel {
         removeAll();
         nameChangeJLabel = new JLabel("Nazwa:");
         tmpVerticalParallelGroupList.clear();
-        //setPreferredSize(new Dimension(190, 308));
         setPreferredSize(new Dimension(190, 200));
         nameChangeTextField.setPreferredSize(new Dimension(20, 20));
 
@@ -196,7 +193,6 @@ public class MachineDataPanel extends javax.swing.JPanel {
             return;
         }
 
-        //System.out.println("PANEL MASZYNY");
         if (allMachines.get(machineListIndex).getName() != null) {
             machineNameLabel.setText(allMachines.get(machineListIndex).getName());
         }

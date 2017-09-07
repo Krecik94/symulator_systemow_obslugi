@@ -68,11 +68,9 @@ public class JobDataPanel extends javax.swing.JPanel {
     }
 
     public JobDataPanel() {
-        //System.out.println("test");
     }
 
     public void updatePanelForEditting(LinkedList<Machine> requiredMachinesList, LinkedList<Integer> requiredTimeUnitsList, String jobName, java.awt.Color newJobColor, int currentMode) {
-        //System.out.println(nameChangeTextField.getSize());
         removeAll();
         jLabelList.clear();
         jSpinnerList.clear();
@@ -87,7 +85,6 @@ public class JobDataPanel extends javax.swing.JPanel {
         JButton addMissingMachineButton = new JButton();
         nameChangeTextField = new JTextField();
         tmpVerticalParallelGroupList.clear();
-        //setPreferredSize(new Dimension(190, 308));
         if (myView.getMissingMachineListModelOfCurrentJob().getSize() == 0) {
             setPreferredSize(new Dimension(185, (requiredMachinesList.size() * 43) + 36 + 36 + 30));
         } else {
@@ -209,12 +206,10 @@ public class JobDataPanel extends javax.swing.JPanel {
         jobColorJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jobColorButtonActionPerformed(evt);
-                //System.out.println("action preformed...");
             }
         });
 
         if (requiredMachinesList.size() != requiredTimeUnitsList.size()) {
-            //System.out.println("ROZMIERY LIST NIEZGODNE");
             return;
         }
 
@@ -224,97 +219,19 @@ public class JobDataPanel extends javax.swing.JPanel {
         }
 
         for (int i = 0; i < requiredTimeUnitsList.size(); ++i) {
-            //TODO ADD SPINNERS
 
             spinnerToAdd = new JSpinner();
             spinnerToAdd.setToolTipText("Wymagany czas zadania na danej maszynie");
             spinnerToAdd.setValue(requiredTimeUnitsList.get(i));
             spinnerToAdd.addChangeListener(new javax.swing.event.ChangeListener() {
                 public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                    //jSpinner5StateChanged(evt);
                     jobDataSpinnerChanged(evt);
                 }
             });
             jSpinnerList.add(spinnerToAdd);
         }
 
-        // Setting layout
-        /*
-        myLayout = new GroupLayout(this);
-        myLayout.setAutoCreateGaps(true);
-        myLayout.setAutoCreateContainerGaps(true);
-        this.setLayout(myLayout);
-
-        SequentialGroup tmpVerticalGroup = myLayout.createSequentialGroup();
-
-        if (jobName != null) {
-            tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                    .addComponent(nameChangeJLabel)
-                    .addComponent(nameChangeTextField));
-            tmpVerticalGroup.addGroup(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                    .addComponent(jobColorJLabel)
-                    .addComponent(jobColorJButton));
-        }
-        for (int i = 0; i < jLabelList.size(); ++i) {
-            tmpVerticalParallelGroupList.add(myLayout.createParallelGroup(GroupLayout.Alignment.CENTER)
-                    .addComponent(jLabelList.get(i))
-                    .addGroup(myLayout.createSequentialGroup()
-                            .addComponent(moveMachineUpButtonList.get(i), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                            .addGap(0)
-                            .addComponent(moveMachineDownButtonList.get(i), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                    .addComponent(deleteMachineButtonList.get(i), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSpinnerList.get(i), 30, 30, 30));
-        }
-        for (int i = 0; i < tmpVerticalParallelGroupList.size(); ++i) {
-            tmpVerticalGroup.addGroup(tmpVerticalParallelGroupList.get(i));
-        }
-
-        myLayout.setVerticalGroup(tmpVerticalGroup);
-
-        SequentialGroup tmpHorizontalGroup = myLayout.createSequentialGroup();
-        tmpParallelGroup = myLayout.createParallelGroup();
-        if (jobName != null) {
-            tmpParallelGroup.addComponent(nameChangeJLabel);
-            tmpParallelGroup.addComponent(jobColorJLabel);
-        }
-        for (int i = 0; i < jLabelList.size(); ++i) {
-            tmpParallelGroup.addComponent(jLabelList.get(i));
-        }
-        tmpParallelGroup.addGap(0);
-        tmpHorizontalGroup.addGroup(tmpParallelGroup);
-        tmpParallelGroup = myLayout.createParallelGroup();
-        for (int i = 0; i < moveMachineUpButtonList.size(); ++i) {
-            tmpParallelGroup.addComponent(moveMachineUpButtonList.get(i), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
-            tmpParallelGroup.addComponent(moveMachineDownButtonList.get(i), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE);
-            
-        }
-        tmpParallelGroup.addGap(0);
-        tmpHorizontalGroup.addGroup(tmpParallelGroup);
-
-        tmpHorizontalGroup.addGroup(tmpParallelGroup);
-        tmpParallelGroup = myLayout.createParallelGroup();
-        for (int i = 0; i < deleteMachineButtonList.size(); ++i) {
-            tmpParallelGroup.addComponent(deleteMachineButtonList.get(i), GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
-                    GroupLayout.PREFERRED_SIZE);
-        }
-        tmpParallelGroup.addGap(0);
-        tmpHorizontalGroup.addGroup(tmpParallelGroup);
-
-        tmpHorizontalGroup.addGroup(tmpParallelGroup);
-        tmpParallelGroup = myLayout.createParallelGroup();
-        if (jobName != null) {
-            tmpParallelGroup.addComponent(nameChangeTextField);
-            tmpParallelGroup.addComponent(jobColorJButton);
-        }
-        for (int i = 0; i < jSpinnerList.size(); ++i) {
-            tmpParallelGroup.addComponent(jSpinnerList.get(i));
-        }
-        tmpParallelGroup.addGap(0);
-        tmpHorizontalGroup.addGroup(tmpParallelGroup);
-
-        myLayout.setHorizontalGroup(tmpHorizontalGroup);
-         */
-        // end of setting layout
+        
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -479,7 +396,6 @@ public class JobDataPanel extends javax.swing.JPanel {
         setPreferredSize(new Dimension(185, (requiredMachinesList.size() * 22) + 75));
 
         if (requiredMachinesList.size() != requiredTimeUnitsList.size() || requiredTimeUnitsList.size() != acquiredTimeUnitsList.size()) {
-            //System.out.println("ROZMIERY LIST NIEZGODNE");
             return;
         }
 
@@ -590,7 +506,6 @@ public class JobDataPanel extends javax.swing.JPanel {
     }
 
     private void jobColorButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        //java.awt.Color tmpColor = JColorChooser.showDialog(null, "Wybierz kolor", currentJobColor);
         jobColorChooser.setColor(currentJobColor);
         JDialog tmp = JColorChooser.createDialog(null, "Wybierz kolor", true, jobColorChooser, new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
