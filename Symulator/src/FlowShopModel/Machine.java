@@ -11,7 +11,7 @@ import java.util.LinkedList;
  *
  * @author Marcin2
  */
-public class Machine {
+public class Machine  implements java.io.Serializable {
 
     private LinkedList<Job> currentQueueList = new LinkedList<Job>();
     private Job currentJob = null;

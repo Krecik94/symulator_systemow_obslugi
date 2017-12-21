@@ -11,7 +11,7 @@ import java.util.LinkedList;
  *
  * @author Marcin2
  */
-public class SPTPriority extends QueuePriorityParent {
+public class SPTPriority extends QueuePriorityParent  implements java.io.Serializable {
 
     public SPTPriority() {
         this.name = "SPT";

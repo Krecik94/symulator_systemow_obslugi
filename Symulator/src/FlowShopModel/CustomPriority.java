@@ -12,7 +12,7 @@ import java.util.HashMap;
  *
  * @author Marcin2
  */
-public class CustomPriority extends QueuePriorityParent {
+public class CustomPriority extends QueuePriorityParent  implements java.io.Serializable {
 
     private static int counter = 0;
     private HashMap<Integer, Integer> priorityToJobMap;

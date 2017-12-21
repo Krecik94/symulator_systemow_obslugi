@@ -8,12 +8,14 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.io.File;
 import java.util.LinkedList;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
@@ -134,6 +136,8 @@ public class MyView extends javax.swing.JFrame {
         jRadioButtonMenuItem2 = new javax.swing.JRadioButtonMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        saveButton = new javax.swing.JMenuItem();
+        loadButton = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -549,6 +553,22 @@ public class MyView extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItem1);
 
+        saveButton.setText("Zapisz");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
+        jMenu1.add(saveButton);
+
+        loadButton.setText("Wczytaj");
+        loadButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadButtonActionPerformed(evt);
+            }
+        });
+        jMenu1.add(loadButton);
+
         jMenuBar2.add(jMenu1);
 
         setJMenuBar(jMenuBar2);
@@ -818,6 +838,68 @@ public class MyView extends javax.swing.JFrame {
         updateStatistics();
 
     }//GEN-LAST:event_endButtonActionPerformed
+
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        // TODO add your handling code here:
+        resetButtonActionPerformed(evt);
+        //Create a file chooser
+        final JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        
+        //In response to a button click:
+        int returnVal = fc.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            myController.save(fc.getSelectedFile().getAbsolutePath());
+        }
+    }//GEN-LAST:event_saveButtonActionPerformed
+
+    private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loadButtonActionPerformed
+        // TODO add your handling code here:
+        jList1.clearSelection();
+        jList2.clearSelection();
+        //Create a file chooser
+        final JFileChooser fc = new JFileChooser();
+        fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+        
+        //In response to a button click:
+        int returnVal = fc.showOpenDialog(this);
+        if (returnVal == JFileChooser.APPROVE_OPTION)
+        {
+            myController.load(fc.getSelectedFile().getAbsolutePath());
+       
+            machineCountSpinner.setValue(myController.getMachineList().size());
+            myController.updateJobDataPanel();
+            myController.updateMachineDataPanel();
+            myController.updateGanttChart();
+            myController.updateAnimationPanel();
+            myController.updateJobList();
+            myController.updateMachineList();
+            startButton.setEnabled(true);
+            stepButton.setEnabled(false);
+            jumpButton.setEnabled(false);
+            endButton.setEnabled(false);
+            resetButton.setEnabled(false);
+            addJobButton.setEnabled(true);
+            removeJobButton.setEnabled(true);
+            machineCountLabel.setEnabled(true);
+            machineCountSpinner.setEnabled(true);
+            jComboBox1.setEnabled(true);
+            stepLabel.setText("Krok: " + myController.getStepCount());
+            updateStatistics();
+            if(myController.getMode() == 0)
+            {
+                jRadioButtonMenuItem2.setSelected(false);
+                jRadioButtonMenuItem1.setSelected(true);
+            }
+            else
+            {
+                jRadioButtonMenuItem2.setSelected(true);
+                jRadioButtonMenuItem1.setSelected(false);
+            }
+        }
+    }//GEN-LAST:event_loadButtonActionPerformed
+    
     public void updateListModel(DefaultListModel newModel) {
         int oldIndex = jList1.getSelectedIndex();
         listModel = newModel;
@@ -925,7 +1007,8 @@ public class MyView extends javax.swing.JFrame {
     }
 
     public void updateInitialPriorityComboBoxModel(DefaultComboBoxModel newModel) {
-        String currentName = ((QueuePriorityParent) jComboBox1.getSelectedItem()).getName();
+        //String currentName = ((QueuePriorityParent) jComboBox1.getSelectedItem()).getName();
+        String currentName = myController.getInitialQueuePriorityName();
         jComboBox1.setModel(newModel);
         for (int i = 0; i < newModel.getSize(); ++i) {
             if (((QueuePriorityParent) newModel.getElementAt(i)).getName().equals(currentName)) {
@@ -1006,12 +1089,14 @@ public class MyView extends javax.swing.JFrame {
     private View.JobDataPanel jobDataPanel1;
     private javax.swing.JLabel jobEventList;
     private javax.swing.JButton jumpButton;
+    private javax.swing.JMenuItem loadButton;
     private javax.swing.JLabel machineCountLabel;
     private javax.swing.JSpinner machineCountSpinner;
     private View.MachineDataPanel machineDataPanel1;
     private javax.swing.JLabel machineEventList;
     private javax.swing.JButton removeJobButton;
     private javax.swing.JButton resetButton;
+    private javax.swing.JMenuItem saveButton;
     private javax.swing.JButton startButton;
     private javax.swing.JLabel statAverageJobWaiting;
     private javax.swing.JLabel statAverageMachineOccupation;

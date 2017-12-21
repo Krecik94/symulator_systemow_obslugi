@@ -13,7 +13,7 @@ import javax.swing.DefaultListModel;
  *
  * @author Marcin2
  */
-public class MyFlowShopModel {
+public class MyFlowShopModel implements java.io.Serializable {
 
     private LinkedList<Job> allJobs = new LinkedList<Job>();
     private LinkedList<Machine> allMachines = new LinkedList<Machine>();

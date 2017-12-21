@@ -11,7 +11,7 @@ import java.util.LinkedList;
  *
  * @author Marcin2
  */
-public class LIFOPriority extends QueuePriorityParent {
+public class LIFOPriority extends QueuePriorityParent  implements java.io.Serializable {
 
     public LIFOPriority() {
         this.name = "LIFO";

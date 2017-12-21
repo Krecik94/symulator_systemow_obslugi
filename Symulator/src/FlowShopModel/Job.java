@@ -11,7 +11,7 @@ import java.util.LinkedList;
  *
  * @author Marcin2
  */
-public class Job {
+public class Job  implements java.io.Serializable {
 
     private Machine currentMachine = null;
     private int ID = 0;

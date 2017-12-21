@@ -11,7 +11,7 @@ import java.util.LinkedList;
  *
  * @author Marcin2
  */
-public class FIFOPriority extends QueuePriorityParent {
+public class FIFOPriority extends QueuePriorityParent implements java.io.Serializable {
 
     public FIFOPriority() {
         this.name = "FIFO";

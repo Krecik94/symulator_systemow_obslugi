@@ -9,7 +9,7 @@ package FlowShopModel;
  *
  * @author Marcin2
  */
-public class Event {
+public class Event  implements java.io.Serializable {
 
     public int eventTime = 0;
     public String eventText = "";

@@ -16,6 +16,11 @@ import FlowShopModel.Machine;
 import FlowShopModel.MyFlowShopModel;
 import FlowShopModel.QueuePriorityParent;
 import View.MyView;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -26,7 +31,7 @@ import javax.swing.DefaultListModel;
  *
  * @author Marcin2
  */
-public class MyController {
+public class MyController implements java.io.Serializable {
 
     private MyView currentView;
     private MyFlowShopModel currentModel;
@@ -68,7 +73,45 @@ public class MyController {
         currentModel.removeJobByIndex(index);
         updateJobList();
     }
-
+    
+    public void save(String path)
+    {
+        System.out.println("Test Save");
+        
+        try {
+         FileOutputStream fileOut = new FileOutputStream(path);
+         ObjectOutputStream out = new ObjectOutputStream(fileOut);
+         out.writeObject(currentModel);
+         out.writeObject(customPriorityList);
+         out.close();
+         fileOut.close();
+         System.out.printf("Serialized data is saved in " + path);
+      } catch (IOException i) {
+         i.printStackTrace();
+      }   
+    }
+    
+    public void load(String path){
+      try {
+         FileInputStream fileIn = new FileInputStream(path);
+         ObjectInputStream in = new ObjectInputStream(fileIn);
+         currentModel = (MyFlowShopModel) in.readObject();
+         customPriorityList = (LinkedList<QueuePriorityParent>) in.readObject();
+         in.close();
+         fileIn.close();
+         currentView.updateInitialPriorityComboBoxModel(getQueuePriorityListModelForInitialQueue());
+      } catch (IOException i) {
+         i.printStackTrace();
+         return;
+      } catch (ClassNotFoundException c) {
+         System.out.println("Deserialization error");
+         c.printStackTrace();
+         return;
+      }
+        
+        
+    }
+    
     public void updateAnimationPanel() {
         currentView.updateAnimationPanel(currentModel.getJobList(), currentModel.getMachineList());
     }
@@ -243,6 +286,11 @@ public class MyController {
         currentView.updateInitialPriorityComboBoxModel(getQueuePriorityListModelForInitialQueue());
     }
 
+    public String getInitialQueuePriorityName()
+    {
+        return currentModel.getInitialQueuePriority().getName();
+    }
+    
     public LinkedList<QueuePriorityParent> getCustomQueuePriorityList() {
         return customPriorityList;
     }

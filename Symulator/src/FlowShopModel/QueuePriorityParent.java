@@ -11,7 +11,7 @@ import java.util.LinkedList;
  *
  * @author Marcin2
  */
-public class QueuePriorityParent {
+public class QueuePriorityParent   implements java.io.Serializable {
     protected String name;
     //Should be overridded in child classes
     public int pickHighestPriorityJob(LinkedList<Job> inputList){

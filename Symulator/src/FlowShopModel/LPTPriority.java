@@ -11,7 +11,7 @@ import java.util.LinkedList;
  *
  * @author Marcin2
  */
-public class LPTPriority extends QueuePriorityParent {
+public class LPTPriority extends QueuePriorityParent  implements java.io.Serializable {
 
     public LPTPriority() {
         this.name = "LPT";
